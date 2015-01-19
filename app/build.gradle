@@ -5,7 +5,7 @@ android {
     buildToolsVersion "20.0.0"
 
     defaultConfig {
-        applicationId "ridgewell.pickupsports2"
+        applicationId "pickupsports2.ridgewell.pickupsports2"
         minSdkVersion 15
         targetSdkVersion 20
         versionCode 1

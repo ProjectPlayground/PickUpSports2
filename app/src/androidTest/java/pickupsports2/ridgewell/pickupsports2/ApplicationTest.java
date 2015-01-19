@@ -1,4 +1,4 @@
-package ridgewell.pickupsports2;
+package pickupsports2.ridgewell.pickupsports2;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

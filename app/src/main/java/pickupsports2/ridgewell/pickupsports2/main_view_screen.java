@@ -1,4 +1,4 @@
-package ridgewell.pickupsports2;
+package pickupsports2.ridgewell.pickupsports2;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -6,19 +6,19 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 
-public class view_events extends Activity {
+public class main_view_screen extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_events);
+        setContentView(R.layout.activity_main_view_screen);
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.view_events, menu);
+        getMenuInflater().inflate(R.menu.main_view_screen, menu);
         return true;
     }
 
