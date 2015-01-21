@@ -1,4 +1,4 @@
-package ridgewell.pickupsports2;
+package ridgewell.pickupsports2.common;
 
 /**
  * Created by cameronridgewell on 1/16/15.

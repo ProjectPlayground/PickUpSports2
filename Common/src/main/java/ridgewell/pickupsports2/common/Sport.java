@@ -1,4 +1,4 @@
-package ridgewell.pickupsports2;
+package ridgewell.pickupsports2.common;
 import java.lang.String;
 
 /**
