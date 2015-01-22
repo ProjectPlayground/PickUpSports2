@@ -1,12 +1,13 @@
 package pickupsports2.ridgewell.pickupsports2;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
 
-public class main_view_screen extends Activity {
+public class Main_View_Screen extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

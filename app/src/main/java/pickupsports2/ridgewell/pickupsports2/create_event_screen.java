@@ -15,8 +15,10 @@ import static pickupsports2.ridgewell.pickupsports2.R.layout.activity_create_eve
 /**
  * Created by cameronridgewell on 1/21/15.
  */
-public class create_event_screen extends ListActivity implements OnClickListener {
-    public create_event_screen(Context context) {
+public class Create_Event_Screen extends ListActivity implements OnClickListener {
+    private Context myContext;
+    public Create_Event_Screen(Context context) {
+        myContext = context;
         this.setContentView(activity_create_event_screen);
         this.setTitle(context.getResources().getString(R.string.create_event_title));
 
