@@ -16,44 +16,30 @@ import static pickupsports2.ridgewell.pickupsports2.R.layout.activity_create_eve
  * Created by cameronridgewell on 1/21/15.
  */
 public class Create_Event_Screen extends ListActivity implements OnClickListener {
-    private Context myContext;
     public Create_Event_Screen() {}
 
-    public Create_Event_Screen(Context context) {
-        myContext = context;
-        this.setContentView(activity_create_event_screen);
-        this.setTitle(context.getResources().getString(R.string.create_event_title));
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        this.setContentView(R.layout.activity_create_event_screen);
 
         final Spinner sportsSpinner = (Spinner) findViewById(R.id.sport_spinner);
         final Spinner costSpinner = (Spinner) findViewById(R.id.cost_spinner);
         final Spinner privacySpinner = (Spinner) findViewById(R.id.privacy_spinner);
 
-        ArrayAdapter<CharSequence> sportsAdapter = ArrayAdapter.createFromResource(context,
+        ArrayAdapter<CharSequence> sportsAdapter = ArrayAdapter.createFromResource(this,
                 R.array.sports, android.R.layout.simple_spinner_item);
         sportsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         sportsSpinner.setAdapter(sportsAdapter);
 
-        ArrayAdapter<CharSequence> costAdapter = ArrayAdapter.createFromResource(context,
+        ArrayAdapter<CharSequence> costAdapter = ArrayAdapter.createFromResource(this,
                 R.array.cost_options, android.R.layout.simple_spinner_item);
-        sportsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        costAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         costSpinner.setAdapter(costAdapter);
 
-        ArrayAdapter<CharSequence> privacyAdapter = ArrayAdapter.createFromResource(context,
+        ArrayAdapter<CharSequence> privacyAdapter = ArrayAdapter.createFromResource(this,
                 R.array.privacy_options, android.R.layout.simple_spinner_item);
-        sportsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        privacyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         privacySpinner.setAdapter(privacyAdapter);
-    }
-
-    Button invite_friends;
-    Button post_event;
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_event_screen);
-        invite_friends=(Button)findViewById(R.id.create_event_invite_button);
-        invite_friends.setOnClickListener(this);
-        post_event=(Button)findViewById(R.id.create_event_post_button);
-        post_event.setOnClickListener(this);
     }
 
     @Override

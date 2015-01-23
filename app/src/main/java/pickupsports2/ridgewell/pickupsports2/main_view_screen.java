@@ -66,6 +66,10 @@ public class Main_View_Screen extends ListActivity {
         if (id == R.id.action_settings) {
             return true;
         }
+        if (id == R.id.create_new_event) {
+            Intent launch_new_event = new Intent(Main_View_Screen.this, Create_Event_Screen.class);
+            startActivity(launch_new_event);
+        }
         return super.onOptionsItemSelected(item);
     }
 }
