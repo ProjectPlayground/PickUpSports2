@@ -18,12 +18,13 @@ public class Event {
     private List<User> attendees;
     private int maxAttendance;
     private List<User> waitlist; //queue
+    private User creator;
 
     //largest number of users allowed on the waitlist
     public final int WAITLISTMAX = 10;
 
     public Event(String name_, Sport sport_, Date time_, Location location_, int cost_,
-                 String notes_, boolean isPublic_, int maxAttendance_) {
+                 String notes_, boolean isPublic_, int maxAttendance_, User creator_) {
         this.name = name_;
         this.sport = sport_;
         this.time = time_;
@@ -34,6 +35,7 @@ public class Event {
         this.maxAttendance = maxAttendance_;
         this.attendees = new ArrayList<User>();
         this.waitlist = new ArrayList<User>();
+        this.creator = creator_;
     }
 
     public String getName() {
@@ -147,5 +149,9 @@ public class Event {
 
     public int waitlistSize() {
         return waitlist.size();
+    }
+
+    public User getCreator() {
+        return creator;
     }
 }
