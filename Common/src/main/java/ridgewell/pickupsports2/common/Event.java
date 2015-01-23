@@ -1,5 +1,6 @@
 package ridgewell.pickupsports2.common;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Date;
@@ -7,7 +8,7 @@ import java.util.Date;
 /**
  * Created by cameronridgewell on 1/16/15.
  */
-public class Event {
+public class Event implements Serializable{
     private String name;
     private Sport sport;
     private Date time;

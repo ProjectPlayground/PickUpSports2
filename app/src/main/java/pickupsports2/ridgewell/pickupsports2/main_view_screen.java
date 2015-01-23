@@ -47,6 +47,7 @@ public class Main_View_Screen extends ListActivity {
     @Override
     protected void onListItemClick (ListView l, View v, int position, long id) {
         Intent intent = new Intent(Main_View_Screen.this, View_Event_Screen.class);
+        intent.putExtra("viewable_event",arraylist.get(position));
         startActivity(intent);
     }
 

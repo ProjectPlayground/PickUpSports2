@@ -2,6 +2,7 @@ package pickupsports2.ridgewell.pickupsports2;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 
@@ -18,14 +19,13 @@ public class View_Event_Screen extends Activity {
 
     public View_Event_Screen() {}
 
-    public View_Event_Screen(Context context, final Event event_) {
-        this.myContext = context;
-        this.event= event_;
-        this.setContentView(view_event_screen);
-    }
-
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_event_screen);
+
+        Intent intent = getIntent();
+        event = (Event) intent.getSerializableExtra("viewable_event");
+
+
     }
 }
