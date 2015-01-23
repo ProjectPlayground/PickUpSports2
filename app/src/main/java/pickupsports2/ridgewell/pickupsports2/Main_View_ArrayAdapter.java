@@ -5,19 +5,20 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.BaseAdapter;
-import android.widget.ListAdapter;
+import ridgewell.pickupsports2.common.Event;
 
 /**
  * Created by cameronridgewell on 1/21/15.
  */
-public class Main_View_ArrayAdapter extends BaseAdapter implements ListAdapter {
-    private ArrayList<String> list = new ArrayList<String>();
+public class Main_View_ArrayAdapter extends ArrayAdapter<Event> {
+    private ArrayList<Event> list = new ArrayList<Event>();
     private Context context;
 
-    public Main_View_ArrayAdapter(ArrayList<String> list_, Context context_) {
+    public Main_View_ArrayAdapter(Context context_, ArrayList<Event> list_) {
+        super(context_, R.layout.event_view_item, list_);
         this.list = list_;
         this.context = context_;
     }
@@ -25,11 +26,6 @@ public class Main_View_ArrayAdapter extends BaseAdapter implements ListAdapter {
     @Override
     public int getCount() {
         return list.size();
-    }
-
-    @Override
-    public Object getItem(int pos) {
-        return list.get(pos);
     }
 
     @Override
@@ -47,8 +43,19 @@ public class Main_View_ArrayAdapter extends BaseAdapter implements ListAdapter {
         }
 
         //Handle TextView and display string from your list
-        TextView listItemText = (TextView)view.findViewById(R.id.list_item_string);
-        listItemText.setText(list.get(position));
+        TextView listItemTextTitle = (TextView)view.findViewById(R.id.event_view_adapter_title);
+        listItemTextTitle.setText(list.get(position).getName());
+
+        TextView listItemTextSport = (TextView)view.findViewById(R.id.event_view_adapter_sport);
+        listItemTextSport.setText(list.get(position).getSport().getSportName());
+
+        TextView listItemTextLocation = (TextView)view.findViewById(R.id.event_view_adapter_location);
+        listItemTextLocation.setText(list.get(position).getLocation().getLocation());
+
+        TextView listItemTextDate = (TextView)view.findViewById(R.id.event_view_adapter_date);
+        listItemTextDate.setText(list.get(position).getTime().toString());
+
+
 
         //Handle buttons and add onClickListeners
         Button view_button = (Button)view.findViewById(R.id.view_button);

@@ -1,52 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:id="@+id/event_view_adapter">
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
         android:gravity="center"
         android:orientation="horizontal"
-        android:weightSum="3"
-        android:id="@+id/linearLayout">
+        android:weightSum="6"
+        android:id="@+id/event_view_adapter_linear_layout">
 
-        <TextView
-            android:id="@+id/event_view_adapter_title"
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_weight="2"
-            android:text="title here"
-            android:textSize="30sp" />
+            android:layout_weight="5">
 
+            <TextView
+                android:id="@+id/event_view_adapter_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_weight="2"
+                android:textSize="30sp"
+                android:text="title here"/>
+            <TextView
+                android:id="@+id/event_view_adapter_sport"
+                android:layout_width="wrap_content"
+                android:layout_below="@+id/event_view_adapter_title"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:layout_marginLeft="25dp"
+                android:text="sport here" />
+            <TextView
+                android:id="@+id/event_view_adapter_location"
+                android:layout_width="wrap_content"
+                android:layout_below="@+id/event_view_adapter_sport"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:textSize="15dp"
+                android:text="location here" />
+            <TextView
+                android:id="@+id/event_view_adapter_date"
+                android:layout_width="wrap_content"
+                android:layout_below="@+id/event_view_adapter_location"
+                android:layout_height="wrap_content"
+                android:textSize="15dp"
+                android:layout_marginLeft="25dp"
+                android:text="date here" />
+        </RelativeLayout>
         <Button
             android:id="@+id/view_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="-25dp"
             android:layout_weight="1"
             android:text="Attend" />
     </LinearLayout>
-    <TextView
-        android:id="@+id/event_view_adapter_sport"
-        android:layout_width="wrap_content"
-        android:layout_below="@+id/linearLayout"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="25dp"
-        android:text="sport here" />
-    <TextView
-        android:id="@+id/event_view_adapter_location"
-        android:layout_width="wrap_content"
-        android:layout_below="@+id/event_view_adapter_sport"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="25dp"
-        android:textSize="20dp"
-        android:text="location here" />
-    <TextView
-        android:id="@+id/event_view_adapter_date"
-        android:layout_width="wrap_content"
-        android:layout_below="@+id/event_view_adapter_location"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="25dp"
-        android:text="date here" />
 </RelativeLayout>

@@ -18,4 +18,8 @@ public class Sport implements Comparable<Sport> {
     public int compareTo(Sport sport) {
         return this.sportName.compareToIgnoreCase(sport.sportName);
     }
+
+    public String getSportName() {
+        return sportName;
+    }
 }
