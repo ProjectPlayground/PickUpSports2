@@ -40,5 +40,8 @@ public class View_Event_Screen extends Activity {
         TextView viewItemTextLocation = (TextView) findViewById(R.id.event_location_heading);
         viewItemTextLocation.setText(event_data[3]);
 
+        TextView viewItemTextTime = (TextView) findViewById(R.id.event_time_heading);
+        viewItemTextTime.setText(event_data[4] + " " + event_data[5]);
+
     }
 }

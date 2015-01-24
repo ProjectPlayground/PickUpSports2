@@ -54,6 +54,27 @@ public class Event {
         this.time = time;
     }
 
+    public String getDaysUntil() {
+        Date now = new Date();
+        now.setHours(12);
+        now.setMinutes(0);
+        now.setSeconds(0);
+        System.out.println((time.getTime() - now.getTime()) / (1000 * 60 * 60 * 24) + "");
+        int days =  (int) ((time.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
+
+        if (days == 0) {
+            return "(today)";
+        } else if (days == 1) {
+            return "(tomorrow)";
+        } else if (days == -1) {
+            return "(yesterday)";
+        } else if (days < 0) {
+            return "(" + (-1 * days) + " days ago)";
+        } else {
+            return "(" + days + " days)";
+        }
+    }
+
     public Sport getSport() {
         return sport;
     }

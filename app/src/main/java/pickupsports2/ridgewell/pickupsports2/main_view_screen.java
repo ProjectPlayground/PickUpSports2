@@ -30,10 +30,12 @@ public class Main_View_Screen extends ListActivity {
         Sport football = new Sport("Football");
         Sport soccer = new Sport("Soccer");
         Date date1 = new Date();
+        Date date2 = new Date();
+        date2.setHours(-72);
         Location loc1 = new Location("Nashville, TN");
         User user1 = new User("Cameron Ridgewell");
         Event event1 = new Event("Random Name 1", football, date1, loc1, 0, "", false, 30, user1);
-        Event event2 = new Event("Random Name 2", soccer, date1, loc1, 3, "notes here", true, 20, user1);
+        Event event2 = new Event("Random Name 2", soccer, date2, loc1, 3, "notes here", true, 20, user1);
 
         arraylist.add(event1);
         arraylist.add(event2);
@@ -49,7 +51,9 @@ public class Main_View_Screen extends ListActivity {
         String[] event_data = { arraylist.get(position).getName(),
                 arraylist.get(position).getCreator().getUsername(),
                 arraylist.get(position).getSport().getSportName(),
-                arraylist.get(position).getLocation().getLocation()};
+                arraylist.get(position).getLocation().getLocation(),
+                arraylist.get(position).getTime().toString(),
+                arraylist.get(position).getDaysUntil() + ""};
         intent.putExtra("viewable_event", event_data);
         startActivity(intent);
     }

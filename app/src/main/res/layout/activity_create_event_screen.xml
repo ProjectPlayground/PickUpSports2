@@ -2,7 +2,8 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:padding="15dp">
 
     <TextView
         android:text="@string/event_name_heading_text"
@@ -28,7 +29,7 @@
         android:layout_alignParentStart="true"/>
 
     <Spinner
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/sport_spinner"
         android:layout_below="@+id/event_sport_heading"
@@ -62,7 +63,7 @@
         android:layout_alignParentStart="true"/>
 
     <Spinner
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/cost_spinner"
         android:layout_below="@+id/event_cost_heading"
@@ -79,7 +80,7 @@
         android:layout_alignParentStart="true"/>
 
     <Spinner
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/privacy_spinner"
         android:layout_below="@+id/event_privacy_heading"
