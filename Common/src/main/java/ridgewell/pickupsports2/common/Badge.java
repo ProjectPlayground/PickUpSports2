@@ -1,7 +1,5 @@
 package ridgewell.pickupsports2.common;
 
-import java.lang.String;
-
 /**
  * Created by cameronridgewell on 1/16/15.
  * Badge class to support user upgrades

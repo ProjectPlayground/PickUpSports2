@@ -1,13 +1,12 @@
 package pickupsports2.ridgewell.pickupsports2;
 
 import android.app.ListActivity;
-import android.content.Context;
+import android.os.Parcel;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 import java.util.ArrayList;
@@ -47,7 +46,11 @@ public class Main_View_Screen extends ListActivity {
     @Override
     protected void onListItemClick (ListView l, View v, int position, long id) {
         Intent intent = new Intent(Main_View_Screen.this, View_Event_Screen.class);
-        intent.putExtra("viewable_event",arraylist.get(position));
+        String[] event_data = { arraylist.get(position).getName(),
+                arraylist.get(position).getCreator().getUsername(),
+                arraylist.get(position).getSport().getSportName(),
+                arraylist.get(position).getLocation().getLocation()};
+        intent.putExtra("viewable_event", event_data);
         startActivity(intent);
     }
 

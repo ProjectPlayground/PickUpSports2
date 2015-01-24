@@ -1,9 +1,8 @@
 package ridgewell.pickupsports2.common;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by cameronridgewell on 1/16/15.
