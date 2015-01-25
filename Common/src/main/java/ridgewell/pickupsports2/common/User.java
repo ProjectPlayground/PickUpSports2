@@ -1,5 +1,8 @@
 package ridgewell.pickupsports2.common;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -7,7 +10,7 @@ import java.util.List;
 /**
  * Created by cameronridgewell on 1/16/15.
  */
-public class User {
+public class User implements Parcelable{
 
     private String username;
     private String nickname;
@@ -90,5 +93,42 @@ public class User {
     public boolean refreshBadges() {
         //check full badge list for qualifies and add qualifiers to badges
         return false;
+    }
+
+    public int describeContents() {
+        return 0;
+    }
+
+    public void writeToParcel(Parcel out, int flags) {
+        out.writeString(username);
+        out.writeString(nickname);
+        out.writeParcelable(location, 0);
+        out.writeLong(joinTime.getTime());
+        out.writeTypedList(favoriteSports);
+        out.writeTypedList(attendedEvents);
+        out.writeTypedList(createdEvents);
+        out.writeTypedList(badges);
+    }
+
+    public static final Parcelable.Creator<User> CREATOR
+            = new Parcelable.Creator<User>() {
+        public User createFromParcel(Parcel in) {
+            return new User(in);
+        }
+
+        public User[] newArray(int size) {
+            return new User[size];
+        }
+    };
+
+    private User(Parcel in) {
+        username = in.readString();
+        nickname = in.readString();
+        location = in.readParcelable(Location.class.getClassLoader());
+        joinTime = new Date(in.readLong());
+        favoriteSports = in.createTypedArrayList(Sport.CREATOR);
+        attendedEvents = in.createTypedArrayList(Event.CREATOR);
+        createdEvents = in.createTypedArrayList(Event.CREATOR);
+        badges = in.createTypedArrayList(Badge.CREATOR);
     }
 }

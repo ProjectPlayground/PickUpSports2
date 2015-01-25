@@ -25,23 +25,26 @@ public class View_Event_Screen extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_event_screen);
 
-        Intent intent = getIntent();
-        String[] event_data = intent.getStringArrayExtra("viewable_event");
+        Bundle extras = getIntent().getExtras();
+        event = extras.getParcelable("viewable_event");
+
+        //String[] event_data = intent.getStringArrayExtra("viewable_event");
 
         TextView viewItemTextTitle = (TextView) findViewById(R.id.view_event_title);
-        viewItemTextTitle.setText(event_data[0]);
+        viewItemTextTitle.setText(event.getName());
 
         TextView viewItemTextCreator = (TextView) findViewById(R.id.view_event_creator);
-        viewItemTextCreator.setText("Created by " + event_data[1]);
+        viewItemTextCreator.setText("Created by " + event.getCreator().getUsername());
 
         TextView viewItemTextSport = (TextView) findViewById(R.id.event_sport_heading);
-        viewItemTextSport.setText(event_data[2]);
+        viewItemTextSport.setText(event.getSport().getSportName());
 
         TextView viewItemTextLocation = (TextView) findViewById(R.id.event_location_heading);
-        viewItemTextLocation.setText(event_data[3]);
+        viewItemTextLocation.setText(event.getLocation().getLocation());
 
         TextView viewItemTextTime = (TextView) findViewById(R.id.event_time_heading);
-        viewItemTextTime.setText(event_data[4] + " " + event_data[5]);
+        viewItemTextTime.setText(event.getTime().toString() + " " + event.getDaysUntil());
+
 
     }
 }
