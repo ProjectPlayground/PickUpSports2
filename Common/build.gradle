@@ -1,5 +1,52 @@
-apply plugin: 'java'
+apply plugin: 'android'
+
+android {
+    compileSdkVersion 20
+    buildToolsVersion '20.0.0'
+
+    defaultConfig {
+        applicationId "ridgewell.pickupsports2.common"
+        minSdkVersion 15
+        targetSdkVersion 20
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            runProguard false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 }
+/*
+apply plugin: 'com.android.library'
+
+
+android {
+    compileSdkVersion 20
+    buildToolsVersion "20.0.0"
+
+    defaultConfig {
+        applicationId "pickupsport2.ridgewell.pickupsports2.common"
+        minSdkVersion 15
+        targetSdkVersion 20
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            runProguard false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.android.support:appcompat-v7:21.0.3'
+}
+*/

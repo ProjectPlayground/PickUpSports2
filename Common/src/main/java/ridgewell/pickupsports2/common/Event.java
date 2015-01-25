@@ -1,5 +1,8 @@
 package ridgewell.pickupsports2.common;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -7,7 +10,7 @@ import java.util.List;
 /**
  * Created by cameronridgewell on 1/16/15.
  */
-public class Event {
+public class Event implements Parcelable{
     private String name;
     private Sport sport;
     private Date time;
@@ -174,5 +177,48 @@ public class Event {
 
     public User getCreator() {
         return creator;
+    }
+
+    public int describeContents() {
+        return 0;
+    }
+
+    public void writeToParcel(Parcel out, int flags) {
+        out.writeString(name);
+        out.writeParcelable(sport,0);
+        out.writeLong(time.getTime());
+        out.writeParcelable(location, 0);
+        out.writeInt(cost);
+        out.writeString(notes);
+        out.writeInt(isPublic ? 1 : 0);
+        out.writeTypedList(attendees);
+        out.writeInt(maxAttendance);
+        out.writeTypedList(waitlist);
+        out.writeParcelable(creator, 0);
+    }
+
+    public static final Parcelable.Creator<Event> CREATOR
+            = new Parcelable.Creator<Event>() {
+        public Event createFromParcel(Parcel in) {
+            return new Event(in);
+        }
+
+        public Event[] newArray(int size) {
+            return new Event[size];
+        }
+    };
+
+    private Event(Parcel in) {
+        name = in.readString();
+        sport = in.readParcelable(Sport.class.getClassLoader());
+        time = new Date(in.readLong());
+        location = in.readParcelable(Location.class.getClassLoader());
+        cost = in.readInt();
+        notes = in.readString();
+        isPublic = in.readInt() == 1;
+        attendees = in.createTypedArrayList(User.CREATOR);
+        maxAttendance = in.readInt();
+        waitlist = in.createTypedArrayList(User.CREATOR);
+        creator = in.readParcelable(User.class.getClassLoader());
     }
 }

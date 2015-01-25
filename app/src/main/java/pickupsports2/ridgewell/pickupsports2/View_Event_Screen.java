@@ -25,7 +25,9 @@ public class View_Event_Screen extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_event_screen);
 
-        Intent intent = getIntent();
+        Bundle extras = getIntent().getExtras();
+        Event event = extras.getParcelable("viewable_event");
+        /*
         String[] event_data = intent.getStringArrayExtra("viewable_event");
 
         TextView viewItemTextTitle = (TextView) findViewById(R.id.view_event_title);
@@ -42,6 +44,7 @@ public class View_Event_Screen extends Activity {
 
         TextView viewItemTextTime = (TextView) findViewById(R.id.event_time_heading);
         viewItemTextTime.setText(event_data[4] + " " + event_data[5]);
+        */
 
     }
 }
