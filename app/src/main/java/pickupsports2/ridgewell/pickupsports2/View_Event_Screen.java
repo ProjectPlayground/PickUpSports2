@@ -28,8 +28,6 @@ public class View_Event_Screen extends Activity {
         Bundle extras = getIntent().getExtras();
         event = extras.getParcelable("viewable_event");
 
-        //String[] event_data = intent.getStringArrayExtra("viewable_event");
-
         TextView viewItemTextTitle = (TextView) findViewById(R.id.view_event_title);
         viewItemTextTitle.setText(event.getName());
 

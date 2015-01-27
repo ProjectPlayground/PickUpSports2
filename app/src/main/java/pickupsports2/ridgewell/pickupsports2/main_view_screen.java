@@ -15,11 +15,12 @@ import java.util.Iterator;
 
 import ridgewell.pickupsports2.common.*;
 
-
 public class Main_View_Screen extends ListActivity {
+    final int CREATE_EVENT_CODE = 1;
+    final int SUCCESS_CODE = 1;
 
     ArrayList<Event> arraylist;
-    ListView main_event_listView;
+    Main_View_ArrayAdapter main_view_arrayAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +41,7 @@ public class Main_View_Screen extends ListActivity {
         arraylist.add(event1);
         arraylist.add(event2);
 
-        Main_View_ArrayAdapter main_view_arrayAdapter = new Main_View_ArrayAdapter(this, arraylist);
+        main_view_arrayAdapter = new Main_View_ArrayAdapter(this, arraylist);
 
         this.setListAdapter(main_view_arrayAdapter);
     }
@@ -79,8 +80,25 @@ public class Main_View_Screen extends ListActivity {
         }
         if (id == R.id.create_new_event) {
             Intent launch_new_event = new Intent(Main_View_Screen.this, Create_Event_Screen.class);
-            startActivity(launch_new_event);
+            startActivityForResult(launch_new_event, CREATE_EVENT_CODE);
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == CREATE_EVENT_CODE) {
+            if (resultCode == SUCCESS_CODE) {
+                //TODO push to server
+                arraylist.add((Event) data.getExtras().getParcelable("created_event"));
+                main_view_arrayAdapter.notifyDataSetChanged();
+            } else {
+                //TODO Toast created event failed
+            }
+            for (Event event_created : arraylist) {
+                System.out.println(event_created.getName());
+            }
+
+        }
     }
 }

@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.view.View.OnClickListener;
@@ -25,6 +26,8 @@ import static pickupsports2.ridgewell.pickupsports2.R.layout.activity_create_eve
  * Created by cameronridgewell on 1/21/15.
  */
 public class Create_Event_Screen extends Activity implements OnClickListener {
+    final int SUCCESS_CODE = 1;
+
     public Create_Event_Screen() {}
 
     public void onCreate(Bundle savedInstanceState) {
@@ -52,10 +55,12 @@ public class Create_Event_Screen extends Activity implements OnClickListener {
         privacyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         privacySpinner.setAdapter(privacyAdapter);
 
-
         final EditText location = (EditText) findViewById(R.id.eventLocationInput);
 
+
         final EditText maxAttendance = (EditText) findViewById(R.id.eventAttendanceInput);
+
+        final DatePicker datePicker = (DatePicker) findViewById(R.id.eventDateInput);
 
         final Button post = (Button) findViewById(R.id.create_event_post_button);
         post.setOnClickListener(new View.OnClickListener() {
@@ -63,16 +68,23 @@ public class Create_Event_Screen extends Activity implements OnClickListener {
                 //Sport, Location, and User passing not implemented yet. Creating new objects for now
                 //TODO no notes
                 //TODO grab creating user
+                //TODO Check for empty fields + Toast
                 Event event = new Event(event_name.getText().toString(),
                         new Sport(sportsSpinner.getSelectedItem().toString()),
-                        new Date(),
+                        new Date(datePicker.getYear() - 1900, datePicker.getMonth(),
+                                datePicker.getDayOfMonth()),
                         new Location(location.getText().toString()),
                         costSpinner.getSelectedItemPosition(), "",
                         privacySpinner.getSelectedItemPosition() == 1,
                         Integer.parseInt(maxAttendance.getText().toString()),
                         new User("Creator User"));
                 //TODO push object to the server
-                System.out.println("Event " + event.getName() + " created");
+
+                Intent intent_return = new Intent(Create_Event_Screen.this, Main_View_Screen.class);
+                intent_return.putExtra("created_event",event);
+                setResult(SUCCESS_CODE, intent_return);
+                finish();
+                //TODO try catch block with success
             }
         });
     }
