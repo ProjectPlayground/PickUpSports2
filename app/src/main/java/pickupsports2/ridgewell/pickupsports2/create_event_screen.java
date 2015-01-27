@@ -35,6 +35,8 @@ public class Create_Event_Screen extends Activity implements OnClickListener {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.activity_create_event_screen);
 
+        setTitle("Create an Event!");
+
         final EditText event_name = (EditText) findViewById(R.id.eventNameInput);
 
         final Spinner sportsSpinner = (Spinner) findViewById(R.id.sport_spinner);

@@ -69,9 +69,13 @@ public class User implements Parcelable{
         location = new Location(location_);
     }
 
+    public List<Sport> getFavoriteSports() {
+        return favoriteSports;
+    }
+
     /*
-     * if the sport is not already in favorites it is added, else nothing
-     */
+         * if the sport is not already in favorites it is added, else nothing
+         */
     public void addToFavorites(Sport sport) {
         int i = 0;
         for (; i < favoriteSports.size() && sport.compareTo(favoriteSports.get(i)) > 0; i++) {}
@@ -87,9 +91,13 @@ public class User implements Parcelable{
         return favoriteSports.remove(sport);
     }
 
+    public List<Badge> getBadges() {
+        return badges;
+    }
+
     /*
-    * returns true if a new badge has been earned
-    */
+        * returns true if a new badge has been earned
+        */
     public boolean refreshBadges() {
         //check full badge list for qualifies and add qualifiers to badges
         return false;
