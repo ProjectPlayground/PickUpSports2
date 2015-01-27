@@ -27,7 +27,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/event_sport_heading"
+        android:id="@+id/event_sport_text"
         android:text="sport"
         android:layout_below="@+id/view_event_creator"
         android:layout_alignParentLeft="true"
@@ -36,18 +36,45 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/event_location_heading"
+        android:id="@+id/event_location_text"
         android:text="location"
-        android:layout_below="@+id/event_sport_heading"
+        android:layout_below="@+id/event_sport_text"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/event_time_heading"
+        android:id="@+id/event_time_text"
         android:text="time"
-        android:layout_below="@+id/event_location_heading"
+        android:layout_below="@+id/event_location_text"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+    
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" 
+        android:text="cost"
+        android:id="@+id/event_cost_text"
+        android:layout_below="@id/event_time_text"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="notes"
+        android:id="@+id/event_notes_text"
+        android:layout_below="@id/event_cost_text"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="spots remaining"
+        android:id="@+id/event_attendance_text"
+        android:layout_below="@id/event_notes_text"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"/>
 

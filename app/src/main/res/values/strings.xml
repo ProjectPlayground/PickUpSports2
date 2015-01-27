@@ -18,6 +18,7 @@
     <string name="event_privacy_heading_text">Who can come? </string>
     <string name="event_attendance_heading_text">How many? </string>
     <string name="event_time_heading_text">When? </string>
+    <string name="event_notes_heading">Any other notes?</string>
 
     <string-array name="sports">
         <item>Baseball</item>

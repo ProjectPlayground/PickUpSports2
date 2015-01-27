@@ -95,10 +95,6 @@ public class Main_View_Screen extends ListActivity {
             } else {
                 //TODO Toast created event failed
             }
-            for (Event event_created : arraylist) {
-                System.out.println(event_created.getName());
-            }
-
         }
     }
 }

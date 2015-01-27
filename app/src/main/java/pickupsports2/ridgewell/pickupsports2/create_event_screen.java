@@ -12,6 +12,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.view.View.OnClickListener;
+import android.widget.Toast;
 
 import java.util.Date;
 
@@ -62,29 +63,38 @@ public class Create_Event_Screen extends Activity implements OnClickListener {
 
         final DatePicker datePicker = (DatePicker) findViewById(R.id.eventDateInput);
 
+        final EditText notes = (EditText) findViewById(R.id.eventNotesInput);
+
         final Button post = (Button) findViewById(R.id.create_event_post_button);
+
         post.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 //Sport, Location, and User passing not implemented yet. Creating new objects for now
                 //TODO no notes
                 //TODO grab creating user
                 //TODO Check for empty fields + Toast
-                Event event = new Event(event_name.getText().toString(),
-                        new Sport(sportsSpinner.getSelectedItem().toString()),
-                        new Date(datePicker.getYear() - 1900, datePicker.getMonth(),
-                                datePicker.getDayOfMonth()),
-                        new Location(location.getText().toString()),
-                        costSpinner.getSelectedItemPosition(), "",
-                        privacySpinner.getSelectedItemPosition() == 1,
-                        Integer.parseInt(maxAttendance.getText().toString()),
-                        new User("Creator User"));
-                //TODO push object to the server
+                try {
+                    Event event = new Event(event_name.getText().toString(),
+                            new Sport(sportsSpinner.getSelectedItem().toString()),
+                            new Date(datePicker.getYear() - 1900, datePicker.getMonth(),
+                                    datePicker.getDayOfMonth()),
+                            new Location(location.getText().toString()),
+                            costSpinner.getSelectedItemPosition(),
+                            notes.getText().toString(),
+                            privacySpinner.getSelectedItemPosition() == 1,
+                            Integer.parseInt(maxAttendance.getText().toString()),
+                            new User("Creator User"));
+                    //TODO push object to the server
 
-                Intent intent_return = new Intent(Create_Event_Screen.this, Main_View_Screen.class);
-                intent_return.putExtra("created_event",event);
-                setResult(SUCCESS_CODE, intent_return);
-                finish();
-                //TODO try catch block with success
+                    Intent intent_return = new Intent(Create_Event_Screen.this, Main_View_Screen.class);
+                    intent_return.putExtra("created_event", event);
+                    setResult(SUCCESS_CODE, intent_return);
+                    finish();
+                } catch (Exception e) {
+                    Toast toast = Toast.makeText(getApplicationContext(),
+                            "An error occurred while creating your event", Toast.LENGTH_SHORT);
+                    toast.show();
+                }
             }
         });
     }

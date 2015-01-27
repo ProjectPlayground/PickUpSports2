@@ -62,7 +62,6 @@ public class Event implements Parcelable{
         now.setHours(12);
         now.setMinutes(0);
         now.setSeconds(0);
-        System.out.println((time.getTime() - now.getTime()) / (1000 * 60 * 60 * 24) + "");
         int days =  (int) ((time.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
 
         if (days == 0) {
