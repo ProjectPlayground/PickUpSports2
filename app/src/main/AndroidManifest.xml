@@ -30,6 +30,15 @@
             android:name=".Create_Event_Screen"
             android:label="@string/app_name">
         </activity>
+
+        <activity
+            android:name=".View_User_Screen"
+            android:label="@string/app_name"
+            android:parentActivityName="pickupsports2.ridgewell.pickupsports2.Main_View_Screen" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="pickupsports2.ridgewell.pickupsports2.Main_View_Screen" />
+        </activity>
     </application>
 
 </manifest>

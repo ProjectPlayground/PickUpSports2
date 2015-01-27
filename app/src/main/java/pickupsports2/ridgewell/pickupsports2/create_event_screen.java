@@ -1,8 +1,6 @@
 package pickupsports2.ridgewell.pickupsports2;
 
 import android.app.Activity;
-import android.app.ListActivity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;

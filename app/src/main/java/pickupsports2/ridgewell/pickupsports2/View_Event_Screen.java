@@ -1,8 +1,12 @@
 package pickupsports2.ridgewell.pickupsports2;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
+
+import java.util.Date;
 
 import ridgewell.pickupsports2.common.*;
 
@@ -27,7 +31,7 @@ public class View_Event_Screen extends Activity {
         viewItemTextTitle.setText(event.getName());
 
         TextView viewItemTextCreator = (TextView) findViewById(R.id.view_event_creator);
-        viewItemTextCreator.setText("Created by " + event.getCreator().getUsername());
+        viewItemTextCreator.setText(event.getCreator().getUsername());
 
         TextView viewItemTextSport = (TextView) findViewById(R.id.event_sport_text);
         viewItemTextSport.setText(event.getSport().getSportName());
@@ -63,5 +67,13 @@ public class View_Event_Screen extends Activity {
         TextView viewRemainingAttendance = (TextView) findViewById(R.id.event_attendance_text);
         viewRemainingAttendance.setText((event.getMaxAttendance()-event.getAttendeeCount())
                 + " out of " + event.getMaxAttendance() + " spots remaining");
+
+        viewItemTextCreator.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(View_Event_Screen.this, View_User_Screen.class);
+                intent.putExtra("user_view", event.getCreator());
+                startActivity(intent);
+            }
+        });
     }
 }

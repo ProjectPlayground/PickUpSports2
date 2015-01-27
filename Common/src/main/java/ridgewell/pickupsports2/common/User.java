@@ -25,6 +25,9 @@ public class User implements Parcelable{
     public User(String username_) {
         username = username_;
         joinTime = new Date();
+        //Fetch from phone or have user input
+        location = new Location("fetch current position");
+        nickname = "";
     }
 
     /*

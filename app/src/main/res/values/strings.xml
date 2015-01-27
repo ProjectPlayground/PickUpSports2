@@ -60,4 +60,6 @@
         <item>Public</item>
     </string-array>
 
+    <!-- view event activity -->
+    <string name="created_by">Created by </string>
 </resources>
