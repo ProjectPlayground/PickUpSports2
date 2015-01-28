@@ -14,19 +14,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
             <TextView
+                style="@style/viewable_heading_text"
                 android:id="@+id/user_name"
-                android:text="Username"
-                android:textSize="20dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:text="Username"/>
 
             <TextView
+                style="@style/minor_text"
                 android:id="@+id/user_join_date"
                 android:text="join date"
-                android:textSize="15dp"
                 android:layout_marginLeft="15dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:layout_below="@+id/user_name"/>
         </RelativeLayout>
 
@@ -37,22 +33,19 @@
     </LinearLayout>
 
     <TextView
+        style="@style/minor_text"
         android:text="badges"
-        android:id="@+id/user_badges"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:id="@+id/user_badges" />
 
     <TextView
+        style="@style/minor_text"
         android:text="favorite sports"
-        android:id="@+id/user_favorite_sports"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:id="@+id/user_favorite_sports" />
 
     <TextView
+        style="@style/minor_text"
         android:text="location"
-        android:id="@+id/user_location"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:id="@+id/user_location" />
 
     <Button
         android:text="Invite"
