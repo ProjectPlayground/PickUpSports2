@@ -10,8 +10,17 @@ By providing this central interface for communication tailored specifically for 
  * run onto Android phone
 
 ## Milestones
+Prototype Link: http://bit.ly/1DTe3wF
+
 Build Cycle 1:
  * create an android interface for the events to operate out of
  * establish a set of common files for structural elements of the application
 
-Prototype Link: http://bit.ly/1DTe3wF
+## User Stories
+1. I want to be able to create and delete my own events.
+2. I've recently moved, I want to be able to find other people to exercise with.
+3. I want to feel safe when playing sports with strangers.
+4. I want to browse events near me to find games to join.
+5. I want to be able to establish a league or set of teams to play each other regularly.
+6. I want to be able to search for users and events
+7. For trivial updates about an event, I want to be able to chat with everyone who has joined an event.
