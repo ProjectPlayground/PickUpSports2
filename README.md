@@ -10,5 +10,8 @@ By providing this central interface for communication tailored specifically for 
  * run onto Android phone
 
 ## Milestones
+Build Cycle 1:
+ * create an android interface for the events to operate out of
+ * establish a set of common files for structural elements of the application
 
 Prototype Link: http://bit.ly/1DTe3wF
