@@ -13,11 +13,11 @@ import ridgewell.pickupsports2.common.Event;
 /**
  * Created by cameronridgewell on 1/21/15.
  */
-public class Main_View_ArrayAdapter extends ArrayAdapter<Event> {
+public class SportingEventArrayAdapter extends ArrayAdapter<Event> {
     private ArrayList<Event> list = new ArrayList<Event>();
     private Context context;
 
-    public Main_View_ArrayAdapter(Context context_, ArrayList<Event> list_) {
+    public SportingEventArrayAdapter(Context context_, ArrayList<Event> list_) {
         super(context_, R.layout.event_view_item, list_);
         this.list = list_;
         this.context = context_;

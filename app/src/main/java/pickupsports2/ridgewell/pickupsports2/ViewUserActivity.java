@@ -11,10 +11,10 @@ import ridgewell.pickupsports2.common.User;
 /**
  * Created by cameronridgewell on 1/26/15.
  */
-public class View_User_Screen extends Activity {
+public class ViewUserActivity extends Activity {
     User user;
 
-    public View_User_Screen() {}
+    public ViewUserActivity() {}
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

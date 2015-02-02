@@ -19,15 +19,13 @@ import ridgewell.pickupsports2.common.Location;
 import ridgewell.pickupsports2.common.Sport;
 import ridgewell.pickupsports2.common.User;
 
-import static pickupsports2.ridgewell.pickupsports2.R.layout.activity_create_event_screen;
-
 /**
  * Created by cameronridgewell on 1/21/15.
  */
-public class Create_Event_Screen extends Activity implements OnClickListener {
+public class CreateEventActivity extends Activity implements OnClickListener {
     final int SUCCESS_CODE = 1;
 
-    public Create_Event_Screen() {}
+    public CreateEventActivity() {}
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,7 +84,7 @@ public class Create_Event_Screen extends Activity implements OnClickListener {
                             new User("Creator User"));
                     //TODO push object to the server
 
-                    Intent intent_return = new Intent(Create_Event_Screen.this, Main_View_Screen.class);
+                    Intent intent_return = new Intent(CreateEventActivity.this, MainActivity.class);
                     intent_return.putExtra("created_event", event);
                     setResult(SUCCESS_CODE, intent_return);
                     finish();

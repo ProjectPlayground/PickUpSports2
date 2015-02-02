@@ -6,17 +6,15 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-import java.util.Date;
-
 import ridgewell.pickupsports2.common.*;
 
 /**
  * Created by cameronridgewell on 1/22/15.
  */
-public class View_Event_Screen extends Activity {
+public class ViewEventActivity extends Activity {
     Event event;
 
-    public View_Event_Screen() {}
+    public ViewEventActivity() {}
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,7 +68,7 @@ public class View_Event_Screen extends Activity {
 
         viewItemTextCreator.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent intent = new Intent(View_Event_Screen.this, View_User_Screen.class);
+                Intent intent = new Intent(ViewEventActivity.this, ViewUserActivity.class);
                 intent.putExtra("user_view", event.getCreator());
                 startActivity(intent);
             }
