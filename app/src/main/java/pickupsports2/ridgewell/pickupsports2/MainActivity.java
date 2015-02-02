@@ -8,55 +8,51 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 
-import java.util.ArrayList;
-import java.util.Date;
+import org.joda.time.DateTime;
 
-import ridgewell.pickupsports2.common.*;
+import java.util.List;
+
+import pickupsports2.ridgewell.pickupsports2.data.DummyEventSource;
+import pickupsports2.ridgewell.pickupsports2.data.EventSource;
+import ridgewell.pickupsports2.common.Event;
 
 public class MainActivity extends ListActivity {
     final int CREATE_EVENT_CODE = 1;
     final int SUCCESS_CODE = 1;
 
-    ArrayList<Event> arraylist;
-    SportingEventArrayAdapter sportingEvent_arrayAdapter_;
+    private final EventSource eventSource = new DummyEventSource();
+
+    private List<Event> events;
+    private SportingEventArrayAdapter sportingEventArrayAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_view_screen);
 
-        arraylist = new ArrayList<Event>();
-        Sport football = new Sport("Football");
-        Sport soccer = new Sport("Soccer");
-        Date date1 = new Date();
-        Date date2 = new Date();
-        date2.setHours(-72);
-        Location loc1 = new Location("Nashville, TN");
-        User user1 = new User("Cameron Ridgewell");
-        Event event1 = new Event("Random Name 1", football, date1, loc1, 0, "", false, 30, user1);
-        Event event2 = new Event("Random Name 2", soccer, date2, loc1, 3, "notes here", true, 20, user1);
+        // Fetch all events that are occurring today
+        DateTime today = DateTime.now();
+        DateTime tomorrow = DateTime.now().plusDays(1);
+        this.events = this.eventSource.getEventsInDateRange(today, tomorrow);
 
-        arraylist.add(event1);
-        arraylist.add(event2);
+        sportingEventArrayAdapter = new SportingEventArrayAdapter(this, this.events);
 
-        sportingEvent_arrayAdapter_ = new SportingEventArrayAdapter(this, arraylist);
-
-        this.setListAdapter(sportingEvent_arrayAdapter_);
+        this.setListAdapter(sportingEventArrayAdapter);
     }
 
     @Override
-    protected void onListItemClick (ListView l, View v, int position, long id) {
+    protected void onListItemClick(ListView l, View v, int position, long id) {
         Intent intent = new Intent(MainActivity.this, ViewEventActivity.class);
         /*
-        String[] event_data = { arraylist.get(position).getName(),
-                arraylist.get(position).getCreator().getUsername(),
-                arraylist.get(position).getSport().getSportName(),
-                arraylist.get(position).getLocation().getLocation(),
-                arraylist.get(position).getTime().toString(),
-                arraylist.get(position).getDaysUntil() + ""};
+        String[] event_data = { events.get(position).getName(),
+                events.get(position).getCreator().getUsername(),
+                events.get(position).getSport().getSportName(),
+                events.get(position).getLocation().getLocation(),
+                events.get(position).getTime().toString(),
+                events.get(position).getDaysUntil() + ""};
         intent.putExtra("viewable_event", event_data);
         */
-        intent.putExtra("viewable_event", arraylist.get(position));
+        intent.putExtra("viewable_event", events.get(position));
         startActivity(intent);
     }
 
@@ -88,8 +84,8 @@ public class MainActivity extends ListActivity {
         if (requestCode == CREATE_EVENT_CODE) {
             if (resultCode == SUCCESS_CODE) {
                 //TODO push to server
-                arraylist.add((Event) data.getExtras().getParcelable("created_event"));
-                sportingEvent_arrayAdapter_.notifyDataSetChanged();
+                events.add((Event) data.getExtras().getParcelable("created_event"));
+                sportingEventArrayAdapter.notifyDataSetChanged();
             } else {
                 //TODO Toast created event failed
             }
