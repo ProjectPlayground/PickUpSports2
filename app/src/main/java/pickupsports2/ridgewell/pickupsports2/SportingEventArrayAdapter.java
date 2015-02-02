@@ -17,10 +17,10 @@ public class SportingEventArrayAdapter extends ArrayAdapter<Event> {
     private ArrayList<Event> list = new ArrayList<Event>();
     private Context context;
 
-    public SportingEventArrayAdapter(Context context_, ArrayList<Event> list_) {
-        super(context_, R.layout.event_view_item, list_);
-        this.list = list_;
-        this.context = context_;
+    public SportingEventArrayAdapter(Context context, ArrayList<Event> list) {
+        super(context, R.layout.event_view_item, list);
+        this.list = list;
+        this.context = context;
     }
 
     @Override
