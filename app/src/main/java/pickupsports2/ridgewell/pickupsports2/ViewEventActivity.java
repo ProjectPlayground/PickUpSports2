@@ -6,13 +6,15 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import pickupsports2.ridgewell.pickupsports2.intents.IntentProtocol;
 import ridgewell.pickupsports2.common.*;
 
 /**
  * Created by cameronridgewell on 1/22/15.
  */
 public class ViewEventActivity extends Activity {
-    Event event;
+
+    private Event event;
 
     public ViewEventActivity() {}
 
@@ -20,8 +22,7 @@ public class ViewEventActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_event_screen);
 
-        Bundle extras = getIntent().getExtras();
-        event = extras.getParcelable("viewable_event");
+        this.event = IntentProtocol.getEvent(this);
 
         setTitle(event.getName());
 
@@ -68,9 +69,8 @@ public class ViewEventActivity extends Activity {
 
         viewItemTextCreator.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent intent = new Intent(ViewEventActivity.this, ViewUserActivity.class);
-                intent.putExtra("user_view", event.getCreator());
-                startActivity(intent);
+                User user = event.getCreator();
+                IntentProtocol.viewUser(ViewEventActivity.this, user);
             }
         });
     }

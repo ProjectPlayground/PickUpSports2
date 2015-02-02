@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import pickupsports2.ridgewell.pickupsports2.intents.IntentProtocol;
 import ridgewell.pickupsports2.common.Badge;
 import ridgewell.pickupsports2.common.Sport;
 import ridgewell.pickupsports2.common.User;
@@ -20,8 +21,7 @@ public class ViewUserActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_user_screen);
 
-        Bundle extras = getIntent().getExtras();
-        user = extras.getParcelable("user_view");
+        this.user = IntentProtocol.getUser(this);
 
         setTitle(user.getUsername());
 

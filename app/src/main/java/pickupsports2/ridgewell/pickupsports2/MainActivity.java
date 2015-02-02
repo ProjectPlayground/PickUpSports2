@@ -14,6 +14,7 @@ import java.util.List;
 
 import pickupsports2.ridgewell.pickupsports2.data.DummyEventSource;
 import pickupsports2.ridgewell.pickupsports2.data.EventSource;
+import pickupsports2.ridgewell.pickupsports2.intents.IntentProtocol;
 import ridgewell.pickupsports2.common.Event;
 
 public class MainActivity extends ListActivity {
@@ -42,18 +43,8 @@ public class MainActivity extends ListActivity {
 
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
-        Intent intent = new Intent(MainActivity.this, ViewEventActivity.class);
-        /*
-        String[] event_data = { events.get(position).getName(),
-                events.get(position).getCreator().getUsername(),
-                events.get(position).getSport().getSportName(),
-                events.get(position).getLocation().getLocation(),
-                events.get(position).getTime().toString(),
-                events.get(position).getDaysUntil() + ""};
-        intent.putExtra("viewable_event", event_data);
-        */
-        intent.putExtra("viewable_event", events.get(position));
-        startActivity(intent);
+        Event toOpen = events.get(position);
+        IntentProtocol.viewEvent(this, toOpen);
     }
 
     @Override
