@@ -1,6 +1,6 @@
 package pickupsports2.ridgewell.pickupsports2;
 
-import android.app.Activity;
+import android.support.v7.app.ActionBarActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -24,7 +24,7 @@ import ridgewell.pickupsports2.common.User;
 /**
  * Created by cameronridgewell on 1/21/15.
  */
-public class CreateEventActivity extends Activity implements OnClickListener {
+public class CreateEventActivity extends ActionBarActivity implements OnClickListener {
     final int SUCCESS_CODE = 1;
 
     public CreateEventActivity() {}

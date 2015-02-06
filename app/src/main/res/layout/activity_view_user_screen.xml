@@ -33,14 +33,16 @@
     </LinearLayout>
 
     <TextView
-        style="@style/minor_text"
+        style="@style/badge_display"
         android:text="badges"
-        android:id="@+id/user_badges" />
+        android:id="@+id/user_badges"
+        android:paddingLeft="10dp"/>
 
     <TextView
-        style="@style/minor_text"
+        style="@style/sport_tag_display"
         android:text="favorite sports"
-        android:id="@+id/user_favorite_sports" />
+        android:id="@+id/user_favorite_sports"
+        android:paddingLeft="10dp"/>
 
     <TextView
         style="@style/minor_text"
