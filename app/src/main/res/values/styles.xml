@@ -1,18 +1,59 @@
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="PickUpSportsTheme" parent="Theme.AppCompat.Light">
-        <!-- Set AppCompat’s actionBarStyle -->
-        <item name="actionBarStyle">@style/action_bar_text</item>
-
-        <!-- Set AppCompat’s color theming attrs -->
-        <item name="colorPrimary">#33AD33</item>
-        <item name="colorPrimaryDark">#7033AD</item>
+    <style name="Theme.Pickupsports" parent="@style/Theme.AppCompat.Light">
+        <item name="actionBarItemBackground">@drawable/selectable_background_pickupsports</item>
+        <item name="popupMenuStyle">@style/PopupMenu.pickupsports</item>
+        <item name="dropDownListViewStyle">@style/DropDownListView.pickupsports</item>
+        <item name="actionBarTabStyle">@style/ActionBarTabStyle.pickupsports</item>
+        <item name="actionDropDownStyle">@style/DropDownNav.pickupsports</item>
+        <item name="actionBarStyle">@style/ActionBar.Solid.pickupsports</item>
+        <item name="actionModeBackground">@drawable/cab_background_top_pickupsports</item>
+        <item name="actionModeSplitBackground">@drawable/cab_background_bottom_pickupsports</item>
+        <item name="actionModeCloseButtonStyle">@style/ActionButton.CloseMode.pickupsports</item>
     </style>
 
-    <style name="action_bar_text">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
+    <style name="ActionBar.Solid.pickupsports" parent="@style/Widget.AppCompat.Light.ActionBar.Solid">
+        <item name="background">@drawable/ab_solid_pickupsports</item>
+        <item name="backgroundStacked">@drawable/ab_stacked_solid_pickupsports</item>
+        <item name="backgroundSplit">@drawable/ab_bottom_solid_pickupsports</item>
+        <item name="progressBarStyle">@style/ProgressBar.pickupsports</item>
+    </style>
+
+    <style name="ActionBar.Transparent.pickupsports" parent="@style/Widget.AppCompat.Light.ActionBar">
+        <item name="background">@drawable/ab_transparent_pickupsports</item>
+        <item name="progressBarStyle">@style/ProgressBar.pickupsports</item>
+    </style>
+
+    <style name="PopupMenu.pickupsports" parent="@style/Widget.AppCompat.Light.PopupMenu">
+        <item name="android:popupBackground">@drawable/menu_dropdown_panel_pickupsports</item>
+    </style>
+
+    <style name="DropDownListView.pickupsports" parent="@style/Widget.AppCompat.Light.ListView.DropDown">
+        <item name="android:listSelector">@drawable/selectable_background_pickupsports</item>
+    </style>
+
+    <style name="ActionBarTabStyle.pickupsports" parent="@style/Widget.AppCompat.Light.ActionBar.TabView">
+        <item name="android:background">@drawable/tab_indicator_ab_pickupsports</item>
+    </style>
+
+    <style name="DropDownNav.pickupsports" parent="@style/Widget.AppCompat.Light.Spinner.DropDown.ActionBar">
+        <item name="android:background">@drawable/spinner_background_ab_pickupsports</item>
+        <item name="android:popupBackground">@drawable/menu_dropdown_panel_pickupsports</item>
+        <item name="android:dropDownSelector">@drawable/selectable_background_pickupsports</item>
+    </style>
+
+    <style name="ProgressBar.pickupsports" parent="@style/Widget.AppCompat.ProgressBar.Horizontal">
+        <item name="android:progressDrawable">@drawable/progress_horizontal_pickupsports</item>
+    </style>
+
+    <style name="ActionButton.CloseMode.pickupsports" parent="@style/Widget.AppCompat.Light.ActionButton.CloseMode">
+        <item name="android:background">@drawable/btn_cab_done_pickupsports</item>
+    </style>
+
+    <!-- this style is only referenced in a Light.DarkActionBar based theme -->
+    <style name="Theme.pickupsports.Widget" parent="@style/Theme.AppCompat">
+        <item name="popupMenuStyle">@style/PopupMenu.pickupsports</item>
+        <item name="dropDownListViewStyle">@style/DropDownListView.pickupsports</item>
     </style>
 
     <style name="viewable_heading_text">

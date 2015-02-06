@@ -1,5 +1,6 @@
 package pickupsports2.ridgewell.pickupsports2;
 
+import android.app.FragmentManager;
 import android.app.ListFragment;
 import android.support.v7.app.ActionBarActivity;
 import android.content.Intent;
@@ -23,7 +24,15 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitle("Games");
         setContentView(R.layout.activity_main_view_screen);
+
+        FragmentManager fm = getFragmentManager();
+
+        if (fm.findFragmentById(android.R.id.content) == null) {
+            EventFragment list = new EventFragment();
+            fm.beginTransaction().add(android.R.id.content, list).commit();
+        }
     }
 
     public static class EventFragment extends ListFragment {
@@ -39,10 +48,9 @@ public class MainActivity extends ActionBarActivity {
 
         public void onActivityCreated(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-            // Fetch all events that are occurring today
+
             DateTime today = DateTime.now();
-            DateTime tomorrow = DateTime.now().plusDays(1);
-            this.events = this.eventSource.getEventsInDateRange(today, tomorrow);
+            this.events = this.eventSource.getEventsInDateRange(today, DateTime.now().plusDays(9));
 
             sportingEventArrayAdapter = new SportingEventArrayAdapter(this.getActivity(), this.events);
 
