@@ -3,8 +3,10 @@ package ridgewell.pickupsports2.common;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import org.joda.time.DateTime;
+import org.joda.time.Days;
+
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -13,7 +15,7 @@ import java.util.List;
 public class Event implements Parcelable{
     private String name;
     private Sport sport;
-    private Date time;
+    private DateTime time;
     private Location location;
     private int cost;
     private String notes;
@@ -26,19 +28,19 @@ public class Event implements Parcelable{
     //largest number of users allowed on the waitlist
     public final int WAITLISTMAX = 10;
 
-    public Event(String name_, Sport sport_, Date time_, Location location_, int cost_,
-                 String notes_, boolean isPublic_, int maxAttendance_, User creator_) {
-        this.name = name_;
-        this.sport = sport_;
-        this.time = time_;
-        this.location = location_;
-        this.cost = cost_;
-        this.notes = notes_;
-        this.isPublic = isPublic_;
-        this.maxAttendance = maxAttendance_;
+    public Event(String name, Sport sport, DateTime time, Location location, int cost,
+                 String notes, boolean isPublic, int maxAttendance, User creator) {
+        this.name = name;
+        this.sport = sport;
+        this.time = time;
+        this.location = location;
+        this.cost = cost;
+        this.notes = notes;
+        this.isPublic = isPublic;
+        this.maxAttendance = maxAttendance;
         this.attendees = new ArrayList<User>();
         this.waitlist = new ArrayList<User>();
-        this.creator = creator_;
+        this.creator = creator;
     }
 
     public String getName() {
@@ -49,20 +51,18 @@ public class Event implements Parcelable{
         this.name = name;
     }
 
-    public Date getTime() {
+    public DateTime getTime() {
         return time;
     }
 
-    public void setTime(Date time) {
+    public void setTime(DateTime time) {
         this.time = time;
     }
 
     public String getDaysUntil() {
-        Date now = new Date();
-        now.setHours(12);
-        now.setMinutes(0);
-        now.setSeconds(0);
-        int days =  (int) ((time.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
+        DateTime now = new DateTime();
+        int days = Days.daysBetween(now.withTimeAtStartOfDay(),
+                this.time.withTimeAtStartOfDay()).getDays();
 
         if (days == 0) {
             return "(today)";
@@ -185,7 +185,7 @@ public class Event implements Parcelable{
     public void writeToParcel(Parcel out, int flags) {
         out.writeString(name);
         out.writeParcelable(sport,0);
-        out.writeLong(time.getTime());
+        out.writeLong(time.getMillis());
         out.writeParcelable(location, 0);
         out.writeInt(cost);
         out.writeString(notes);
@@ -210,7 +210,7 @@ public class Event implements Parcelable{
     private Event(Parcel in) {
         name = in.readString();
         sport = in.readParcelable(Sport.class.getClassLoader());
-        time = new Date(in.readLong());
+        time = new DateTime(in.readLong());
         location = in.readParcelable(Location.class.getClassLoader());
         cost = in.readInt();
         notes = in.readString();

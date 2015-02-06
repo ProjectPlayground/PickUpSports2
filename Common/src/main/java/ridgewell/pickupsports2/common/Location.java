@@ -9,8 +9,8 @@ import android.os.Parcelable;
 public class Location implements Parcelable{
     private String location;
 
-    public Location(String location_) {
-        location = location_;
+    public Location(String location) {
+        this.location = location;
     }
 
     public String getLocation() {

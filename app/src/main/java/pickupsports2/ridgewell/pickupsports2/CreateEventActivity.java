@@ -12,6 +12,8 @@ import android.widget.Spinner;
 import android.view.View.OnClickListener;
 import android.widget.Toast;
 
+import org.joda.time.DateTime;
+
 import java.util.Date;
 
 import ridgewell.pickupsports2.common.Event;
@@ -74,8 +76,8 @@ public class CreateEventActivity extends Activity implements OnClickListener {
                 try {
                     Event event = new Event(event_name.getText().toString(),
                             new Sport(sportsSpinner.getSelectedItem().toString()),
-                            new Date(datePicker.getYear() - 1900, datePicker.getMonth(),
-                                    datePicker.getDayOfMonth()),
+                            new DateTime(datePicker.getYear(), datePicker.getMonth(),
+                                    datePicker.getDayOfMonth(), 0, 0),
                             new Location(location.getText().toString()),
                             costSpinner.getSelectedItemPosition(),
                             notes.getText().toString(),

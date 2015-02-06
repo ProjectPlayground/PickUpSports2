@@ -10,8 +10,8 @@ public class Sport implements Parcelable {
     private String sportName;
     //picture for the sport
 
-    public Sport(String name_) {
-        sportName = name_;
+    public Sport(String name) {
+        this.sportName = name;
     }
 
     /*

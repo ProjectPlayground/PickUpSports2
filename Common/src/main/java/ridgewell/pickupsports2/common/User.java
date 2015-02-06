@@ -22,12 +22,12 @@ public class User implements Parcelable{
     private List<Event> createdEvents = new ArrayList<Event>();
     private List<Badge> badges = new ArrayList<Badge>();
 
-    public User(String username_) {
-        username = username_;
-        joinTime = new Date();
+    public User(String username) {
+        this.username = username;
+        this.joinTime = new Date();
         //Fetch from phone or have user input
-        location = new Location("fetch current position");
-        nickname = "";
+        this.location = new Location("fetch current position");
+        this.nickname = "";
     }
 
     /*
@@ -47,8 +47,8 @@ public class User implements Parcelable{
     /*
      * sets the String nickname
      */
-    public void setNickname(String nickname_) {
-        nickname = nickname_;
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 
     /*
@@ -68,8 +68,8 @@ public class User implements Parcelable{
     /*
      * sets the user's location
      */
-    public void setLocation(String location_) {
-        location = new Location(location_);
+    public void setLocation(String location) {
+        this.location = new Location(location);
     }
 
     public List<Sport> getFavoriteSports() {
@@ -81,9 +81,10 @@ public class User implements Parcelable{
          */
     public void addToFavorites(Sport sport) {
         int i = 0;
-        for (; i < favoriteSports.size() && sport.compareTo(favoriteSports.get(i)) > 0; i++) {}
-        if (sport.compareTo(favoriteSports.get(i)) != 0) {
-            favoriteSports.add(sport);
+        for (; i < this.favoriteSports.size()
+                && sport.compareTo(this.favoriteSports.get(i)) > 0; i++) {}
+        if (sport.compareTo(this.favoriteSports.get(i)) != 0) {
+            this.favoriteSports.add(sport);
         }
     }
 

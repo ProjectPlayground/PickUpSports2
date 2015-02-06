@@ -11,8 +11,8 @@ public class Badge implements Parcelable {
     private String name;
     //icon of some kind
 
-    public Badge(String name_) {
-        name = name_;
+    public Badge(String name) {
+        this.name = name;
     }
 
     public String getName() {
