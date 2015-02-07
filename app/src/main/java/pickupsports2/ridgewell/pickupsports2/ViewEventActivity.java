@@ -38,8 +38,13 @@ public class ViewEventActivity extends Activity {
         TextView viewItemTextLocation = (TextView) findViewById(R.id.event_location_text);
         viewItemTextLocation.setText(event.getLocation().getLocation());
 
+        TextView viewItemTextDate = (TextView) findViewById(R.id.event_date_text);
+        viewItemTextDate.setText(event.getTime().toString("MMMM d, yyyy")
+                + " " + event.getDaysUntil());
+
         TextView viewItemTextTime = (TextView) findViewById(R.id.event_time_text);
-        viewItemTextTime.setText(event.getTime().toString() + " " + event.getDaysUntil());
+        viewItemTextTime.setText(event.getTime().toString("h:mm a"));
+
 
         TextView viewItemTextCost = (TextView) findViewById(R.id.event_cost_text);
         switch (event.getCost()) {

@@ -51,8 +51,7 @@ public class SportingEventArrayAdapter extends ArrayAdapter<Event> {
         listItemTextLocation.setText(event.getLocation().getLocation());
 
         TextView listItemTextDate = (TextView)view.findViewById(R.id.event_view_adapter_date);
-        listItemTextDate.setText(event.getTime().toString());
-
+        listItemTextDate.setText(event.getTime().toString("MMMM d, yyyy"));
 
         //Handle buttons and add onClickListeners
         Button viewButton = (Button)view.findViewById(R.id.attendButton);
