@@ -1,5 +1,7 @@
 package pickupsports2.ridgewell.pickupsports2;
 
+import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.support.v7.app.ActionBarActivity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -57,7 +59,6 @@ public class CreateEventActivity extends ActionBarActivity implements OnClickLis
         privacySpinner.setAdapter(privacyAdapter);
 
         final EditText location = (EditText) findViewById(R.id.eventLocationInput);
-
 
         final EditText maxAttendance = (EditText) findViewById(R.id.eventAttendanceInput);
 

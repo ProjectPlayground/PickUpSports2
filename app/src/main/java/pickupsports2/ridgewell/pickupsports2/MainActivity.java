@@ -23,6 +23,10 @@ public class MainActivity extends ActionBarActivity {
     final int CREATE_EVENT_CODE = 1;
     final int SUCCESS_CODE = 1;
 
+    private List<Event> events;
+
+    private SportingEventArrayAdapter sportingEventArrayAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +42,8 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public static class EventFragment extends ListFragment {
+        final int CREATE_EVENT_CODE = 1;
+        final int SUCCESS_CODE = 1;
 
         private List<Event> events;
 
