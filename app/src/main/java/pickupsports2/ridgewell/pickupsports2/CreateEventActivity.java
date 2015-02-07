@@ -69,7 +69,6 @@ public class CreateEventActivity extends ActionBarActivity implements OnClickLis
 
         post.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                //Sport, Location, and User passing not implemented yet. Creating new objects for now
                 //TODO no notes
                 //TODO grab creating user
                 //TODO Check for empty fields + Toast
@@ -94,6 +93,7 @@ public class CreateEventActivity extends ActionBarActivity implements OnClickLis
                     Toast toast = Toast.makeText(getApplicationContext(),
                             "An error occurred while creating your event", Toast.LENGTH_SHORT);
                     toast.show();
+
                 }
             }
         });

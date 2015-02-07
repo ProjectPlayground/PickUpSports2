@@ -20,6 +20,8 @@ import pickupsports2.ridgewell.pickupsports2.intents.IntentProtocol;
 import ridgewell.pickupsports2.common.Event;
 
 public class MainActivity extends ActionBarActivity {
+    final int CREATE_EVENT_CODE = 1;
+    final int SUCCESS_CODE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,22 +39,19 @@ public class MainActivity extends ActionBarActivity {
 
     public static class EventFragment extends ListFragment {
 
-        final int CREATE_EVENT_CODE = 1;
-        final int SUCCESS_CODE = 1;
-
-        private final EventSource eventSource = new DummyEventSource();
-
         private List<Event> events;
+
         private SportingEventArrayAdapter sportingEventArrayAdapter;
 
+        private final EventSource eventSource = new DummyEventSource();
 
         public void onActivityCreated(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
 
             DateTime today = DateTime.now();
-            this.events = this.eventSource.getEventsInDateRange(today, DateTime.now().plusDays(9));
+            events = this.eventSource.getEventsInDateRange(today, DateTime.now().plusDays(9));
 
-            sportingEventArrayAdapter = new SportingEventArrayAdapter(this.getActivity(), this.events);
+            sportingEventArrayAdapter = new SportingEventArrayAdapter(this.getActivity(), events);
 
             this.setListAdapter(sportingEventArrayAdapter);
         }
@@ -65,10 +64,11 @@ public class MainActivity extends ActionBarActivity {
 
         @Override
         public void onActivityResult(int requestCode, int resultCode, Intent data) {
+            System.out.println("here");
             if (requestCode == CREATE_EVENT_CODE) {
                 if (resultCode == SUCCESS_CODE) {
                     //TODO push to server
-                    events.add((Event) data.getExtras().getParcelable("created_event"));
+                    events.add(IntentProtocol.getEvent(this.getActivity()));
                     sportingEventArrayAdapter.notifyDataSetChanged();
                 } else {
                     //TODO Toast created event failed
@@ -92,11 +92,28 @@ public class MainActivity extends ActionBarActivity {
         int id = item.getItemId();
         if (id == R.id.action_settings) {
             return true;
-        } /*
+        }
         if (id == R.id.create_new_event) {
             Intent launch_new_event = new Intent(MainActivity.this, CreateEventActivity.class);
             startActivityForResult(launch_new_event, CREATE_EVENT_CODE);
-        } */
+        }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == CREATE_EVENT_CODE) {
+            System.out.println("here");
+            if (resultCode == SUCCESS_CODE) {
+                System.out.println("here");
+                //TODO push to server
+                Intent intent = this.getIntent();
+                Event event = intent.getExtras().getParcelable("created_event");
+                events.add(event);
+                sportingEventArrayAdapter.notifyDataSetChanged();
+            } else {
+                //TODO Toast created event failed
+            }
+        }
     }
 }
