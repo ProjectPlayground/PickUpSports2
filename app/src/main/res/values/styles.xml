@@ -59,25 +59,25 @@
     <style name="viewable_heading_text">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textSize">35dp</item>
+        <item name="android:textSize">25dp</item>
     </style>
 
     <style name="list_view_heading">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textSize">30dp</item>
+        <item name="android:textSize">20dp</item>
     </style>
 
     <style name="list_view_subtext">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textSize">20dp</item>
+        <item name="android:textSize">15dp</item>
     </style>
 
     <style name = "minor_text">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textSize">25dp</item>
+        <item name="android:textSize">15dp</item>
     </style>
 
     <style name = "minor_text_link" parent = "minor_text">
