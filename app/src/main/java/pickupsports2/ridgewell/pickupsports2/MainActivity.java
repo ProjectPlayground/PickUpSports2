@@ -41,13 +41,7 @@ public class MainActivity extends ActionBarActivity {
         }
     }
 
-    public static class EventFragment extends ListFragment {
-        final int CREATE_EVENT_CODE = 1;
-        final int SUCCESS_CODE = 1;
-
-        private List<Event> events;
-
-        private SportingEventArrayAdapter sportingEventArrayAdapter;
+    public class EventFragment extends ListFragment {
 
         private final EventSource eventSource = new DummyEventSource();
 
@@ -109,12 +103,9 @@ public class MainActivity extends ActionBarActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CREATE_EVENT_CODE) {
-            System.out.println("here");
             if (resultCode == SUCCESS_CODE) {
-                System.out.println("here");
                 //TODO push to server
-                Intent intent = this.getIntent();
-                Event event = intent.getExtras().getParcelable("created_event");
+                Event event = data.getExtras().getParcelable("created_event");
                 events.add(event);
                 sportingEventArrayAdapter.notifyDataSetChanged();
             } else {
