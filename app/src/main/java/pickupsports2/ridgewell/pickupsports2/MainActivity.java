@@ -3,6 +3,7 @@ package pickupsports2.ridgewell.pickupsports2;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,6 +16,7 @@ import java.util.List;
 import pickupsports2.ridgewell.pickupsports2.data.DummyEventSource;
 import pickupsports2.ridgewell.pickupsports2.data.EventSource;
 import pickupsports2.ridgewell.pickupsports2.intents.IntentProtocol;
+import retrofit.RestAdapter;
 import ridgewell.pickupsports2.common.Event;
 
 public class MainActivity extends ListActivity {
@@ -39,6 +41,20 @@ public class MainActivity extends ListActivity {
         sportingEventArrayAdapter = new SportingEventArrayAdapter(this, this.events);
 
         this.setListAdapter(sportingEventArrayAdapter);
+        /*
+        Runnable r = new Runnable() {
+            @Override
+            public void run() {
+                RequestLibrary svc = new RestAdapter.Builder()
+                        .setEndpoint("http://192.168.56.1:8080")
+                        .build().create(MyService.class);
+
+
+            }
+        };
+        Thread t = new Thread(r);
+        t.start();
+        */
     }
 
     @Override
