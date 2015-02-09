@@ -18,6 +18,10 @@ Build Cycle 1:
  * create an android interface for the events to operate out of
  * establish a set of common files for structural elements of the application
 
+Build Cycle 2:
+ * establish Node.js backend for application
+ * create retrofit adaptation of front end information and communicate jsons over http
+
 ## User Stories
 1. I want to be able to create and delete my own events.
 2. I've recently moved, I want to be able to find other people to exercise with.
