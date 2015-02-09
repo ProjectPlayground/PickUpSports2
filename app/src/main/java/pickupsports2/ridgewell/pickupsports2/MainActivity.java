@@ -1,31 +1,19 @@
 package pickupsports2.ridgewell.pickupsports2;
 
 import android.app.FragmentManager;
-import android.app.ListFragment;
 import android.support.v7.app.ActionBarActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ListView;
 
-import org.joda.time.DateTime;
-
-import java.util.List;
-
-import pickupsports2.ridgewell.pickupsports2.data.DummyEventSource;
-import pickupsports2.ridgewell.pickupsports2.data.EventSource;
-import pickupsports2.ridgewell.pickupsports2.intents.IntentProtocol;
 import ridgewell.pickupsports2.common.Event;
 
 public class MainActivity extends ActionBarActivity {
     final int CREATE_EVENT_CODE = 1;
     final int SUCCESS_CODE = 1;
 
-    private List<Event> events;
-
-    private SportingEventArrayAdapter sportingEventArrayAdapter;
+    EventFragment eventList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,44 +24,8 @@ public class MainActivity extends ActionBarActivity {
         FragmentManager fm = getFragmentManager();
 
         if (fm.findFragmentById(android.R.id.content) == null) {
-            EventFragment list = new EventFragment();
-            fm.beginTransaction().add(android.R.id.content, list).commit();
-        }
-    }
-
-    public class EventFragment extends ListFragment {
-
-        private final EventSource eventSource = new DummyEventSource();
-
-        public void onActivityCreated(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-
-            DateTime today = DateTime.now();
-            events = this.eventSource.getEventsInDateRange(today, DateTime.now().plusDays(9));
-
-            sportingEventArrayAdapter = new SportingEventArrayAdapter(this.getActivity(), events);
-
-            this.setListAdapter(sportingEventArrayAdapter);
-        }
-
-        @Override
-        public void onListItemClick(ListView l, View v, int position, long id) {
-            Event toOpen = events.get(position);
-            IntentProtocol.viewEvent(this.getActivity(), toOpen);
-        }
-
-        @Override
-        public void onActivityResult(int requestCode, int resultCode, Intent data) {
-            System.out.println("here");
-            if (requestCode == CREATE_EVENT_CODE) {
-                if (resultCode == SUCCESS_CODE) {
-                    //TODO push to server
-                    events.add(IntentProtocol.getEvent(this.getActivity()));
-                    sportingEventArrayAdapter.notifyDataSetChanged();
-                } else {
-                    //TODO Toast created event failed
-                }
-            }
+            eventList = new EventFragment();
+            fm.beginTransaction().add(android.R.id.content, eventList).commit();
         }
     }
 
@@ -106,8 +58,8 @@ public class MainActivity extends ActionBarActivity {
             if (resultCode == SUCCESS_CODE) {
                 //TODO push to server
                 Event event = data.getExtras().getParcelable("created_event");
-                events.add(event);
-                sportingEventArrayAdapter.notifyDataSetChanged();
+                eventList.addEvent(event);
+                eventList.getSportingEventArrayAdapter().notifyDataSetChanged();
             } else {
                 //TODO Toast created event failed
             }
