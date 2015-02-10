@@ -55,21 +55,23 @@ public class MainActivity extends ListActivity {
                         .setEndpoint("http://192.168.56.1:8080")
                         .build().create(RequestLibrary.class);
                 Log.e("Current Time",DateTime.now().toString());
-                try {
+                /*try {
                     Fooey user = svc.getUser("Cameron Ridgewell");
                     Log.e("Username Tag:", "############" + user.getUsername() + "############");
                 } catch (NullPointerException e) {
                     Log.e("null object detection: ", "null object was returned by service");
-                }
+                }*/
 
-                /*
+
                 Location location = new Location("Nashville, TN");
-                User user = new User("Cameron Ridgewell");
+                Fooey user = new Fooey();
+                user.setUsername("Cameron Ridgewell");
                 user.setNickname("Cam");
-                user.setLocation(location);
+                user.setJoinTime("abcd");
+                //user.setLocation(location);
 
                 svc.addUser(user);
-                */
+
             }
         };
         Thread t = new Thread(r);
