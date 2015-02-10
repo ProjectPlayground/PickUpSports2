@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import org.joda.time.DateTime;
+
 import ridgewell.pickupsports2.common.Event;
 
 public class MainActivity extends ActionBarActivity {
@@ -27,6 +29,7 @@ public class MainActivity extends ActionBarActivity {
             eventList = new EventFragment();
             fm.beginTransaction().add(android.R.id.content, eventList).commit();
         }
+        System.out.println(DateTime.now());
     }
 
     @Override
