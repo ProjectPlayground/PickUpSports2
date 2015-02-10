@@ -22,8 +22,8 @@ http.createServer(function(request, response) {
 					cs.getUser(username, response);
 					break;
 				case "add":
-					console.log("here");
-					var user = url.parse(request.url, true).query.user;
+					console.log(cmd + " " + type);
+					var user = url.parse(request.url, true).body;
 					console.log(cmd + " " + type + " : " + JSON.parse(user));
 					//cs.addUser(user);
 					break;

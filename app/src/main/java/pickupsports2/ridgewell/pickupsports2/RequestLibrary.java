@@ -1,5 +1,6 @@
 package pickupsports2.ridgewell.pickupsports2;
 
+import retrofit.Callback;
 import retrofit.http.Body;
 import retrofit.http.GET;
 import retrofit.http.POST;
@@ -16,5 +17,5 @@ public interface RequestLibrary {
     public Fooey getUser(@Query("username") String username);
 
     @POST("/?cmd=add&type=user")
-    public void addUser(@Body Fooey user);
+    public void addUser(@Body Fooey user, Callback<Fooey> success);
 }

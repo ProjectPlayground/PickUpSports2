@@ -20,7 +20,10 @@ import java.util.List;
 import pickupsports2.ridgewell.pickupsports2.data.DummyEventSource;
 import pickupsports2.ridgewell.pickupsports2.data.EventSource;
 import pickupsports2.ridgewell.pickupsports2.intents.IntentProtocol;
+import retrofit.Callback;
 import retrofit.RestAdapter;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 import ridgewell.pickupsports2.common.Event;
 import ridgewell.pickupsports2.common.Location;
 import ridgewell.pickupsports2.common.User;
@@ -70,7 +73,17 @@ public class MainActivity extends ListActivity {
                 user.setJoinTime("abcd");
                 //user.setLocation(location);
 
-                svc.addUser(user);
+                svc.addUser(user, new Callback<Fooey>() {
+                    @Override
+                    public void success(Fooey fooey, Response response) {
+                        Log.e("Retrofit Success", "Fooey response");
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+                        Log.e("Retrofit Error", "addUser Failed");
+                    }
+                });
 
             }
         };
