@@ -23,9 +23,11 @@ http.createServer(function(request, response) {
 					break;
 				case "add":
 					console.log(cmd + " " + type);
-					var user = url.parse(request.url, true).body;
-					console.log(cmd + " " + type + " : " + JSON.parse(user));
-					//cs.addUser(user);
+					var body;
+					request.on('data', function(chunk) {
+						var user = chunk.toString();
+						cs.addUser(JSON.parse(user));
+					});
 					break;
 				default: 
 					console.log("Invalid user command");
