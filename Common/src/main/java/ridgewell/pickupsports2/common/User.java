@@ -68,8 +68,8 @@ public class User implements Parcelable{
     /*
      * sets the user's location
      */
-    public void setLocation(String location) {
-        this.location = new Location(location);
+    public void setLocation(Location location) {
+        this.location = location;
     }
 
     public List<Sport> getFavoriteSports() {

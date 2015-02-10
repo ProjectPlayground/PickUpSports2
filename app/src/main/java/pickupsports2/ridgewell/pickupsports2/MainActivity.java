@@ -9,6 +9,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 
+import com.google.gson.FieldNamingPolicy;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import org.joda.time.DateTime;
 
 import java.util.List;
@@ -18,6 +22,8 @@ import pickupsports2.ridgewell.pickupsports2.data.EventSource;
 import pickupsports2.ridgewell.pickupsports2.intents.IntentProtocol;
 import retrofit.RestAdapter;
 import ridgewell.pickupsports2.common.Event;
+import ridgewell.pickupsports2.common.Location;
+import ridgewell.pickupsports2.common.User;
 
 public class MainActivity extends ListActivity {
     final int CREATE_EVENT_CODE = 1;
@@ -41,20 +47,27 @@ public class MainActivity extends ListActivity {
         sportingEventArrayAdapter = new SportingEventArrayAdapter(this, this.events);
 
         this.setListAdapter(sportingEventArrayAdapter);
-        /*
+
         Runnable r = new Runnable() {
             @Override
             public void run() {
                 RequestLibrary svc = new RestAdapter.Builder()
                         .setEndpoint("http://192.168.56.1:8080")
-                        .build().create(MyService.class);
+                        .build().create(RequestLibrary.class);
+                /*User user = svc.getUser("Cameron Ridgewell");
+                System.out.println("############" + user.getNickname());*/
+                Location location = new Location("Nashville, TN");
+                User user = new User("Cameron Ridgewell");
+                user.setNickname("Cam");
+                user.setLocation(location);
 
-
+                svc.addUser(user);
             }
         };
         Thread t = new Thread(r);
         t.start();
-        */
+
+
     }
 
     @Override
