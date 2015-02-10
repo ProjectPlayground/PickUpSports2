@@ -54,14 +54,22 @@ public class MainActivity extends ListActivity {
                 RequestLibrary svc = new RestAdapter.Builder()
                         .setEndpoint("http://192.168.56.1:8080")
                         .build().create(RequestLibrary.class);
-                /*User user = svc.getUser("Cameron Ridgewell");
-                System.out.println("############" + user.getNickname());*/
+                Log.e("Current Time",DateTime.now().toString());
+                try {
+                    Fooey user = svc.getUser("Cameron Ridgewell");
+                    Log.e("Username Tag:", "############" + user.getUsername() + "############");
+                } catch (NullPointerException e) {
+                    Log.e("null object detection: ", "null object was returned by service");
+                }
+
+                /*
                 Location location = new Location("Nashville, TN");
                 User user = new User("Cameron Ridgewell");
                 user.setNickname("Cam");
                 user.setLocation(location);
 
                 svc.addUser(user);
+                */
             }
         };
         Thread t = new Thread(r);

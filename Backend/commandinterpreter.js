@@ -11,6 +11,7 @@ exports.getUser = function(username, response) {
 		if (err) {
 			console.log("error while reading " + user_path);
 			response.write(null);
+			response.end();
 			return;
 		} else {
 			var user_list = JSON.parse(users.toString()).users;
@@ -19,6 +20,7 @@ exports.getUser = function(username, response) {
 					console.log("found it");
 					console.log(JSON.stringify(user_list[i]));
 					response.write(JSON.stringify(user_list[i]));
+					response.end();
 					return;
 				}
 			}
@@ -26,5 +28,8 @@ exports.getUser = function(username, response) {
 			response.write(null);
 			return;
 		}
+		console.log("Response Ending");
+		response.end();
+		return;
 	});
 }

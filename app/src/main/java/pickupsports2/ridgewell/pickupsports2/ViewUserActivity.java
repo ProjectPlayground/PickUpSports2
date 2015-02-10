@@ -30,7 +30,7 @@ public class ViewUserActivity extends Activity {
 
         TextView joindate = (TextView) findViewById(R.id.user_join_date);
         joindate.setText(user.getJoinTime().toString());
-
+/*
         TextView badges = (TextView) findViewById(R.id.user_badges);
         String badges_list = "";
         for (Badge badge : user.getBadges()) {
@@ -47,6 +47,6 @@ public class ViewUserActivity extends Activity {
 
         TextView user_location = (TextView) findViewById(R.id.user_location);
         user_location.setText(user.getLocation().getLocation());
-
+*/
     }
 }

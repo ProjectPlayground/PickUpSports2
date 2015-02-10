@@ -13,6 +13,7 @@ import java.util.List;
  * Created by cameronridgewell on 1/16/15.
  */
 public class Event implements Parcelable{
+    private int event_id;
     private String name;
     private Sport sport;
     private DateTime time;

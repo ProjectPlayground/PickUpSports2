@@ -4,8 +4,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+import org.joda.time.DateTime;
 
 /**
  * Created by cameronridgewell on 1/16/15.
@@ -15,16 +15,18 @@ public class User implements Parcelable{
     private String username;
     private String nickname;
     private Location location;
-    private Date joinTime;
+    private String joiningTime;
 
-    private List<Sport> favoriteSports = new ArrayList<Sport>();
-    private List<Event> attendedEvents = new ArrayList<Event>();
-    private List<Event> createdEvents = new ArrayList<Event>();
-    private List<Badge> badges = new ArrayList<Badge>();
+    //private List<Sport> favoriteSports = new ArrayList<Sport>();
+    //private List<Event> attendedEvents = new ArrayList<Event>();
+    //private List<Event> createdEvents = new ArrayList<Event>();
+    //private List<Badge> badges = new ArrayList<Badge>();
+
+    public User() {}
 
     public User(String username) {
         this.username = username;
-        this.joinTime = new Date();
+        this.joiningTime = DateTime.now().toString();
         //Fetch from phone or have user input
         this.location = new Location("fetch current position");
         this.nickname = "";
@@ -37,9 +39,13 @@ public class User implements Parcelable{
         return username;
     }
 
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     /*
-     * returns the String nickname
-     */
+         * returns the String nickname
+         */
     public String getNickname() {
         return nickname;
     }
@@ -54,8 +60,16 @@ public class User implements Parcelable{
     /*
      * returns the user's join Date
      */
-    public Date getJoinTime() {
-        return joinTime;
+    public String getJoiningTime() {
+        return joiningTime;
+    }
+
+    public void setJoiningTime(String joinTime) {
+        this.joiningTime = joiningTime;
+    }
+
+    public DateTime getJoinTime() {
+        return new DateTime(joiningTime);
     }
 
     /*
@@ -71,14 +85,15 @@ public class User implements Parcelable{
     public void setLocation(Location location) {
         this.location = location;
     }
-
+/*
     public List<Sport> getFavoriteSports() {
         return favoriteSports;
     }
-
+*/
     /*
          * if the sport is not already in favorites it is added, else nothing
          */
+    /*
     public void addToFavorites(Sport sport) {
         int i = 0;
         for (; i < this.favoriteSports.size()
@@ -87,18 +102,19 @@ public class User implements Parcelable{
             this.favoriteSports.add(sport);
         }
     }
-
+*/
     /*
      * if the sport is in favorites, it is removed and true is returned, else false
      */
+    /*
     public boolean removeFromFavorites(Sport sport) {
         return favoriteSports.remove(sport);
     }
-
-    public List<Badge> getBadges() {
+    */
+    /*public List<Badge> getBadges() {
         return badges;
     }
-
+    */
     /*
         * returns true if a new badge has been earned
         */
@@ -115,11 +131,11 @@ public class User implements Parcelable{
         out.writeString(username);
         out.writeString(nickname);
         out.writeParcelable(location, 0);
-        out.writeLong(joinTime.getTime());
-        out.writeTypedList(favoriteSports);
-        out.writeTypedList(attendedEvents);
-        out.writeTypedList(createdEvents);
-        out.writeTypedList(badges);
+        out.writeString(joiningTime);
+        //out.writeTypedList(favoriteSports);
+        //out.writeTypedList(attendedEvents);
+        //out.writeTypedList(createdEvents);
+        //out.writeTypedList(badges);
     }
 
     public static final Parcelable.Creator<User> CREATOR
@@ -137,10 +153,10 @@ public class User implements Parcelable{
         username = in.readString();
         nickname = in.readString();
         location = in.readParcelable(Location.class.getClassLoader());
-        joinTime = new Date(in.readLong());
-        favoriteSports = in.createTypedArrayList(Sport.CREATOR);
-        attendedEvents = in.createTypedArrayList(Event.CREATOR);
-        createdEvents = in.createTypedArrayList(Event.CREATOR);
-        badges = in.createTypedArrayList(Badge.CREATOR);
+        joiningTime = in.readString();
+        //favoriteSports = in.createTypedArrayList(Sport.CREATOR);
+        //attendedEvents = in.createTypedArrayList(Event.CREATOR);
+        //createdEvents = in.createTypedArrayList(Event.CREATOR);
+        //badges = in.createTypedArrayList(Badge.CREATOR);
     }
 }

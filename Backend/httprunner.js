@@ -7,6 +7,9 @@ var port = 8080;
 var path = require('path');
 var mypath = "./storage.txt";
 
+var event_path = "./events.json";
+var user_path = "./users.json";
+
 http.createServer(function(request, response) {
 	var cmd = url.parse(request.url, true).query.cmd;
 	var type = url.parse(request.url, true).query.type;
@@ -16,7 +19,6 @@ http.createServer(function(request, response) {
 			switch (cmd) {
 				case "get":
 					var username = url.parse(request.url, true).query.username;
-					console.log(cmd + " " + type + " : " + username);
 					cs.getUser(username, response);
 					break;
 				case "add":
@@ -35,18 +37,10 @@ http.createServer(function(request, response) {
 	}
 
 /*
-	request.on('data', function(chunk) {
-		if (!cs.interpret(chunk, mypath)) {
-			console.log("Operation Failed.")
-		}
-	});
-
     var fooey = {sport:1, name:"foo", type:"something"};
 
-    response.write(JSON.stringify());
+    response.write(JSON.stringify(fooey));
 */
-
-	response.end();
 }).listen(port);
 
 console.log("Server Running on " + port);
