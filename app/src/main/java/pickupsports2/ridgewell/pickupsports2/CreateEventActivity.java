@@ -1,7 +1,9 @@
 package pickupsports2.ridgewell.pickupsports2;
 
-import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
+import android.support.v7.app.ActionBarActivity;
+import android.app.Activity;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
@@ -29,7 +31,7 @@ import ridgewell.pickupsports2.common.User;
 /**
  * Created by cameronridgewell on 1/21/15.
  */
-public class CreateEventActivity extends Activity implements OnClickListener {
+public class CreateEventActivity extends ActionBarActivity implements OnClickListener {
     final int SUCCESS_CODE = 1;
     private Button post;
     private EditText event_name;
@@ -86,6 +88,8 @@ public class CreateEventActivity extends Activity implements OnClickListener {
 
         displayTime = (TextView) findViewById(R.id.selected_time);
 
+        EditText maxAttendance = (EditText) findViewById(R.id.eventAttendanceInput);
+
         notes = (EditText) findViewById(R.id.eventNotesInput);
 
         post = (Button) findViewById(R.id.create_event_post_button);
@@ -134,7 +138,6 @@ public class CreateEventActivity extends Activity implements OnClickListener {
     public void addCreateEventButtonListener() {
         post.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                //Sport, Location, and User passing not implemented yet. Creating new objects for now
                 //TODO no notes
                 //TODO grab creating user
                 //TODO Check for empty fields + Toast
@@ -158,6 +161,7 @@ public class CreateEventActivity extends Activity implements OnClickListener {
                     Toast toast = Toast.makeText(getApplicationContext(),
                             "An error occurred while creating your event", Toast.LENGTH_SHORT);
                     toast.show();
+
                 }
             }
         });

@@ -1,8 +1,7 @@
 package pickupsports2.ridgewell.pickupsports2;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.TextView;
 
@@ -12,7 +11,7 @@ import ridgewell.pickupsports2.common.*;
 /**
  * Created by cameronridgewell on 1/22/15.
  */
-public class ViewEventActivity extends Activity {
+public class ViewEventActivity extends ActionBarActivity {
 
     private Event event;
 
