@@ -1,8 +1,11 @@
 package pickupsports2.ridgewell.pickupsports2;
 
-import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.widget.TextView;
+
+import org.joda.time.DateTime;
+import org.joda.time.Days;
 
 import pickupsports2.ridgewell.pickupsports2.intents.IntentProtocol;
 import ridgewell.pickupsports2.common.Badge;
@@ -12,7 +15,7 @@ import ridgewell.pickupsports2.common.User;
 /**
  * Created by cameronridgewell on 1/26/15.
  */
-public class ViewUserActivity extends Activity {
+public class ViewUserActivity extends ActionBarActivity {
     User user;
 
     public ViewUserActivity() {}
@@ -32,16 +35,16 @@ public class ViewUserActivity extends Activity {
         joindate.setText(user.getJoinTime().toString());
 /*
         TextView badges = (TextView) findViewById(R.id.user_badges);
-        String badges_list = "";
+        String badges_list = "|";
         for (Badge badge : user.getBadges()) {
-            badges_list = badges_list + badge + " ";
+            badges_list = badges_list + " " + badge.getName() + " |";
         }
         badges.setText(badges_list);
 
         TextView user_favorite_sports = (TextView) findViewById(R.id.user_favorite_sports);
-        String favorite_sports_list = "";
+        String favorite_sports_list = "| ";
         for (Sport sport: user.getFavoriteSports()) {
-            favorite_sports_list = favorite_sports_list + sport + " ";
+            favorite_sports_list = favorite_sports_list + " " + sport.getSportName() + " |";
         }
         user_favorite_sports.setText(favorite_sports_list);
 

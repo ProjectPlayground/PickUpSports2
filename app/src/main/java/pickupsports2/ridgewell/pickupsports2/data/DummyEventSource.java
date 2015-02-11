@@ -5,6 +5,7 @@ import org.joda.time.DateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import ridgewell.pickupsports2.common.Badge;
 import ridgewell.pickupsports2.common.Event;
 import ridgewell.pickupsports2.common.Location;
 import ridgewell.pickupsports2.common.Sport;

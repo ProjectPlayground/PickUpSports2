@@ -1,7 +1,7 @@
 package pickupsports2.ridgewell.pickupsports2;
 
-import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.support.v7.app.ActionBarActivity;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
@@ -18,8 +18,6 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import org.joda.time.MutableDateTime;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
 
 import ridgewell.pickupsports2.common.Event;
 import ridgewell.pickupsports2.common.Location;
@@ -29,7 +27,7 @@ import ridgewell.pickupsports2.common.User;
 /**
  * Created by cameronridgewell on 1/21/15.
  */
-public class CreateEventActivity extends Activity implements OnClickListener {
+public class CreateEventActivity extends ActionBarActivity implements OnClickListener {
     final int SUCCESS_CODE = 1;
     private Button post;
     private EditText event_name;
@@ -88,6 +86,8 @@ public class CreateEventActivity extends Activity implements OnClickListener {
 
         displayTime = (TextView) findViewById(R.id.selected_time);
 
+        EditText maxAttendance = (EditText) findViewById(R.id.eventAttendanceInput);
+
         notes = (EditText) findViewById(R.id.eventNotesInput);
 
         post = (Button) findViewById(R.id.create_event_post_button);
@@ -136,7 +136,6 @@ public class CreateEventActivity extends Activity implements OnClickListener {
     public void addCreateEventButtonListener() {
         post.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-
                 //TODO grab creating user
                 //TODO Check for empty fields + Toast
                 try {
@@ -157,6 +156,7 @@ public class CreateEventActivity extends Activity implements OnClickListener {
                     Toast toast = Toast.makeText(getApplicationContext(),
                             "An error occurred while creating your event", Toast.LENGTH_SHORT);
                     toast.show();
+
                 }
             }
         });

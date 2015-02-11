@@ -3,6 +3,8 @@ package ridgewell.pickupsports2.common;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import org.joda.time.DateTime;
+
 import java.util.ArrayList;
 import java.util.List;
 import org.joda.time.DateTime;
@@ -60,6 +62,7 @@ public class User implements Parcelable{
     /*
      * returns the user's join Date
      */
+
     public String getJoiningTime() {
         return joiningTime;
     }
@@ -115,9 +118,10 @@ public class User implements Parcelable{
         return badges;
     }
     */
+
     /*
-        * returns true if a new badge has been earned
-        */
+            * returns true if a new badge has been earned
+            */
     public boolean refreshBadges() {
         //check full badge list for qualifies and add qualifiers to badges
         return false;

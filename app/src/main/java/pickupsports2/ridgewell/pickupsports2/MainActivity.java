@@ -1,72 +1,35 @@
 package pickupsports2.ridgewell.pickupsports2;
 
-import android.app.ListActivity;
+import android.app.FragmentManager;
+import android.support.v7.app.ActionBarActivity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ListView;
+import android.util.Log;
 import android.widget.Toast;
-
-import com.google.gson.FieldNamingPolicy;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
-import org.joda.time.DateTime;
-
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-import pickupsports2.ridgewell.pickupsports2.data.DummyEventSource;
-import pickupsports2.ridgewell.pickupsports2.data.EventSource;
-import pickupsports2.ridgewell.pickupsports2.intents.IntentProtocol;
-import retrofit.Callback;
-import retrofit.RestAdapter;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
-import ridgewell.pickupsports2.common.Event;
-import ridgewell.pickupsports2.common.Location;
-import ridgewell.pickupsports2.common.User;
-
-public class MainActivity extends ListActivity {
+public class MainActivity extends ActionBarActivity {
     final int CREATE_EVENT_CODE = 1;
     final int SUCCESS_CODE = 1;
 
-    private List<Event> events = new ArrayList<Event>();
-    private SportingEventArrayAdapter sportingEventArrayAdapter;
+    EventFragment eventList;
 
     private ServerRequest svreq = new ServerRequest();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitle("Games");
         setContentView(R.layout.activity_main_view_screen);
 
-        // Fetch all events that are occurring today
-        DateTime today = DateTime.now();
-        DateTime tomorrow = DateTime.now().plusDays(1);
-        //this.events = this.eventSource.getEventsInDateRange(today, tomorrow);
+        FragmentManager fm = getFragmentManager();
 
-        try {
-            events = svreq.getAllEvents();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
+        if (fm.findFragmentById(android.R.id.content) == null) {
+            eventList = new EventFragment();
+            fm.beginTransaction().add(android.R.id.content, eventList).commit();
         }
-
-        sportingEventArrayAdapter = new SportingEventArrayAdapter(this, this.events);
-
-        this.setListAdapter(sportingEventArrayAdapter);
-    }
-
-        @Override
-    protected void onListItemClick(ListView l, View v, int position, long id) {
-        Event toOpen = events.get(position);
-        IntentProtocol.viewEvent(this, toOpen);
     }
 
     @Override
@@ -93,14 +56,14 @@ public class MainActivity extends ListActivity {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CREATE_EVENT_CODE) {
             if (resultCode == SUCCESS_CODE) {
                 try {
                     Log.v("Fetching All Events", "All Events Fetched");
-                    this.events = svreq.getAllEvents();
+                    this.eventList.setEvents(svreq.getAllEvents());
                     //TODO figure out why data set is not updating when a new event is created
-                    this.sportingEventArrayAdapter.notifyDataSetChanged();
+                    this.eventList.getSportingEventArrayAdapter().notifyDataSetChanged();
                 } catch (InterruptedException e1) {
                     Log.e("Server interrupt", e1.getMessage());
                     e1.printStackTrace();
