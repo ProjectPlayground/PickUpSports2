@@ -1,3 +1,10 @@
-{"users":[ 
-	{"username": "Cameron Ridgewell", "nickname":"Cam",	"joinTime":"2015-02-10T00:41:29.621Z"}
+{"users":[
+    {
+        "joiningTime": "2015-02-10T17:31:28.799-06:00",
+        "location": {
+            "location": "Nashville, TN"
+        },
+        "nickname": "Cam",
+        "username": "Cameron Ridgewell"
+    }
 ]}

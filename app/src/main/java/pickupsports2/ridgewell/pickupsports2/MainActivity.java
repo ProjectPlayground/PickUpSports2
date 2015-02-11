@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
@@ -15,7 +16,9 @@ import com.google.gson.GsonBuilder;
 
 import org.joda.time.DateTime;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import pickupsports2.ridgewell.pickupsports2.data.DummyEventSource;
 import pickupsports2.ridgewell.pickupsports2.data.EventSource;
@@ -32,10 +35,10 @@ public class MainActivity extends ListActivity {
     final int CREATE_EVENT_CODE = 1;
     final int SUCCESS_CODE = 1;
 
-    private final EventSource eventSource = new DummyEventSource();
-
-    private List<Event> events;
+    private List<Event> events = new ArrayList<Event>();
     private SportingEventArrayAdapter sportingEventArrayAdapter;
+
+    private ServerRequest svreq = new ServerRequest();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,55 +48,22 @@ public class MainActivity extends ListActivity {
         // Fetch all events that are occurring today
         DateTime today = DateTime.now();
         DateTime tomorrow = DateTime.now().plusDays(1);
-        this.events = this.eventSource.getEventsInDateRange(today, tomorrow);
+        //this.events = this.eventSource.getEventsInDateRange(today, tomorrow);
+
+        try {
+            events = svreq.getAllEvents();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
 
         sportingEventArrayAdapter = new SportingEventArrayAdapter(this, this.events);
 
         this.setListAdapter(sportingEventArrayAdapter);
-
-        Runnable r = new Runnable() {
-            @Override
-            public void run() {
-                RequestLibrary svc = new RestAdapter.Builder()
-                        .setEndpoint("http://192.168.56.1:8080")
-                        .build().create(RequestLibrary.class);
-                Log.e("Current Time",DateTime.now().toString());
-                /*try {
-                    Fooey user = svc.getUser("Cameron Ridgewell");
-                    Log.e("Username Tag:", "############" + user.getUsername() + "############");
-                } catch (NullPointerException e) {
-                    Log.e("null object detection: ", "null object was returned by service");
-                }*/
-
-
-                Location location = new Location("Nashville, TN");
-                Fooey user = new Fooey();
-                user.setUsername("Cameron Ridgewell");
-                user.setNickname("Cam");
-                user.setJoinTime("abcd");
-                //user.setLocation(location);
-
-                svc.addUser(user, new Callback<Fooey>() {
-                    @Override
-                    public void success(Fooey fooey, Response response) {
-                        Log.e("Retrofit Success", "Fooey response");
-                    }
-
-                    @Override
-                    public void failure(RetrofitError error) {
-                        Log.e("Retrofit Error", "addUser Failed");
-                    }
-                });
-
-            }
-        };
-        Thread t = new Thread(r);
-        t.start();
-
-
     }
 
-    @Override
+        @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
         Event toOpen = events.get(position);
         IntentProtocol.viewEvent(this, toOpen);
@@ -126,11 +96,22 @@ public class MainActivity extends ListActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CREATE_EVENT_CODE) {
             if (resultCode == SUCCESS_CODE) {
-                //TODO push to server
-                events.add((Event) data.getExtras().getParcelable("created_event"));
-                sportingEventArrayAdapter.notifyDataSetChanged();
+                try {
+                    Log.v("Fetching All Events", "All Events Fetched");
+                    this.events = svreq.getAllEvents();
+                    //TODO figure out why data set is not updating when a new event is created
+                    this.sportingEventArrayAdapter.notifyDataSetChanged();
+                } catch (InterruptedException e1) {
+                    Log.e("Server interrupt", e1.getMessage());
+                    e1.printStackTrace();
+                } catch (ExecutionException e2) {
+                    Log.e("Execution Exception", e2.getMessage());
+                    e2.printStackTrace();
+                }
             } else {
-                //TODO Toast created event failed
+                Toast toast = Toast.makeText(getApplicationContext(),
+                        "An error occurred while creating your event", Toast.LENGTH_SHORT);
+                toast.show();
             }
         }
     }

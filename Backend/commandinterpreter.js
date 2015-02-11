@@ -33,3 +33,89 @@ exports.getUser = function(username, response) {
 		return;
 	});
 }
+
+exports.addUser = function(user) {
+	fs.readFile(user_path, function(err, users) {
+		if (err) {
+			console.log("error while reading " + user_path);
+		} else {
+			console.log(JSON.stringify(user));
+			var user_list = JSON.parse(users.toString()).users;
+			user_list.push(user);
+			fs.writeFile(user_path, 
+				"{\"users\":" + JSON.stringify(user_list, null, 4) +"}", 
+				function(err) {
+					if (err) {
+						console.log("Error while writing file");
+					 }
+			});
+		}
+		return;
+	});
+}
+
+//returns specified user
+exports.getEvent = function(name, response) {
+	fs.readFile(event_path, function(err, events) {
+		if (err) {
+			console.log("error while reading " + event_path);
+			response.write(null);
+			response.end();
+			return;
+		} else {
+			var event_list = JSON.parse(events.toString()).events;
+			for (var i = 0; i < event_list.length; i++) {
+				if (event_list[i].name == name) {
+					console.log("found it");
+					console.log(JSON.stringify(event_list[i]));
+					response.write(JSON.stringify(event_list[i]));
+					response.end();
+					return;
+				}
+			}
+			console.log("couldn't find event " + name);
+			response.write(null);
+			return;
+		}
+		response.end();
+		return;
+	});
+}
+
+exports.addEvent = function(event) {
+	fs.readFile(event_path, function(err, events) {
+		if (err) {
+			console.log("error while reading " + event_path);
+		} else {
+			console.log(JSON.stringify(event));
+			var event_list = JSON.parse(events.toString()).events;
+			event_list.push(event);
+			fs.writeFile(event_path, 
+				"{\"events\":" + JSON.stringify(event_list, null, 4) +"}", 
+				function(err) {
+					if (err) {
+						console.log("Error while writing file");
+					} else {
+						console.log("Event written to " + event_path);
+					}
+			});
+		}
+		return;
+	});
+}
+
+//returns specified user
+exports.getAllEvents = function(response) {
+	fs.readFile(event_path, function(err, events) {
+		if (err) {
+			console.log("error while reading " + event_path);
+			response.write(null);
+		} else {
+			var event_list = JSON.parse(events.toString()).events;
+			response.write(JSON.stringify(event_list));
+			console.log(JSON.stringify(event_list));
+		}
+		response.end();
+		return;
+	});
+}

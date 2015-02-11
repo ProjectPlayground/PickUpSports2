@@ -34,6 +34,33 @@ http.createServer(function(request, response) {
 					break;
 			}
 			break;
+		case "event":
+			switch (cmd) {
+				case "get":
+					var filter = url.parse(request.url, true).query.filter;
+					console.log(cmd + " " + type + ": filter -" + filter);
+					if (filter == "none") {
+						cs.getAllEvents(response);
+					} else if (filter == "name") {
+						var name = url.parse(request.url, true).query.name;
+						cs.getEvent(name, response);
+					} else {
+						console.log("not a valid filter type");
+					}
+					break;
+				case "add":
+					console.log(cmd + " " + type);
+					var body;
+					request.on('data', function(chunk) {
+						var event = chunk.toString();
+						cs.addEvent(JSON.parse(event));
+					});
+					break;
+				default: 
+					console.log("Invalid user command");
+					break;
+			}
+			break;
 		default:
 			console.log("Invalid type");
 			break;

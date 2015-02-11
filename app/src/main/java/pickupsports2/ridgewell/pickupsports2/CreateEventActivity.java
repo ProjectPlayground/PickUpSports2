@@ -47,6 +47,8 @@ public class CreateEventActivity extends Activity implements OnClickListener {
 
     private MutableDateTime date;
 
+    private ServerRequest svreq = new ServerRequest();
+
     static final int DATE_DIALOG_ID = 999;
     static final int TIME_DIALOG_ID = 888;
 
@@ -134,12 +136,11 @@ public class CreateEventActivity extends Activity implements OnClickListener {
     public void addCreateEventButtonListener() {
         post.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                //Sport, Location, and User passing not implemented yet. Creating new objects for now
-                //TODO no notes
+
                 //TODO grab creating user
                 //TODO Check for empty fields + Toast
                 try {
-                    Event event = new Event(event_name.getText().toString(),
+                    svreq.addEvent(new Event(event_name.getText().toString(),
                             new Sport(sportsSpinner.getSelectedItem().toString()),
                             date.toDateTime(),
                             new Location(location.getText().toString()),
@@ -147,12 +148,10 @@ public class CreateEventActivity extends Activity implements OnClickListener {
                             notes.getText().toString(),
                             privacySpinner.getSelectedItemPosition() == 1,
                             Integer.parseInt(maxAttendance.getText().toString()),
-                            new User("Creator User"));
-                    //TODO push object to the server
+                            new User("Creator User")));
 
-                    Intent intent_return = new Intent(CreateEventActivity.this, MainActivity.class);
-                    intent_return.putExtra("created_event", event);
-                    setResult(SUCCESS_CODE, intent_return);
+                    //TODO this is an empty intent, surely it doesn't need to be passed
+                    setResult(SUCCESS_CODE, new Intent());
                     finish();
                 } catch (Exception e) {
                     Toast toast = Toast.makeText(getApplicationContext(),

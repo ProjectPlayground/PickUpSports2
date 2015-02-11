@@ -16,31 +16,33 @@ public class Event implements Parcelable{
     private int event_id;
     private String name;
     private Sport sport;
-    private DateTime time;
+    private String timeString;
     private Location location;
     private int cost;
     private String notes;
     private boolean isPublic;
-    private List<User> attendees;
+    //private List<User> attendees;
     private int maxAttendance;
-    private List<User> waitlist; //queue
+    //private List<User> waitlist; //queue
     private User creator;
 
     //largest number of users allowed on the waitlist
     public final int WAITLISTMAX = 10;
 
+    public Event() {}
+
     public Event(String name, Sport sport, DateTime time, Location location, int cost,
                  String notes, boolean isPublic, int maxAttendance, User creator) {
         this.name = name;
         this.sport = sport;
-        this.time = time;
+        this.timeString = time.toString();
         this.location = location;
         this.cost = cost;
         this.notes = notes;
         this.isPublic = isPublic;
         this.maxAttendance = maxAttendance;
-        this.attendees = new ArrayList<User>();
-        this.waitlist = new ArrayList<User>();
+        //this.attendees = new ArrayList<User>();
+        //this.waitlist = new ArrayList<User>();
         this.creator = creator;
     }
 
@@ -53,17 +55,25 @@ public class Event implements Parcelable{
     }
 
     public DateTime getTime() {
-        return time;
+        return new DateTime(timeString);
+    }
+
+    public String getTimeString() {
+        return timeString;
     }
 
     public void setTime(DateTime time) {
-        this.time = time;
+        this.timeString = time.toString();
+    }
+
+    public void setTimeString(String time) {
+        this.timeString = time;
     }
 
     public String getDaysUntil() {
         DateTime now = new DateTime();
         int days = Days.daysBetween(now.withTimeAtStartOfDay(),
-                this.time.withTimeAtStartOfDay()).getDays();
+                this.getTime().withTimeAtStartOfDay()).getDays();
 
         if (days == 0) {
             return "(today)";
@@ -117,7 +127,7 @@ public class Event implements Parcelable{
     public void setPublic(boolean isPublic) {
         this.isPublic = isPublic;
     }
-
+/*
     public List<User> getAttendees() {
         return attendees;
     }
@@ -133,7 +143,7 @@ public class Event implements Parcelable{
     public void removeAttendee(User user) {
         this.attendees.remove(user);
     }
-
+*/
     public int getMaxAttendance() {
         return maxAttendance;
     }
@@ -141,7 +151,7 @@ public class Event implements Parcelable{
     public void setMaxAttendance(int maxAttendance) {
         this.maxAttendance = maxAttendance;
     }
-
+/*
     public List<User> getWaitlist() {
         return waitlist;
     }
@@ -174,7 +184,7 @@ public class Event implements Parcelable{
     public int waitlistSize() {
         return waitlist.size();
     }
-
+*/
     public User getCreator() {
         return creator;
     }
@@ -186,14 +196,14 @@ public class Event implements Parcelable{
     public void writeToParcel(Parcel out, int flags) {
         out.writeString(name);
         out.writeParcelable(sport,0);
-        out.writeLong(time.getMillis());
+        out.writeString(timeString);
         out.writeParcelable(location, 0);
         out.writeInt(cost);
         out.writeString(notes);
         out.writeInt(isPublic ? 1 : 0);
-        out.writeTypedList(attendees);
+        //out.writeTypedList(attendees);
         out.writeInt(maxAttendance);
-        out.writeTypedList(waitlist);
+        //out.writeTypedList(waitlist);
         out.writeParcelable(creator, 0);
     }
 
@@ -211,14 +221,14 @@ public class Event implements Parcelable{
     private Event(Parcel in) {
         name = in.readString();
         sport = in.readParcelable(Sport.class.getClassLoader());
-        time = new DateTime(in.readLong());
+        timeString = in.readString();
         location = in.readParcelable(Location.class.getClassLoader());
         cost = in.readInt();
         notes = in.readString();
         isPublic = in.readInt() == 1;
-        attendees = in.createTypedArrayList(User.CREATOR);
+        //attendees = in.createTypedArrayList(User.CREATOR);
         maxAttendance = in.readInt();
-        waitlist = in.createTypedArrayList(User.CREATOR);
+        //waitlist = in.createTypedArrayList(User.CREATOR);
         creator = in.readParcelable(User.class.getClassLoader());
     }
 }

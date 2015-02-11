@@ -67,11 +67,11 @@ public class ViewEventActivity extends Activity {
 
         TextView viewItemNotes = (TextView) findViewById(R.id.event_notes_text);
         viewItemNotes.setText(event.getNotes());
-
+        /*
         TextView viewRemainingAttendance = (TextView) findViewById(R.id.event_attendance_text);
         viewRemainingAttendance.setText((event.getMaxAttendance()-event.getAttendeeCount())
                 + " out of " + event.getMaxAttendance() + " spots remaining");
-
+        */
         viewItemTextCreator.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 User user = event.getCreator();
