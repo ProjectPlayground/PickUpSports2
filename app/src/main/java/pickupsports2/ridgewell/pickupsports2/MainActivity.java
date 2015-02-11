@@ -22,6 +22,11 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main_view_screen);
 
         FragmentManager fm = getFragmentManager();
+
+        if (fm.findFragmentById(android.R.id.content) == null) {
+            eventList = new EventFragment();
+            fm.beginTransaction().add(android.R.id.content, eventList).commit();
+        }
     }
 
     @Override
