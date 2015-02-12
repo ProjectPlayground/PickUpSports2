@@ -159,12 +159,15 @@
             android:layout_below="@+id/event_notes_heading"
             android:layout_alignParentRight="true"/>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/eventNotesInput">
         <Button
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:text="@string/invite_friends"
             android:id="@+id/create_event_invite_button"
-            android:layout_below="@+id/eventNotesInput"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"/>
 
@@ -173,8 +176,8 @@
             android:layout_height="50dp"
             android:text="@string/post"
             android:id="@+id/create_event_post_button"
-            android:layout_below="@+id/create_event_invite_button"
-            android:layout_alignParentRight="true" />
+            android:layout_alignParentLeft="true" />
+    </LinearLayout>
 
     </LinearLayout>
 </ScrollView>

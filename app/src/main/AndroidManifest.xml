@@ -29,7 +29,8 @@
 
         <activity
             android:name=".activites.CreateEventActivity"
-            android:label="@string/app_name">
+            android:label="@string/app_name"
+            android:parentActivityName=".activites.MainActivity">
         </activity>
 
         <activity

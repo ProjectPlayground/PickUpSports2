@@ -170,7 +170,7 @@ public class CreateEventActivity extends ActionBarActivity implements OnClickLis
             case DATE_DIALOG_ID:
                 // set date picker as current date
                 return new DatePickerDialog(this, datePickerListener,
-                        date.getYear(), date.getMonthOfYear(), date.getDayOfMonth());
+                        date.getYear(), date.getMonthOfYear() - 1, date.getDayOfMonth());
             case TIME_DIALOG_ID:
                 // set time picker as current date
                 return new TimePickerDialog(this, timePickerListener,
@@ -186,7 +186,7 @@ public class CreateEventActivity extends ActionBarActivity implements OnClickLis
         public void onDateSet(DatePicker view, int selectedYear,
                               int selectedMonth, int selectedDay) {
             date.setYear(selectedYear);
-            date.setMonthOfYear(selectedMonth);
+            date.setMonthOfYear(selectedMonth + 1);
             date.setDayOfMonth(selectedDay);
 
             // set selected date into textview
