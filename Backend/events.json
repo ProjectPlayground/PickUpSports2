@@ -70,5 +70,29 @@
         "event_id": 0,
         "isPublic": false,
         "maxAttendance": 35
+    },
+    {
+        "timeString": "2015-04-11T11:53:36.060Z",
+        "sport": {
+            "sportName": "Cricket"
+        },
+        "creator": {
+            "joiningTime": "2015-02-12T00:00:31.203Z",
+            "location": {
+                "location": "fetch current position"
+            },
+            "nickname": "",
+            "username": "Creator User"
+        },
+        "notes": "How many people are supposed to play cricket at a time?",
+        "name": "Cricket",
+        "location": {
+            "location": "LondonTown"
+        },
+        "maxAttendance": 14,
+        "isPublic": true,
+        "event_id": 0,
+        "cost": 2,
+        "WAITLISTMAX": 10
     }
 ]}

@@ -19,7 +19,8 @@ import ridgewell.pickupsports2.common.Event;
  * Created by cameronridgewell on 2/10/15.
  */
 public class ServerRequest {
-    private final String ip_address = "http://10.0.2.2:8080";
+    //192.168.56.1 for genymotion, 10.0.2.2 for android emulator
+    private final String ip_address = "http://192.168.56.1:8080";
     private final RequestLibrary svc = new RestAdapter.Builder()
             .setEndpoint(ip_address).build()
             .create(RequestLibrary.class);

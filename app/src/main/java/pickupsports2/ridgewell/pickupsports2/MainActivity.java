@@ -54,28 +54,4 @@ public class MainActivity extends ActionBarActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == CREATE_EVENT_CODE) {
-            if (resultCode == SUCCESS_CODE) {
-                try {
-                    Log.v("Fetching All Events", "All Events Fetched");
-                    this.eventList.setEvents(svreq.getAllEvents());
-                    //TODO figure out why data set is not updating when a new event is created
-                    this.eventList.getSportingEventArrayAdapter().notifyDataSetChanged();
-                } catch (InterruptedException e1) {
-                    Log.e("Server interrupt", e1.getMessage());
-                    e1.printStackTrace();
-                } catch (ExecutionException e2) {
-                    Log.e("Execution Exception", e2.getMessage());
-                    e2.printStackTrace();
-                }
-            } else {
-                Toast toast = Toast.makeText(getApplicationContext(),
-                        "An error occurred while creating your event", Toast.LENGTH_SHORT);
-                toast.show();
-            }
-        }
-    }
 }
