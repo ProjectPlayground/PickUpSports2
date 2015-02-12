@@ -1,13 +1,14 @@
 package pickupsports2.ridgewell.pickupsports2;
 
-import android.app.ListFragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -22,7 +23,7 @@ public class EventFragment extends SwipeRefreshListFragment {
     final int CREATE_EVENT_CODE = 1;
     final int SUCCESS_CODE = 1;
 
-    private List<Event> events;
+    private List<Event> events = new ArrayList<Event>();
 
     private SportingEventArrayAdapter sportingEventArrayAdapter;
     private ServerRequest svreq = new ServerRequest();
@@ -30,19 +31,20 @@ public class EventFragment extends SwipeRefreshListFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        try {
-            events = svreq.getAllEvents();
-        } catch (InterruptedException e) {
-            Log.e("Interrupted Exception", e.getMessage());
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            Log.e("Execution Exception", e.getMessage());
-            e.printStackTrace();
-        }
-
         sportingEventArrayAdapter = new SportingEventArrayAdapter(this.getActivity(), events);
-
         this.setListAdapter(sportingEventArrayAdapter);
+
+        refreshEvents();
+
+        final SwipeRefreshLayout swipeRefresh = this.getmSwipeRefreshLayout();
+        swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refreshEvents();
+                swipeRefresh.setRefreshing(false);
+            }
+        });
+        this.setmSwipeRefreshLayout(swipeRefresh);
     }
 
     @Override
@@ -55,18 +57,7 @@ public class EventFragment extends SwipeRefreshListFragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CREATE_EVENT_CODE) {
             if (resultCode == SUCCESS_CODE) {
-                try {
-                    Log.v("Fetching All Events", "All Events Fetched");
-                    this.events = svreq.getAllEvents();
-                    //TODO figure out why data set is not updating when a new event is created
-                    sportingEventArrayAdapter.notifyDataSetChanged();
-                } catch (InterruptedException e1) {
-                    Log.e("Server interrupt", e1.getMessage());
-                    e1.printStackTrace();
-                } catch (ExecutionException e2) {
-                    Log.e("Execution Exception", e2.getMessage());
-                    e2.printStackTrace();
-                }
+                refreshEvents();
             } else {
                 Toast toast = Toast.makeText(getActivity().getApplicationContext(),
                         "An error occurred while creating your event", Toast.LENGTH_SHORT);
@@ -75,19 +66,18 @@ public class EventFragment extends SwipeRefreshListFragment {
         }
     }
 
-    public void setEvents (List<Event> events) {
-        this.events = events;
-    }
-
-    public List<Event> getEvents() {
-        return events;
-    }
-
-    public void addEvent(Event e) {
-        events.add(e);
-    }
-
-    public SportingEventArrayAdapter getSportingEventArrayAdapter() {
-        return sportingEventArrayAdapter;
+    public void refreshEvents() {
+        try {
+            Log.v("Attempting", "Event Refresh");
+            events = svreq.getAllEvents();
+            sportingEventArrayAdapter.refreshItems(events);
+            Log.v("Completed","EventRefresh");
+        } catch (InterruptedException e) {
+            Log.e("Interrupted Exception", e.getMessage());
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            Log.e("Execution Exception", e.getMessage());
+            e.printStackTrace();
+        }
     }
 }

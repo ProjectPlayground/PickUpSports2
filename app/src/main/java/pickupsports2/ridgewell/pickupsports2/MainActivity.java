@@ -12,7 +12,6 @@ import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends ActionBarActivity {
     final int CREATE_EVENT_CODE = 1;
-    final int SUCCESS_CODE = 1;
 
     EventFragment eventList;
 

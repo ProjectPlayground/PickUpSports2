@@ -66,4 +66,9 @@ public class SportingEventArrayAdapter extends ArrayAdapter<Event> {
 
         return view;
     }
+
+    public void refreshItems(List<Event> events) {
+        this.list = events;
+        notifyDataSetChanged();
+    }
 }

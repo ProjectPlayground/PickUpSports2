@@ -82,6 +82,20 @@ public class SwipeRefreshListFragment extends ListFragment {
         return mSwipeRefreshLayout;
     }
 
+    /*
+     *Allows access to the SwipeRefreshLayout Object
+     */
+    public SwipeRefreshLayout getmSwipeRefreshLayout() {
+        return mSwipeRefreshLayout;
+    }
+
+    /*
+    *Allows setting the SwipeRefreshLayout Object
+    */
+    public void setmSwipeRefreshLayout(SwipeRefreshLayout mSwipeRefreshLayout) {
+        this.mSwipeRefreshLayout = mSwipeRefreshLayout;
+    }
+
     /**
      * Sub-class of {@link android.support.v4.widget.SwipeRefreshLayout} for use in this
      * {@link android.support.v4.app.ListFragment}. The reason that this is needed is because
