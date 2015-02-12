@@ -33,7 +33,7 @@ public class ViewUserActivity extends ActionBarActivity {
         username.setText(user.getUsername());
 
         TextView joindate = (TextView) findViewById(R.id.user_join_date);
-        joindate.setText(user.getJoinTime().toString());
+        joindate.setText(user.getJoinTime().toString("MMMM d, yyyy"));
 /*
         TextView badges = (TextView) findViewById(R.id.user_badges);
         String badges_list = "|";
