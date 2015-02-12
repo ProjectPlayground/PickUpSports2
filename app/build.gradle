@@ -9,6 +9,10 @@ android {
         versionCode 1
         versionName "1.0"
     }
+    repositories {
+        mavenCentral()
+        mavenLocal()
+    }
     buildTypes {
         release {
             minifyEnabled false
@@ -23,4 +27,5 @@ dependencies {
     compile 'joda-time:joda-time:2.7'
     compile 'com.squareup.retrofit:retrofit:1.9.0'
     compile "com.android.support:appcompat-v7:21.0.+"
+    compile 'com.github.markushi:circlebutton:1.1'
 }
