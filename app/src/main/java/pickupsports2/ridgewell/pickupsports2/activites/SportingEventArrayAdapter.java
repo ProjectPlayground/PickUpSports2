@@ -1,4 +1,4 @@
-package pickupsports2.ridgewell.pickupsports2;
+package pickupsports2.ridgewell.pickupsports2.activites;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
+
+import pickupsports2.ridgewell.pickupsports2.R;
 import ridgewell.pickupsports2.common.Event;
 
 /**

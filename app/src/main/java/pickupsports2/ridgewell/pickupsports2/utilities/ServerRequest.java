@@ -1,4 +1,4 @@
-package pickupsports2.ridgewell.pickupsports2;
+package pickupsports2.ridgewell.pickupsports2.utilities;
 
 import android.util.Log;
 
@@ -8,7 +8,6 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import pickupsports2.ridgewell.pickupsports2.intents.IntentProtocol;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;

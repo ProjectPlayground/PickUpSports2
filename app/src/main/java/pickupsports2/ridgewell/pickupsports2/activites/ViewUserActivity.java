@@ -1,4 +1,4 @@
-package pickupsports2.ridgewell.pickupsports2;
+package pickupsports2.ridgewell.pickupsports2.activites;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -7,6 +7,7 @@ import android.widget.TextView;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
 
+import pickupsports2.ridgewell.pickupsports2.R;
 import pickupsports2.ridgewell.pickupsports2.intents.IntentProtocol;
 import ridgewell.pickupsports2.common.Badge;
 import ridgewell.pickupsports2.common.Sport;

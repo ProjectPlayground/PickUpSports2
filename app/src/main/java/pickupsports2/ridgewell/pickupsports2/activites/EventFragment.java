@@ -1,4 +1,4 @@
-package pickupsports2.ridgewell.pickupsports2;
+package pickupsports2.ridgewell.pickupsports2.activites;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
+import pickupsports2.ridgewell.pickupsports2.utilities.ServerRequest;
+import pickupsports2.ridgewell.pickupsports2.utilities.SwipeRefreshListFragment;
 import pickupsports2.ridgewell.pickupsports2.intents.IntentProtocol;
 import ridgewell.pickupsports2.common.Event;
 

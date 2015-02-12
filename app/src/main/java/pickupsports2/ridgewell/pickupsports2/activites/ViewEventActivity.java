@@ -1,10 +1,11 @@
-package pickupsports2.ridgewell.pickupsports2;
+package pickupsports2.ridgewell.pickupsports2.activites;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.TextView;
 
+import pickupsports2.ridgewell.pickupsports2.R;
 import pickupsports2.ridgewell.pickupsports2.intents.IntentProtocol;
 import ridgewell.pickupsports2.common.*;
 
@@ -19,7 +20,7 @@ public class ViewEventActivity extends ActionBarActivity {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_event_screen);
+        setContentView(pickupsports2.ridgewell.pickupsports2.R.layout.activity_view_event_screen);
 
         this.event = IntentProtocol.getEvent(this);
 

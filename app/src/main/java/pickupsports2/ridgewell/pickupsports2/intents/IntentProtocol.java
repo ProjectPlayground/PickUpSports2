@@ -4,9 +4,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
-import pickupsports2.ridgewell.pickupsports2.MainActivity;
-import pickupsports2.ridgewell.pickupsports2.ViewEventActivity;
-import pickupsports2.ridgewell.pickupsports2.ViewUserActivity;
+import pickupsports2.ridgewell.pickupsports2.activites.MainActivity;
+import pickupsports2.ridgewell.pickupsports2.activites.ViewEventActivity;
+import pickupsports2.ridgewell.pickupsports2.activites.ViewUserActivity;
 import ridgewell.pickupsports2.common.Event;
 import ridgewell.pickupsports2.common.User;
 

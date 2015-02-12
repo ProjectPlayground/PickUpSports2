@@ -1,4 +1,4 @@
-package pickupsports2.ridgewell.pickupsports2;
+package pickupsports2.ridgewell.pickupsports2.activites;
 
 import android.app.FragmentManager;
 import android.support.v7.app.ActionBarActivity;
@@ -6,9 +6,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.util.Log;
-import android.widget.Toast;
-import java.util.concurrent.ExecutionException;
+
+import pickupsports2.ridgewell.pickupsports2.R;
+import pickupsports2.ridgewell.pickupsports2.utilities.ServerRequest;
 
 public class MainActivity extends ActionBarActivity {
     final int CREATE_EVENT_CODE = 1;

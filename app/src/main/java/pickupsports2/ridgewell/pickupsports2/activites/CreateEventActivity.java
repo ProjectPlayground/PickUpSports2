@@ -1,4 +1,4 @@
-package pickupsports2.ridgewell.pickupsports2;
+package pickupsports2.ridgewell.pickupsports2.activites;
 
 import android.app.DatePickerDialog;
 import android.support.v7.app.ActionBarActivity;
@@ -19,6 +19,8 @@ import android.widget.Toast;
 
 import org.joda.time.MutableDateTime;
 
+import pickupsports2.ridgewell.pickupsports2.R;
+import pickupsports2.ridgewell.pickupsports2.utilities.ServerRequest;
 import ridgewell.pickupsports2.common.Event;
 import ridgewell.pickupsports2.common.Location;
 import ridgewell.pickupsports2.common.Sport;
