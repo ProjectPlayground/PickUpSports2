@@ -3,13 +3,16 @@ package pickupsports2.ridgewell.pickupsports2.activites;
 import com.software.shell.fab.FloatingActionButton;
 import android.app.FragmentManager;
 import android.content.Context;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 
 import pickupsports2.ridgewell.pickupsports2.R;
@@ -28,21 +31,19 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTitle("Games");
+
         setContentView(R.layout.activity_main_view_screen);
 
         FragmentManager fm = getFragmentManager();
 
-        if (fm.findFragmentById(android.R.id.content) == null) {
+        if (fm.findFragmentById(R.id.event_list_fragment) == null) {
             eventList = new EventFragment();
-            fm.beginTransaction().add(android.R.id.content, eventList).commit();
+            fm.beginTransaction().add(R.id.event_list_fragment, eventList).commit();
         }
 
-        createEventClickListener();
-    }
-
-    private void createEventClickListener() {
         create_event = (FloatingActionButton) findViewById(R.id.create_event);
         create_event.setOnClickListener(new View.OnClickListener() {
+            @Override
             public void onClick(View v) {
                 Intent launch_new_event = new Intent(MainActivity.this, CreateEventActivity.class);
                 startActivityForResult(launch_new_event, CREATE_EVENT_CODE);
