@@ -70,29 +70,5 @@
         "event_id": 0,
         "isPublic": false,
         "maxAttendance": 35
-    },
-    {
-        "timeString": "2015-02-15T18:01:59.525Z",
-        "sport": {
-            "sportName": "Cross Country Running"
-        },
-        "creator": {
-            "joiningTime": "2015-02-12T18:02:31.211Z",
-            "location": {
-                "location": "fetch current position"
-            },
-            "nickname": "",
-            "username": "Creator User"
-        },
-        "notes": "Running everywhere",
-        "name": "Some Event",
-        "location": {
-            "location": "Rand"
-        },
-        "maxAttendance": 800000,
-        "isPublic": false,
-        "event_id": 0,
-        "cost": 0,
-        "WAITLISTMAX": 10
     }
 ]}

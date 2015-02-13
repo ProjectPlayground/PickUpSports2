@@ -1,11 +1,16 @@
 package pickupsports2.ridgewell.pickupsports2.activites;
 
+import com.software.shell.fab.FloatingActionButton;
 import android.app.FragmentManager;
+import android.content.Context;
 import android.support.v7.app.ActionBarActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 import pickupsports2.ridgewell.pickupsports2.R;
 import pickupsports2.ridgewell.pickupsports2.utilities.ServerRequest;
@@ -16,6 +21,8 @@ public class MainActivity extends ActionBarActivity {
     EventFragment eventList;
 
     private ServerRequest svreq = new ServerRequest();
+
+    FloatingActionButton create_event;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +36,18 @@ public class MainActivity extends ActionBarActivity {
             eventList = new EventFragment();
             fm.beginTransaction().add(android.R.id.content, eventList).commit();
         }
+
+        createEventClickListener();
+    }
+
+    private void createEventClickListener() {
+        create_event = (FloatingActionButton) findViewById(R.id.create_event);
+        create_event.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent launch_new_event = new Intent(MainActivity.this, CreateEventActivity.class);
+                startActivityForResult(launch_new_event, CREATE_EVENT_CODE);
+            }
+        });
     }
 
     @Override
