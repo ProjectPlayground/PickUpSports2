@@ -1,9 +1,9 @@
 package pickupsports2.ridgewell.pickupsports2.activites;
 
-import com.software.shell.fab.FloatingActionButton;
+
+import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import android.app.FragmentManager;
-import android.content.Context;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -42,6 +42,9 @@ public class MainActivity extends ActionBarActivity {
         }
 
         create_event = (FloatingActionButton) findViewById(R.id.create_event);
+        create_event.setSize(FloatingActionButton.SIZE_NORMAL);
+        create_event.setStrokeVisible(false);
+
         create_event.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
