@@ -41,6 +41,11 @@ public class MainActivity extends ActionBarActivity {
         create_event = new AddEventButton(findViewById(R.id.create_event), create_launcher);
     }
 
+    public void onResume() {
+        super.onResume();
+        eventList.refreshEvents();
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

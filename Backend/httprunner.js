@@ -56,6 +56,10 @@ http.createServer(function(request, response) {
 						cs.addEvent(JSON.parse(event));
 					});
 					break;
+				case "delete":
+					var name = url.parse(request.url, true).query.name;
+					cs.deleteEvent(name);
+					break;
 				default: 
 					console.log("Invalid user command");
 					break;

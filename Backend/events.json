@@ -72,12 +72,12 @@
         "maxAttendance": 35
     },
     {
-        "timeString": "2015-02-13T16:48:03.225-06:00",
+        "timeString": "2015-04-16T17:02:00.107-05:00",
         "sport": {
             "sportName": "Baseball"
         },
         "creator": {
-            "joiningTime": "2015-02-13T16:48:10.071-06:00",
+            "joiningTime": "2015-02-16T17:02:21.410-06:00",
             "location": {
                 "location": "fetch current position"
             },
@@ -85,35 +85,11 @@
             "username": "Creator User"
         },
         "notes": "",
-        "name": "\nevnet",
+        "name": "Some Event",
         "location": {
-            "location": ""
+            "location": "Here"
         },
-        "maxAttendance": 800,
-        "isPublic": false,
-        "event_id": 0,
-        "cost": 0,
-        "WAITLISTMAX": 10
-    },
-    {
-        "timeString": "2015-02-13T16:48:18.929-06:00",
-        "sport": {
-            "sportName": "Baseball"
-        },
-        "creator": {
-            "joiningTime": "2015-02-13T16:48:24.022-06:00",
-            "location": {
-                "location": "fetch current position"
-            },
-            "nickname": "",
-            "username": "Creator User"
-        },
-        "notes": "",
-        "name": "wjhsflsakdfn",
-        "location": {
-            "location": ""
-        },
-        "maxAttendance": 12,
+        "maxAttendance": 34,
         "isPublic": false,
         "event_id": 0,
         "cost": 0,

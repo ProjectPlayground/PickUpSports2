@@ -71,4 +71,26 @@ public class ServerRequest {
         t.start();
     }
 
+    public void deleteEvent(Event event) {
+        final Event e = event;
+        Runnable r = new Runnable() {
+            @Override
+            public void run() {
+                svc.deleteEvent(e.getName(), new Callback<Event>() {
+                    @Override
+                    public void success(Event event, Response response) {
+                        Log.v("Retrofit Success", "Event response");
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+                        Log.e("Retrofit Error", "deleteEvent Failed");
+                    }
+                });
+            }
+        };
+        Thread t = new Thread(r);
+        t.start();
+    }
+
 }
