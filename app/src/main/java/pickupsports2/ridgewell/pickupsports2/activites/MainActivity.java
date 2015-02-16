@@ -8,27 +8,37 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import pickupsports2.ridgewell.pickupsports2.R;
-import pickupsports2.ridgewell.pickupsports2.utilities.ServerRequest;
+import pickupsports2.ridgewell.pickupsports2.elements.AddEventButton;
 
 public class MainActivity extends ActionBarActivity {
     final int CREATE_EVENT_CODE = 1;
 
     EventFragment eventList;
 
-    private ServerRequest svreq = new ServerRequest();
+    AddEventButton create_event;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTitle("Games");
+
         setContentView(R.layout.activity_main_view_screen);
 
         FragmentManager fm = getFragmentManager();
 
-        if (fm.findFragmentById(android.R.id.content) == null) {
+        if (fm.findFragmentById(R.id.event_list_fragment) == null) {
             eventList = new EventFragment();
-            fm.beginTransaction().add(android.R.id.content, eventList).commit();
+            fm.beginTransaction().add(R.id.event_list_fragment, eventList).commit();
         }
+
+        Runnable create_launcher = new Runnable() {
+            @Override
+            public void run() {
+                Intent launch_new_event = new Intent(MainActivity.this, CreateEventActivity.class);
+                startActivityForResult(launch_new_event, CREATE_EVENT_CODE);
+            }
+        };
+        create_event = new AddEventButton(findViewById(R.id.create_event), create_launcher);
     }
 
     @Override
@@ -47,10 +57,8 @@ public class MainActivity extends ActionBarActivity {
         if (id == R.id.action_settings) {
             return true;
         }
-        if (id == R.id.create_new_event) {
-            Intent launch_new_event = new Intent(MainActivity.this, CreateEventActivity.class);
-            startActivityForResult(launch_new_event, CREATE_EVENT_CODE);
-        }
         return super.onOptionsItemSelected(item);
     }
 }
+
+

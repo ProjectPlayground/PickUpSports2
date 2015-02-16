@@ -31,7 +31,7 @@ public class EventFragment extends SwipeRefreshListFragment {
     private ServerRequest svreq = new ServerRequest();
 
     public void onActivityCreated(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        super.onActivityCreated(savedInstanceState);
 
         sportingEventArrayAdapter = new SportingEventArrayAdapter(this.getActivity(), events);
         this.setListAdapter(sportingEventArrayAdapter);

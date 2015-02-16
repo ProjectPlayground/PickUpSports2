@@ -2,12 +2,16 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 21
-    buildToolsVersion '20.0.0'
+    buildToolsVersion '21.1.2'
     defaultConfig {
         minSdkVersion 15
         targetSdkVersion 21
         versionCode 1
         versionName "1.0"
+    }
+    repositories {
+        mavenCentral()
+        mavenLocal()
     }
     buildTypes {
         release {
@@ -22,5 +26,7 @@ dependencies {
     compile project(':Common')
     compile 'joda-time:joda-time:2.7'
     compile 'com.squareup.retrofit:retrofit:1.9.0'
-    compile "com.android.support:appcompat-v7:21.0.+"
+    compile 'com.android.support:appcompat-v7:21.0.+'
+    compile 'com.getbase:floatingactionbutton:1.7.0'
+    compile 'com.facebook.rebound:rebound:0.3.7'
 }
