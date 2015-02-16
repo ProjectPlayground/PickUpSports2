@@ -9,7 +9,10 @@ By providing this central interface for communication tailored specifically for 
 ## Installation Instructions
  * clone the github repo
  * import the project with Android Studio
- * run onto Android phone
+ * open Backend
+ * from terminal run node httprunner.js
+ * if running from genymotion, run out of Android Studio
+ * if running android emulator, change the ip address at the top of app/src/main/java/pickupsports2/ridgewell/pickupsports2/utilities/ServerRequest.java to 10.0.2.2, then run out of Android Studio
 
 ## Milestones
 Prototype Link: http://bit.ly/1DTe3wF
