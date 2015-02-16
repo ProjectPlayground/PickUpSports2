@@ -72,24 +72,48 @@
         "maxAttendance": 35
     },
     {
-        "timeString": "2015-02-15T18:01:59.525Z",
+        "timeString": "2015-02-13T16:48:03.225-06:00",
         "sport": {
-            "sportName": "Cross Country Running"
+            "sportName": "Baseball"
         },
         "creator": {
-            "joiningTime": "2015-02-12T18:02:31.211Z",
+            "joiningTime": "2015-02-13T16:48:10.071-06:00",
             "location": {
                 "location": "fetch current position"
             },
             "nickname": "",
             "username": "Creator User"
         },
-        "notes": "Running everywhere",
-        "name": "Some Event",
+        "notes": "",
+        "name": "\nevnet",
         "location": {
-            "location": "Rand"
+            "location": ""
         },
-        "maxAttendance": 800000,
+        "maxAttendance": 800,
+        "isPublic": false,
+        "event_id": 0,
+        "cost": 0,
+        "WAITLISTMAX": 10
+    },
+    {
+        "timeString": "2015-02-13T16:48:18.929-06:00",
+        "sport": {
+            "sportName": "Baseball"
+        },
+        "creator": {
+            "joiningTime": "2015-02-13T16:48:24.022-06:00",
+            "location": {
+                "location": "fetch current position"
+            },
+            "nickname": "",
+            "username": "Creator User"
+        },
+        "notes": "",
+        "name": "wjhsflsakdfn",
+        "location": {
+            "location": ""
+        },
+        "maxAttendance": 12,
         "isPublic": false,
         "event_id": 0,
         "cost": 0,
