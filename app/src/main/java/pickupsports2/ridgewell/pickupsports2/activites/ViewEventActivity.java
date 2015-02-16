@@ -86,12 +86,15 @@ public class ViewEventActivity extends ActionBarActivity {
             }
         });
 
+        startDeleteClickListener();
+    }
+
+    public void startDeleteClickListener() {
         Button delete_event = (Button) findViewById(R.id.delete_event);
         delete_event.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(ViewEventActivity.this);
-                Log.v("inside click","hey look a colon");
                 builder
                         .setMessage("Are you sure you want to delete " + event.getName() + "?")
                         .setTitle("Confirm Delete")
@@ -102,11 +105,11 @@ public class ViewEventActivity extends ActionBarActivity {
                                 finish();
                             }
                         }).setNegativeButton("No", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                //do nothing? go back somehow?
-                            }
-                        });
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //do nothing? go back somehow?
+                    }
+                });
                 AlertDialog dialog = builder.create();
                 dialog.show();
             }
