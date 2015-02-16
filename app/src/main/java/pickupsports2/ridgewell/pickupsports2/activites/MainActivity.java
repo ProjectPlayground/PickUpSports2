@@ -1,25 +1,11 @@
 package pickupsports2.ridgewell.pickupsports2.activites;
 
-
-import com.facebook.rebound.BaseSpringSystem;
-import com.facebook.rebound.SimpleSpringListener;
-import com.facebook.rebound.Spring;
-import com.facebook.rebound.SpringConfig;
-import com.facebook.rebound.SpringListener;
-import com.facebook.rebound.SpringSystem;
-import com.facebook.rebound.SpringUtil;
-import com.getbase.floatingactionbutton.FloatingActionButton;
-import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import android.app.FragmentManager;
 import android.support.v7.app.ActionBarActivity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
-import android.view.View;
-import android.widget.FrameLayout;
 
 import pickupsports2.ridgewell.pickupsports2.R;
 import pickupsports2.ridgewell.pickupsports2.elements.AddEventButton;
