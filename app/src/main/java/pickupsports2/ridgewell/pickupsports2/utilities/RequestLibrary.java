@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import retrofit.Callback;
 import retrofit.http.Body;
+import retrofit.http.DELETE;
 import retrofit.http.GET;
 import retrofit.http.POST;
 import retrofit.http.Query;
@@ -30,4 +31,7 @@ public interface RequestLibrary {
 
     @POST("/?cmd=add&type=event")
     public void addEvent(@Body Event event, Callback<Event> success);
+
+    @DELETE("/?cmd=delete&type=event")
+    public void deleteEvent(@Query("name") String name, Callback<Event> success);
 }

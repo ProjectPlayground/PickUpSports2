@@ -66,7 +66,7 @@ exports.getEvent = function(name, response) {
 			var event_list = JSON.parse(events.toString()).events;
 			for (var i = 0; i < event_list.length; i++) {
 				if (event_list[i].name == name) {
-					console.log("found it");
+					console.log("found event " + name);
 					console.log(JSON.stringify(event_list[i]));
 					response.write(JSON.stringify(event_list[i]));
 					response.end();
@@ -116,6 +116,37 @@ exports.getAllEvents = function(response) {
 			console.log(JSON.stringify(event_list));
 		}
 		response.end();
+		return;
+	});
+}
+
+//returns specified user
+exports.deleteEvent = function(name) {
+	fs.readFile(event_path, function(err, events) {
+		if (err) {
+			console.log("error while reading " + event_path);
+			return;
+		} else {
+			var event_list = JSON.parse(events.toString()).events;
+			for (var i = 0; i < event_list.length; i++) {
+				if (event_list[i].name == name) {
+					console.log("found event " + name);
+					event_list.splice(i,1)
+					fs.writeFile(event_path, 
+						"{\"events\":" + JSON.stringify(event_list, 
+						null, 4) +"}", function(err) {
+							if (err) {
+								console.log("Error while writing file");
+							} else {
+								console.log("Event deleted from " + event_path);
+							}
+					});
+					return;
+				}
+			}
+			console.log("couldn't find event " + name);
+			return;
+		}
 		return;
 	});
 }

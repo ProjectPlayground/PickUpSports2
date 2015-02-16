@@ -1,12 +1,17 @@
 package pickupsports2.ridgewell.pickupsports2.activites;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import pickupsports2.ridgewell.pickupsports2.R;
 import pickupsports2.ridgewell.pickupsports2.intents.IntentProtocol;
+import pickupsports2.ridgewell.pickupsports2.utilities.ServerRequest;
 import ridgewell.pickupsports2.common.*;
 
 /**
@@ -15,6 +20,8 @@ import ridgewell.pickupsports2.common.*;
 public class ViewEventActivity extends ActionBarActivity {
 
     private Event event;
+
+    private ServerRequest svreq = new ServerRequest();
 
     public ViewEventActivity() {}
 
@@ -76,6 +83,35 @@ public class ViewEventActivity extends ActionBarActivity {
             public void onClick(View v) {
                 User user = event.getCreator();
                 IntentProtocol.viewUser(ViewEventActivity.this, user);
+            }
+        });
+
+        startDeleteClickListener();
+    }
+
+    public void startDeleteClickListener() {
+        Button delete_event = (Button) findViewById(R.id.delete_event);
+        delete_event.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(ViewEventActivity.this);
+                builder
+                        .setMessage("Are you sure you want to delete " + event.getName() + "?")
+                        .setTitle("Confirm Delete")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int id) {
+                                svreq.deleteEvent(event);
+                                finish();
+                            }
+                        }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //do nothing? go back somehow?
+                    }
+                });
+                AlertDialog dialog = builder.create();
+                dialog.show();
             }
         });
     }
