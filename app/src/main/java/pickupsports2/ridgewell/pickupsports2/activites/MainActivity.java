@@ -1,6 +1,13 @@
 package pickupsports2.ridgewell.pickupsports2.activites;
 
 
+import com.facebook.rebound.BaseSpringSystem;
+import com.facebook.rebound.SimpleSpringListener;
+import com.facebook.rebound.Spring;
+import com.facebook.rebound.SpringConfig;
+import com.facebook.rebound.SpringListener;
+import com.facebook.rebound.SpringSystem;
+import com.facebook.rebound.SpringUtil;
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import android.app.FragmentManager;
@@ -8,24 +15,21 @@ import android.support.v7.app.ActionBarActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.FrameLayout;
 
 import pickupsports2.ridgewell.pickupsports2.R;
-import pickupsports2.ridgewell.pickupsports2.utilities.ServerRequest;
+import pickupsports2.ridgewell.pickupsports2.elements.AddEventButton;
 
 public class MainActivity extends ActionBarActivity {
     final int CREATE_EVENT_CODE = 1;
 
     EventFragment eventList;
 
-    private ServerRequest svreq = new ServerRequest();
-
-    FloatingActionButton create_event;
+    AddEventButton create_event;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,17 +45,14 @@ public class MainActivity extends ActionBarActivity {
             fm.beginTransaction().add(R.id.event_list_fragment, eventList).commit();
         }
 
-        create_event = (FloatingActionButton) findViewById(R.id.create_event);
-        create_event.setSize(FloatingActionButton.SIZE_NORMAL);
-        create_event.setStrokeVisible(false);
-
-        create_event.setOnClickListener(new View.OnClickListener() {
+        Runnable create_launcher = new Runnable() {
             @Override
-            public void onClick(View v) {
+            public void run() {
                 Intent launch_new_event = new Intent(MainActivity.this, CreateEventActivity.class);
                 startActivityForResult(launch_new_event, CREATE_EVENT_CODE);
             }
-        });
+        };
+        create_event = new AddEventButton(findViewById(R.id.create_event), create_launcher);
     }
 
     @Override
@@ -70,10 +71,8 @@ public class MainActivity extends ActionBarActivity {
         if (id == R.id.action_settings) {
             return true;
         }
-        if (id == R.id.create_new_event) {
-            Intent launch_new_event = new Intent(MainActivity.this, CreateEventActivity.class);
-            startActivityForResult(launch_new_event, CREATE_EVENT_CODE);
-        }
         return super.onOptionsItemSelected(item);
     }
 }
+
+

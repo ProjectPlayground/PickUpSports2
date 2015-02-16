@@ -28,4 +28,5 @@ dependencies {
     compile 'com.squareup.retrofit:retrofit:1.9.0'
     compile 'com.android.support:appcompat-v7:21.0.+'
     compile 'com.getbase:floatingactionbutton:1.7.0'
+    compile 'com.facebook.rebound:rebound:0.3.7'
 }
