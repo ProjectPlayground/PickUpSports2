@@ -4,11 +4,17 @@ import android.app.FragmentManager;
 import android.support.v7.app.ActionBarActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.util.concurrent.ExecutionException;
+
 import pickupsports2.ridgewell.pickupsports2.R;
 import pickupsports2.ridgewell.pickupsports2.elements.AddEventButton;
+import pickupsports2.ridgewell.pickupsports2.utilities.ServerRequest;
+import ridgewell.pickupsports2.common.Location;
+import ridgewell.pickupsports2.common.User;
 
 public class MainActivity extends ActionBarActivity {
     final int CREATE_EVENT_CODE = 1;
@@ -39,6 +45,13 @@ public class MainActivity extends ActionBarActivity {
             }
         };
         create_event = new AddEventButton(findViewById(R.id.create_event), create_launcher);
+        /*
+        User user = new User("Robert Saget");
+        user.setNickname("Bob");
+        user.setLocation(new Location("Philidelphia, PA"));
+        ServerRequest svcreq = new ServerRequest();
+        svcreq.addUser(user);
+        */
     }
 
     public void onResume() {

@@ -16,6 +16,7 @@ import pickupsports2.ridgewell.pickupsports2.utilities.ServerRequest;
 import pickupsports2.ridgewell.pickupsports2.utilities.SwipeRefreshListFragment;
 import pickupsports2.ridgewell.pickupsports2.intents.IntentProtocol;
 import ridgewell.pickupsports2.common.Event;
+import ridgewell.pickupsports2.common.User;
 
 /**
  * Created by cameronridgewell on 2/9/15.
