@@ -47,7 +47,9 @@ exports.addUser = function(user) {
 				function(err) {
 					if (err) {
 						console.log("Error while writing file");
-					 }
+					} else {
+						console.log("Event written to " + user_path);
+					}
 			});
 		}
 		return;

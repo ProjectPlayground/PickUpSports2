@@ -27,6 +27,38 @@ public class ServerRequest {
 
     public ServerRequest(){};
 
+    public User getUser(final String username) throws ExecutionException, InterruptedException {
+        Callable<User> callable = new Callable<User>() {
+            @Override
+            public User call() {
+                return svc.getUser(username);
+            }
+        };
+        ExecutorService exec = Executors.newFixedThreadPool(3);
+        return exec.submit(callable).get();
+    }
+
+    public void addUser(final User user) {
+        Runnable r = new Runnable() {
+            @Override
+            public void run() {
+                svc.addUser(user, new Callback<User>() {
+                    @Override
+                    public void success(User user, Response response) {
+                        Log.v("Retrofit Success", "User response");
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+                        Log.e("Retrofit Error", "addUser Failed");
+                    }
+                });
+            }
+        };
+        Thread t = new Thread(r);
+        t.start();
+    }
+
     public Event getEvent(final String event_name) throws ExecutionException, InterruptedException {
         Callable<Event> callable = new Callable<Event>() {
             @Override
@@ -69,17 +101,6 @@ public class ServerRequest {
         };
         Thread t = new Thread(r);
         t.start();
-    }
-
-    public User getUser(final String username) throws ExecutionException, InterruptedException {
-        Callable<User> callable = new Callable<User>() {
-            @Override
-            public User call() {
-                return svc.getUser(username);
-            }
-        };
-        ExecutorService exec = Executors.newFixedThreadPool(3);
-        return exec.submit(callable).get();
     }
 
     public void deleteEvent(final Event event) {
