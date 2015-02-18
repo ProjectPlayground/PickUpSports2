@@ -13,6 +13,7 @@ import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 import ridgewell.pickupsports2.common.Event;
+import ridgewell.pickupsports2.common.User;
 
 /**
  * Created by cameronridgewell on 2/10/15.
@@ -26,12 +27,11 @@ public class ServerRequest {
 
     public ServerRequest(){};
 
-    public Event getEvent(String event_name) throws ExecutionException, InterruptedException {
-        final String e = event_name;
+    public Event getEvent(final String event_name) throws ExecutionException, InterruptedException {
         Callable<Event> callable = new Callable<Event>() {
             @Override
             public Event call() {
-                return svc.getEvent(e);
+                return svc.getEvent(event_name);
             }
         };
         ExecutorService exec = Executors.newFixedThreadPool(3 );
@@ -69,6 +69,17 @@ public class ServerRequest {
         };
         Thread t = new Thread(r);
         t.start();
+    }
+
+    public User getUser(final String username) throws ExecutionException, InterruptedException {
+        Callable<User> callable = new Callable<User>() {
+            @Override
+            public User call() {
+                return svc.getUser(username);
+            }
+        };
+        ExecutorService exec = Executors.newFixedThreadPool(3 );
+        return exec.submit(callable).get();
     }
 
 }

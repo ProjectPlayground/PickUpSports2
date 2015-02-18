@@ -65,12 +65,6 @@ http.createServer(function(request, response) {
 			console.log("Invalid type");
 			break;
 	}
-
-/*
-    var fooey = {sport:1, name:"foo", type:"something"};
-
-    response.write(JSON.stringify(fooey));
-*/
 }).listen(port);
 
 console.log("Server Running on " + port);
