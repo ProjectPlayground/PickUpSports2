@@ -10,6 +10,7 @@
         android:text="title"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -103,4 +104,10 @@
             android:text="Invite"
             android:layout_weight="1"/>
         </LinearLayout>
+
+    <Button
+        android:text="Delete"
+        android:id="@+id/delete_event"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 </LinearLayout>

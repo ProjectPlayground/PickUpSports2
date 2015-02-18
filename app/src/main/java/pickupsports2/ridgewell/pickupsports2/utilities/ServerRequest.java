@@ -78,8 +78,29 @@ public class ServerRequest {
                 return svc.getUser(username);
             }
         };
-        ExecutorService exec = Executors.newFixedThreadPool(3 );
+        ExecutorService exec = Executors.newFixedThreadPool(3);
         return exec.submit(callable).get();
+    }
+
+    public void deleteEvent(final Event event) {
+        Runnable r = new Runnable() {
+            @Override
+            public void run() {
+                svc.deleteEvent(event.getName(), new Callback<Event>() {
+                    @Override
+                    public void success(Event event, Response response) {
+                        Log.v("Retrofit Success", "Event response");
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+                        Log.e("Retrofit Error", "deleteEvent Failed");
+                    }
+                });
+            }
+        };
+        Thread t = new Thread(r);
+        t.start();
     }
 
 }
