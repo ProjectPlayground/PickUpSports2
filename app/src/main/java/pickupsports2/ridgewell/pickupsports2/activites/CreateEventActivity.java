@@ -149,7 +149,7 @@ public class CreateEventActivity extends ActionBarActivity implements OnClickLis
                             notes.getText().toString(),
                             privacySpinner.getSelectedItemPosition() == 1,
                             Integer.parseInt(maxAttendance.getText().toString()),
-                            new User("Creator User")));
+                            "Creator User"));
 
                     //TODO this is an empty intent, surely it doesn't need to be passed
                     setResult(SUCCESS_CODE, new Intent());

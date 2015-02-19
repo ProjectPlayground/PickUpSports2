@@ -30,7 +30,7 @@ public class DummyEventSource implements EventSource {
         DateTime date2 = date1.minusHours(24);
         DateTime date3 = date1.plusHours(24);
         Location loc1 = new Location("Nashville, TN");
-        User user1 = new User("Cameron Ridgewell");
+        String user1 = "Cameron Ridgewell";
 
         Event event1 = new Event("Music Bowl", football, date1, loc1, 0, "", false, 35, user1);
         Event event2 = new Event("Kicking and Screaming", soccer, date2, loc1, 3, "notes here", true, 20, user1);

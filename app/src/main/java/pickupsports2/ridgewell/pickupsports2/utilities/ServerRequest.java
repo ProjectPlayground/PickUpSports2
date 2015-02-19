@@ -27,15 +27,23 @@ public class ServerRequest {
 
     public ServerRequest(){};
 
-    public User getUser(final String username) throws ExecutionException, InterruptedException {
-        Callable<User> callable = new Callable<User>() {
-            @Override
-            public User call() {
-                return svc.getUser(username);
-            }
-        };
-        ExecutorService exec = Executors.newFixedThreadPool(3);
-        return exec.submit(callable).get();
+    public User getUser(final String username) {
+        try {
+            Callable<User> callable = new Callable<User>() {
+                @Override
+                public User call() {
+                    return svc.getUser(username);
+                }
+            };
+            ExecutorService exec = Executors.newFixedThreadPool(3);
+            return exec.submit(callable).get();
+        } catch (ExecutionException e) {
+            Log.e("Interrupted Exception", e.getMessage());
+            return null;
+        } catch (InterruptedException e) {
+            Log.e("Execution Exception", e.getMessage());
+            return null;
+        }
     }
 
     public void addUser(final User user) {
@@ -59,26 +67,42 @@ public class ServerRequest {
         t.start();
     }
 
-    public Event getEvent(final String event_name) throws ExecutionException, InterruptedException {
-        Callable<Event> callable = new Callable<Event>() {
-            @Override
-            public Event call() {
-                return svc.getEvent(event_name);
-            }
-        };
-        ExecutorService exec = Executors.newFixedThreadPool(3 );
-        return exec.submit(callable).get();
+    public Event getEvent(final String event_name) {
+        try {
+            Callable<Event> callable = new Callable<Event>() {
+                @Override
+                public Event call() {
+                    return svc.getEvent(event_name);
+                }
+            };
+            ExecutorService exec = Executors.newFixedThreadPool(3 );
+            return exec.submit(callable).get();
+        } catch (ExecutionException e) {
+            Log.e("Interrupted Exception", e.getMessage());
+            return null;
+        } catch (InterruptedException e) {
+            Log.e("Execution Exception", e.getMessage());
+            return null;
+        }
     }
 
-    public List<Event> getAllEvents() throws ExecutionException, InterruptedException {
-        Callable<List<Event>> callable = new Callable<List<Event>>() {
-            @Override
-            public List<Event> call() throws Exception {
-                return svc.getAllEvents();
-            }
-        };
-        ExecutorService exec = Executors.newFixedThreadPool(3);
-        return exec.submit(callable).get();
+    public List<Event> getAllEvents() {
+        try {
+            Callable<List<Event>> callable = new Callable<List<Event>>() {
+                @Override
+                public List<Event> call() throws Exception {
+                    return svc.getAllEvents();
+                }
+            };
+            ExecutorService exec = Executors.newFixedThreadPool(3);
+            return exec.submit(callable).get();
+        } catch (ExecutionException e) {
+            Log.e("Interrupted Exception", e.getMessage());
+            return null;
+        } catch (InterruptedException e) {
+            Log.e("Execution Exception", e.getMessage());
+            return null;
+        }
     }
 
     public void addEvent(Event event) {

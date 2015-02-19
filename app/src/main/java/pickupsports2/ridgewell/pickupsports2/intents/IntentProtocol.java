@@ -7,6 +7,7 @@ import android.os.Bundle;
 import pickupsports2.ridgewell.pickupsports2.activites.MainActivity;
 import pickupsports2.ridgewell.pickupsports2.activites.ViewEventActivity;
 import pickupsports2.ridgewell.pickupsports2.activites.ViewUserActivity;
+import pickupsports2.ridgewell.pickupsports2.utilities.ServerRequest;
 import ridgewell.pickupsports2.common.Event;
 import ridgewell.pickupsports2.common.User;
 
@@ -18,6 +19,7 @@ public class IntentProtocol {
     public static final String VIEWABLE_EVENT = "viewable_event";
     public static final String USER_VIEW = "user_view";
     public static final String CREATED_EVENT = "created_event";
+    public static final ServerRequest svreq = new ServerRequest();
 
     public static void viewEvent(Activity context, Event event){
         Intent intent = new Intent(context, ViewEventActivity.class);
@@ -39,8 +41,9 @@ public class IntentProtocol {
         context.setResult(SUCCESS_CODE, intent_return);
     }
 
-    public static void viewUser(Activity context, User user){
+    public static void viewUser(Activity context, String user_str){
         Intent intent = new Intent(context, ViewUserActivity.class);
+        User user = svreq.getUser(user_str);
         intent.putExtra(USER_VIEW, user);
         context.startActivity(intent);
     }
