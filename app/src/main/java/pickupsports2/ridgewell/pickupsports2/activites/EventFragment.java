@@ -68,17 +68,9 @@ public class EventFragment extends SwipeRefreshListFragment {
     }
 
     public void refreshEvents() {
-        try {
-            Log.v("Attempting", "Event Refresh");
-            events = svreq.getAllEvents();
-            sportingEventArrayAdapter.refreshItems(events);
-            Log.v("Completed","EventRefresh");
-        } catch (InterruptedException e) {
-            Log.e("Interrupted Exception", e.getMessage());
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            Log.e("Execution Exception", e.getMessage());
-            e.printStackTrace();
-        }
+        Log.v("Attempting", "Event Refresh");
+        events = svreq.getAllEvents();
+        sportingEventArrayAdapter.refreshItems(events);
+        Log.v("Completed","EventRefresh");
     }
 }

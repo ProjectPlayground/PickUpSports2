@@ -1,13 +1,23 @@
 {"events":[
     {
-        "creator": {
-            "joiningTime": "2015-02-10T20:54:59.722-06:00",
-            "location": {
-                "location": "fetch current position"
-            },
-            "nickname": "",
-            "username": "Cameron Ridgewell"
+        "timeString": "2016-07-24T21:01:22.950-05:00",
+        "sport": {
+            "sportName": "Cross Country Running"
         },
+        "creator": "Creator User",
+        "notes": "May the best horse win.",
+        "name": "Horserace",
+        "location": {
+            "location": "Around the World"
+        },
+        "maxAttendance": 30,
+        "isPublic": false,
+        "event_id": 0,
+        "cost": 0,
+        "WAITLISTMAX": 10
+    },
+    {
+        "creator": "Cameron Ridgewell",
         "location": {
             "location": "Nashville, TN"
         },
@@ -24,14 +34,7 @@
         "maxAttendance": 8
     },
     {
-        "creator": {
-            "joiningTime": "2015-02-10T20:54:59.722-06:00",
-            "location": {
-                "location": "fetch current position"
-            },
-            "nickname": "",
-            "username": "Cameron Ridgewell"
-        },
+        "creator": "Cameron Ridgewell",
         "location": {
             "location": "Nashville, TN"
         },
@@ -48,14 +51,7 @@
         "maxAttendance": 20
     },
     {
-        "creator": {
-            "joiningTime": "2015-02-10T20:54:59.722-06:00",
-            "location": {
-                "location": "fetch current position"
-            },
-            "nickname": "",
-            "username": "Cameron Ridgewell"
-        },
+        "creator": "Cameron Ridgewell",
         "location": {
             "location": "Nashville, TN"
         },
@@ -71,4 +67,5 @@
         "isPublic": false,
         "maxAttendance": 35
     }
+
 ]}

@@ -37,7 +37,7 @@ public class ViewEventActivity extends ActionBarActivity {
         viewItemTextTitle.setText(event.getName());
 
         TextView viewItemTextCreator = (TextView) findViewById(R.id.view_event_creator);
-        viewItemTextCreator.setText(event.getCreator().getUsername());
+        viewItemTextCreator.setText(event.getCreator());
 
         TextView viewItemTextSport = (TextView) findViewById(R.id.event_sport_text);
         viewItemTextSport.setText(event.getSport().getSportName());
@@ -81,7 +81,7 @@ public class ViewEventActivity extends ActionBarActivity {
         */
         viewItemTextCreator.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                User user = event.getCreator();
+                String user = event.getCreator();
                 IntentProtocol.viewUser(ViewEventActivity.this, user);
             }
         });

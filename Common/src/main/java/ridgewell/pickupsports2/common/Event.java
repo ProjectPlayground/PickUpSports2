@@ -24,7 +24,7 @@ public class Event implements Parcelable{
     //private List<User> attendees;
     private int maxAttendance;
     //private List<User> waitlist; //queue
-    private User creator;
+    private String creator;
 
     //largest number of users allowed on the waitlist
     public final int WAITLISTMAX = 10;
@@ -32,7 +32,7 @@ public class Event implements Parcelable{
     public Event() {}
 
     public Event(String name, Sport sport, DateTime time, Location location, int cost,
-                 String notes, boolean isPublic, int maxAttendance, User creator) {
+                 String notes, boolean isPublic, int maxAttendance, String creator) {
         this.name = name;
         this.sport = sport;
         this.timeString = time.toString();
@@ -185,7 +185,7 @@ public class Event implements Parcelable{
         return waitlist.size();
     }
 */
-    public User getCreator() {
+    public String getCreator() {
         return creator;
     }
 
@@ -204,7 +204,7 @@ public class Event implements Parcelable{
         //out.writeTypedList(attendees);
         out.writeInt(maxAttendance);
         //out.writeTypedList(waitlist);
-        out.writeParcelable(creator, 0);
+        out.writeString(creator);
     }
 
     public static final Parcelable.Creator<Event> CREATOR
@@ -229,6 +229,6 @@ public class Event implements Parcelable{
         //attendees = in.createTypedArrayList(User.CREATOR);
         maxAttendance = in.readInt();
         //waitlist = in.createTypedArrayList(User.CREATOR);
-        creator = in.readParcelable(User.class.getClassLoader());
+        creator = in.readString();
     }
 }
