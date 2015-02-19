@@ -37,8 +37,6 @@ public class EventFragment extends SwipeRefreshListFragment {
         sportingEventArrayAdapter = new SportingEventArrayAdapter(this.getActivity(), events);
         this.setListAdapter(sportingEventArrayAdapter);
 
-        refreshEvents();
-
         final SwipeRefreshLayout swipeRefresh = this.getmSwipeRefreshLayout();
         swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
