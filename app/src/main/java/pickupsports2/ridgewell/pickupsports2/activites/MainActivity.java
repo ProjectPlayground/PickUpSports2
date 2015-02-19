@@ -45,13 +45,6 @@ public class MainActivity extends ActionBarActivity {
             }
         };
         create_event = new AddEventButton(findViewById(R.id.create_event), create_launcher);
-        /*
-        User user = new User("Robert Saget");
-        user.setNickname("Bob");
-        user.setLocation(new Location("Philidelphia, PA"));
-        ServerRequest svcreq = new ServerRequest();
-        svcreq.addUser(user);
-        */
     }
 
     public void onResume() {

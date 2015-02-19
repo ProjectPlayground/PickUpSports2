@@ -118,7 +118,7 @@ public class ServerRequest {
 
                     @Override
                     public void failure(RetrofitError error) {
-                        Log.e("Retrofit Error", "addEvent Failed");
+                        Log.e("addEvent Failed", error.getMessage());
                     }
                 });
             }

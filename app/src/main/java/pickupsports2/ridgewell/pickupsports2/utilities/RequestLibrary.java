@@ -25,15 +25,15 @@ public interface RequestLibrary {
     public void addUser(@Body User user, Callback<User> success);
 
     /*Event Commands*/
-    @GET("/?cmd=get&type=event&filter=name")
+    @GET("/event/?filter=name")
     public Event getEvent(@Query("name") String name);
 
-    @GET("/?cmd=get&type=event&filter=none")
+    @GET("/event/?filter=none")
     public List<Event> getAllEvents();
 
-    @POST("/?cmd=add&type=event")
+    @POST("/event/")
     public void addEvent(@Body Event event, Callback<Event> success);
 
-    @DELETE("/?cmd=delete&type=event")
+    @DELETE("/event/")
     public void deleteEvent(@Query("name") String name, Callback<Event> success);
 }

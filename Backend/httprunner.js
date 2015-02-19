@@ -2,6 +2,8 @@ var http = require('http');
 var fs = require('fs');
 var cs = require('./commandinterpreter.js');
 var url = require('url');
+var express = require('express');
+var app = express();
 
 var port = 8080;
 var path = require('path');
@@ -10,79 +12,75 @@ var mypath = "./storage.txt";
 var event_path = "./events.json";
 var user_path = "./users.json";
 
-http.createServer(function(request, response) {
-	var cmd = url.parse(request.url, true).query.cmd;
-	var type = url.parse(request.url, true).query.type;
+/*
+ * Call to get events. filter specifies what type of get event this req is
+ */
+app.get('/event/', function(req, res) {
+	console.log("get " + url.parse(req.url, true).path);
+	var filter = url.parse(req.url, true).query.filter;
+	switch (filter) {
+		case 'none': 
+			res.writeHead(200);
+			cs.getAllEvents(res);
+			break;
+		case "name":
+			var name = url.parse(req.url, true).query.name;
+			res.writeHead(200);
+			cs.getEvent(name, res);
+			break;
+		default:
+			res.writeHead(400);
+			console.log("not a valid filter type");
+			res.end();
+	}
+});
+
+app.post('/event/', function(req, res) {
+	console.log("post " + url.parse(req.url, true).path);
+	res.writeHead(201);
+	req.on('data', function(chunk) {
+		cs.addEvent(JSON.parse(chunk.toString()));
+	});
+	res.end();
+});
+
+app.delete('/event', function(req, res) {
+	console.log("delete " + url.parse(req.url, true).path);
+	var name = url.parse(req.url, true).query.name;
+	res.writeHead(200);
+	cs.deleteEvent(name);
+	res.end();
+});
+http.createServer(app).listen(port);
+
+/*
+http.createServer(function(req, res) {
+	var cmd = url.parse(req.url, true).query.cmd;
+	var type = url.parse(req.url, true).query.type;
 
 	switch (type) {
 		case "user":
 			switch (cmd) {
 				case "get":
-					var username = url.parse(request.url, true).query.username;
-					response.writeHead(200);
-					cs.getUser(username, response);
+					var username = url.parse(req.url, true).query.username;
+					res.writeHead(200);
+					cs.getUser(username, res);
 					break;
 				case "add":
-					response.writeHead(201);
+					res.writeHead(201);
 					console.log(cmd + " " + type);
 					var body;
-					request.on('data', function(chunk) {
+					req.on('data', function(chunk) {
 						var user = chunk.toString();
 						cs.addUser(JSON.parse(user));
 					});
 					break;
 				default: 
-					response.writeHead(400);
+					res.writeHead(400);
 					console.log("Invalid user command");
 					break;
 			}
 			break;
-		case "event":
-			switch (cmd) {
-				case "get":
-					var filter = url.parse(request.url, true).query.filter;
-					console.log(cmd + " " + type + ": filter -" + filter);
-					if (filter == "none") {
-						response.writeHead(200);
-						cs.getAllEvents(response);
-					} else if (filter == "name") {
-						var name = url.parse(request.url, true).query.name;
-						response.writeHead(200);
-						cs.getEvent(name, response);
-					} else {
-						response.writeHead(400);
-						console.log("not a valid filter type");
-						response.end();
-					}
-					break;
-				case "add":
-					response.writeHead(201);
-					console.log(cmd + " " + type);
-					var body;
-					request.on('data', function(chunk) {
-						var event = chunk.toString();
-						cs.addEvent(JSON.parse(event));
-						response.end();
-					});
-					break;
-				case "delete":
-					var name = url.parse(request.url, true).query.name;
-					response.writeHead(200);
-					cs.deleteEvent(name);
-					response.end();
-					break;
-				default: 
-					response.writeHead(400);
-					console.log("Invalid user command");
-					response.end();
-					break;
-			}
-			break;
-		default:
-			response.writeHead(400);
-			console.log("Invalid type");
-			break;
-	}
-}).listen(port);
+*/
 
 console.log("Server Running on " + port);
