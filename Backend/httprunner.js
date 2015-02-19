@@ -13,7 +13,8 @@ var event_path = "./events.json";
 var user_path = "./users.json";
 
 /*
- * Call to get events. filter specifies what type of get event this req is
+ * Express code to use module to delete an event from the commandinterpreter
+ * uses a query filter field to indicate the breadth of the 'get' call
  */
 app.get('/event/', function(req, res) {
 	console.log("get " + url.parse(req.url, true).path);
@@ -35,6 +36,9 @@ app.get('/event/', function(req, res) {
 	}
 });
 
+/*
+ * Express code to use module to add an event from the commandinterpreter
+ */
 app.post('/event/', function(req, res) {
 	console.log("post " + url.parse(req.url, true).path);
 	res.writeHead(201);
@@ -44,6 +48,9 @@ app.post('/event/', function(req, res) {
 	res.end();
 });
 
+/*
+ * Express code to use module to delete an event from the commandinterpreter
+ */
 app.delete('/event', function(req, res) {
 	console.log("delete " + url.parse(req.url, true).path);
 	var name = url.parse(req.url, true).query.name;
@@ -51,36 +58,40 @@ app.delete('/event', function(req, res) {
 	cs.deleteEvent(name);
 	res.end();
 });
-http.createServer(app).listen(port);
 
 /*
-http.createServer(function(req, res) {
-	var cmd = url.parse(req.url, true).query.cmd;
-	var type = url.parse(req.url, true).query.type;
+ * Express code to use module to get a user from the commandinterpreter
+ */
+app.get('/user/', function(req, res) {
+	console.log("get " + url.parse(req.url, true).path);
+	var username = url.parse(req.url, true).query.username;
+	res.writeHead(200);
+	cs.getUser(username, res);
+});
 
-	switch (type) {
-		case "user":
-			switch (cmd) {
-				case "get":
-					var username = url.parse(req.url, true).query.username;
-					res.writeHead(200);
-					cs.getUser(username, res);
-					break;
-				case "add":
-					res.writeHead(201);
-					console.log(cmd + " " + type);
-					var body;
-					req.on('data', function(chunk) {
-						var user = chunk.toString();
-						cs.addUser(JSON.parse(user));
-					});
-					break;
-				default: 
-					res.writeHead(400);
-					console.log("Invalid user command");
-					break;
-			}
-			break;
-*/
+/*
+ * Express code to use module to add a user from the commandinterpreter
+ */
+app.post('/user/', function(req, res) {
+	console.log("post " + url.parse(req.url, true).path);
+	res.writeHead(201);
+	req.on('data', function(chunk) {
+		cs.addUser(JSON.parse(chunk.toString()));
+	});
+	res.end();
+});
+
+/*
+ * Express code to use module to add a user from the commandinterpreter
+ */
+app.delete('/user/', function(req, res) {
+	console.log("delete " + url.parse(req.url, true).path);
+	var name = url.parse(req.url, true).query.name;
+	res.writeHead(200);
+	cs.deleteUser(name);
+	res.end();
+});
+
+http.createServer(app).listen(port);
 
 console.log("Server Running on " + port);
