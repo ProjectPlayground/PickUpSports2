@@ -1,7 +1,5 @@
 var fs = require('fs');
 
-var command_list = ['add', 'delete'];
-
 var event_path = "./events.json";
 var user_path = "./users.json";
 

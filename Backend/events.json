@@ -1,22 +1,5 @@
 {"events":[
     {
-        "timeString": "2016-07-24T21:01:22.950-05:00",
-        "sport": {
-            "sportName": "Cross Country Running"
-        },
-        "creator": "Creator User",
-        "notes": "May the best horse win.",
-        "name": "Horserace",
-        "location": {
-            "location": "Around the World"
-        },
-        "maxAttendance": 30,
-        "isPublic": false,
-        "event_id": 0,
-        "cost": 0,
-        "WAITLISTMAX": 10
-    },
-    {
         "creator": "Cameron Ridgewell",
         "location": {
             "location": "Nashville, TN"

@@ -14,39 +14,5 @@
         },
         "nickname": "Bob",
         "username": "Robert Saget"
-    },
-    {
-        "timeString": "2015-02-18T21:55:48.498-06:00",
-        "sport": {
-            "sportName": "Baseball"
-        },
-        "creator": "Creator User",
-        "notes": "",
-        "name": "lkanslksadlkm",
-        "location": {
-            "location": "lnlklkm"
-        },
-        "maxAttendance": 78,
-        "isPublic": false,
-        "event_id": 0,
-        "cost": 0,
-        "WAITLISTMAX": 10
-    },
-    {
-        "timeString": "2015-02-18T21:58:03.513-06:00",
-        "sport": {
-            "sportName": "Baseball"
-        },
-        "creator": "Creator User",
-        "notes": "",
-        "name": "asdksakldn",
-        "location": {
-            "location": ""
-        },
-        "maxAttendance": 78,
-        "isPublic": false,
-        "event_id": 0,
-        "cost": 0,
-        "WAITLISTMAX": 10
     }
 ]}

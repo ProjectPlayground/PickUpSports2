@@ -18,10 +18,10 @@ import ridgewell.pickupsports2.common.User;
 public interface RequestLibrary {
 
     /*User Commands*/
-    @GET("/?cmd=get&type=user")
+    @GET("/user/")
     public User getUser(@Query("username") String username);
 
-    @POST("/?cmd=add&type=user")
+    @POST("/user/")
     public void addUser(@Body User user, Callback<User> success);
 
     /*Event Commands*/

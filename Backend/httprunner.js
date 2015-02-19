@@ -1,13 +1,10 @@
 var http = require('http');
-var fs = require('fs');
 var cs = require('./commandinterpreter.js');
 var url = require('url');
 var express = require('express');
 var app = express();
 
 var port = 8080;
-var path = require('path');
-var mypath = "./storage.txt";
 
 var event_path = "./events.json";
 var user_path = "./users.json";
