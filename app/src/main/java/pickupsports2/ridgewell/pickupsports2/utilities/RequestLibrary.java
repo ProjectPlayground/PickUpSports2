@@ -2,6 +2,8 @@ package pickupsports2.ridgewell.pickupsports2.utilities;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
+
 import retrofit.Callback;
 import retrofit.http.Body;
 import retrofit.http.DELETE;
@@ -10,6 +12,7 @@ import retrofit.http.POST;
 import retrofit.http.Query;
 
 import ridgewell.pickupsports2.common.Event;
+import ridgewell.pickupsports2.common.Sport;
 import ridgewell.pickupsports2.common.User;
 
 /**
@@ -36,4 +39,11 @@ public interface RequestLibrary {
 
     @DELETE("/event/")
     public void deleteEvent(@Query("name") String name, Callback<Event> success);
+
+    /*Sport Commands*/
+    @GET("/sport/")
+    public Sport getSport(@Query("sport") String sport);
+
+    @POST("/sport/")
+    public void addSport(@Body Sport sport, Callback<Sport> success);
 }

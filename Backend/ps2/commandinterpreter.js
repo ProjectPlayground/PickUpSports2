@@ -1,7 +1,8 @@
 var fs = require('fs');
 
-var event_path = "./events.json";
-var user_path = "./users.json";
+var event_path 	= "./events.json";
+var user_path 	= "./users.json";
+var sport_path 	= "./sports.json"
 
 //returns specified event
 exports.getEvent = function(name, res) {
@@ -179,7 +180,92 @@ exports.deleteUser = function(name, res) {
 					return;
 				}
 			}
-			console.log("couldn't find event " + name);
+			console.log("couldn't find user " + name);
+			return;
+		}
+		return;
+	});
+}
+
+//returns specified sport
+exports.getSport = function(sport, res) {
+	fs.readFile(sport_path, function(err, sports) {
+		if (err) {
+			console.log("error while reading " + sport_path);
+			res.write(null);
+			res.end();
+			return;
+		} else {
+			var sport_list = JSON.parse(sports.toString()).sports;
+			for (var i = 0; i < sport_list.length; i++) {
+				if (sport_list[i].sportName == sport) {
+					console.log("found it");
+					console.log(JSON.stringify(sport_list[i]));
+					res.write(JSON.stringify(sport_list[i]));
+					res.end();
+					return;
+				}
+			}
+			console.log("couldn't find sport " + sport);
+			res.write(null);
+			return;
+		}
+		console.log("res Ending");
+		res.end();
+		return;
+	});
+}
+
+//adds specified sport
+exports.addSport = function(sport) {
+	fs.readFile(sport_path, function(err, sports) {
+		if (err) {
+			console.log("error while reading " + sport_path);
+		} else {
+			console.log(JSON.stringify(sport));
+			var sport_list = JSON.parse(sports.toString()).sports;
+			sport_list.push(sport);
+			fs.writeFile(sport_path, 
+				"{\"sports\":" + JSON.stringify(sport_list, null, 4) +"}", 
+				function(err) {
+					if (err) {
+						console.log("Error while writing file");
+					} else {
+						console.log("Event written to " + sport_path);
+					}
+			});
+		}
+		return;
+	});
+}
+
+//deletes specified sport
+exports.deleteSport = function(sport, res) {
+	fs.readFile(sport_path, function(err, sports) {
+		if (err) {
+			console.log("error while reading " + sport_path);
+			res.write(null);
+			res.end();
+			return;
+		} else {
+			var sport_list = JSON.parse(sports.toString()).sports;
+			for (var i = 0; i < sport_list.length; i++) {
+				if (sport_list[i].sportName == sport) {
+					console.log("found it");
+					sport_list.splice(i,1);
+					fs.writeFile(sport_path, 
+						"{\"sports\":" + JSON.stringify(sport_list, null, 4) +"}", 
+						function(err) {
+							if (err) {
+								console.log("Error while writing file");
+							} else {
+								console.log("Event written to " + sport_path);
+							}
+					});
+					return;
+				}
+			}
+			console.log("couldn't find sport " + sport);
 			return;
 		}
 		return;

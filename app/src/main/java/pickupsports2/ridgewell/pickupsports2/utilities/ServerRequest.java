@@ -13,6 +13,7 @@ import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 import ridgewell.pickupsports2.common.Event;
+import ridgewell.pickupsports2.common.Sport;
 import ridgewell.pickupsports2.common.User;
 
 /**
@@ -107,12 +108,11 @@ public class ServerRequest {
         }
     }
 
-    public void addEvent(Event event) {
-        final Event e = event;
+    public void addEvent(final Event event) {
         Runnable r = new Runnable() {
             @Override
             public void run() {
-                svc.addEvent(e, new Callback<Event>() {
+                svc.addEvent(event, new Callback<Event>() {
                     @Override
                     public void success(Event event, Response response) {
                         Log.v("Retrofit Success", "Event response");
@@ -150,4 +150,43 @@ public class ServerRequest {
         t.start();
     }
 
+    public Sport getSport(final String sport) {
+        try {
+            Callable<Sport> callable = new Callable<Sport>() {
+                @Override
+                public Sport call() {
+                    return svc.getSport(sport);
+                }
+            };
+            ExecutorService exec = Executors.newFixedThreadPool(3 );
+            return exec.submit(callable).get();
+        } catch (ExecutionException e) {
+            Log.e("Interrupted Exception", e.getMessage());
+            return null;
+        } catch (InterruptedException e) {
+            Log.e("Execution Exception", e.getMessage());
+            return null;
+        }
+    }
+
+    public void addSport(final Sport sport) {
+        Runnable r = new Runnable() {
+            @Override
+            public void run() {
+                svc.addSport(sport, new Callback<Sport>() {
+                    @Override
+                    public void success(Sport event, Response response) {
+                        Log.v("Retrofit Success", "Sport response");
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+                        Log.e("addSport Failed", error.getMessage());
+                    }
+                });
+            }
+        };
+        Thread t = new Thread(r);
+        t.start();
+    }
 }

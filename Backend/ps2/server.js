@@ -4,6 +4,7 @@ var express = require('express');
 var fs      = require('fs');
 var url     = require('url');
 var cs      = require('./commandinterpreter.js');
+var MongoClient = require('mongodb').MongoClient;
 
 /**
  *  Define the sample application.
@@ -36,6 +37,18 @@ var PickUpSports2 = function() {
             console.warn('No OPENSHIFT_NODEJS_IP var, using 127.0.0.1');
             self.ipaddress = "127.0.0.1";
         };
+
+        // default to a 'localhost' configuration:
+        self.connection_string = '127.0.0.1:27017/PickUpSports2';
+
+        // if OPENSHIFT env variables are present, use the available connection info:
+        if(process.env.OPENSHIFT_MONGODB_DB_PASSWORD){
+          self.connection_string = process.env.OPENSHIFT_MONGODB_DB_USERNAME + ":" +
+          process.env.OPENSHIFT_MONGODB_DB_PASSWORD + "@" +
+          process.env.OPENSHIFT_MONGODB_DB_HOST + ':' +
+          process.env.OPENSHIFT_MONGODB_DB_PORT + '/' +
+          process.env.OPENSHIFT_APP_NAME;
+        }
     };
 
 
@@ -100,11 +113,6 @@ var PickUpSports2 = function() {
     self.createRoutes = function() {
         self.routes = { };
 
-        self.routes['/asciimo'] = function(req, res) {
-            var link = "http://i.imgur.com/kmbjB.png";
-            res.send("<html><body><img src='" + link + "'></body></html>");
-        };
-
         self.routes['/'] = function(req, res) {
             res.setHeader('Content-Type', 'text/html');
             res.send(self.cache_get('index.html') );
@@ -125,7 +133,7 @@ var PickUpSports2 = function() {
 
         self.app.get('/', function(req, res) {
             res.writeHead(200);
-            res.write("hello world");
+            res.write("Server Running");
             res.end();
         });
 
@@ -208,8 +216,50 @@ var PickUpSports2 = function() {
             cs.deleteUser(name);
             res.end();
         });
+
+                /*
+         * Express code to use module to get a user from the commandinterpreter
+         */
+        self.app.get('/sport/', function(req, res) {
+            console.log("get " + url.parse(req.url, true).path);
+            var sport = url.parse(req.url, true).query.sport;
+            res.writeHead(200);
+            cs.getSport(sport, res);
+        });
+
+        /*
+         * Express code to use module to add a user from the commandinterpreter
+         */
+        self.app.post('/sport/', function(req, res) {
+            console.log("post " + url.parse(req.url, true).path);
+            res.writeHead(201);
+            req.on('data', function(chunk) {
+                cs.addSport(JSON.parse(chunk.toString()));
+            });
+            res.end();
+        });
+
+        /*
+         * Express code to use module to add a user from the commandinterpreter
+         */
+        self.app.delete('/sport/', function(req, res) {
+            console.log("delete " + url.parse(req.url, true).path);
+            var name = url.parse(req.url, true).query.sport;
+            res.writeHead(200);
+            cs.deleteSport(sport);
+            res.end();
+        });
     };
 
+    self.findDB = function() {
+        MongoClient.connect('mongodb://'+self.connection_string, function(err, db) {
+          if(err) throw err;
+          self.events_c = db.collection('events').find().limit(10).toArray(function(err, docs) {
+            console.dir(docs);
+            db.close();
+          })
+        })
+    }
 
     /**
      *  Initializes the sample application.
@@ -221,11 +271,14 @@ var PickUpSports2 = function() {
 
         // Create the express server and routes.
         self.initializeServer();
+
+        //acquire collections
+        self.findDB();
     };
 
 
     /**
-     *  Start the server (starts up the sample application).
+     *  Start the server
      */
     self.start = function() {
         //  Start the app on the specific interface (and port).
@@ -235,7 +288,7 @@ var PickUpSports2 = function() {
         });
     };
 
-};   /*  Sample Application.  */
+}; 
 
 
 
