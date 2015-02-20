@@ -3,7 +3,7 @@
 var express = require('express');
 var fs      = require('fs');
 var url     = require('url');
-var cs      = require('./commandinterpreter.js')
+var cs      = require('./commandinterpreter.js');
 
 /**
  *  Define the sample application.
@@ -25,6 +25,10 @@ var PickUpSports2 = function() {
         //  Set the environment variables we need.
         self.ipaddress = process.env.OPENSHIFT_NODEJS_IP;
         self.port      = process.env.OPENSHIFT_NODEJS_PORT || 8080;
+
+        //mongodb configuration
+        self.mongoHost = process.env.OPENSHIFT_MONGODB_DB_HOST;
+        self.mongoPort = process.env.OPENSHIFT_MONGODB_DB_PORT || 27017;
 
         if (typeof self.ipaddress === "undefined") {
             //  Log errors on OpenShift but continue w/ 127.0.0.1 - this
