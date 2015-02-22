@@ -70,7 +70,13 @@ public class EventFragment extends SwipeRefreshListFragment {
     public void refreshEvents() {
         Log.v("Attempting", "Event Refresh");
         events = svreq.getAllEvents();
-        sportingEventArrayAdapter.refreshItems(events);
-        Log.v("Completed","EventRefresh");
+        if (events != null) {
+            sportingEventArrayAdapter.refreshItems(events);
+            Log.v("Completed", "EventRefresh");
+        } else {
+            Toast toast = Toast.makeText(getActivity().getApplicationContext(),
+                    "PickUpSports was unable to connect to server", Toast.LENGTH_SHORT);
+            toast.show();
+        }
     }
 }

@@ -15,9 +15,9 @@ import java.util.List;
 public class Event implements Parcelable{
     private int event_id;
     private String name;
-    private Sport sport;
+    private String sport;
     private String timeString;
-    private Location location;
+    private String location;
     private int cost;
     private String notes;
     private boolean isPublic;
@@ -31,7 +31,7 @@ public class Event implements Parcelable{
 
     public Event() {}
 
-    public Event(String name, Sport sport, DateTime time, Location location, int cost,
+    public Event(String name, String sport, DateTime time, String location, int cost,
                  String notes, boolean isPublic, int maxAttendance, String creator) {
         this.name = name;
         this.sport = sport;
@@ -88,19 +88,19 @@ public class Event implements Parcelable{
         }
     }
 
-    public Sport getSport() {
+    public String getSport() {
         return sport;
     }
 
-    public void setSport(Sport sport) {
+    public void setSport(String sport) {
         this.sport = sport;
     }
 
-    public Location getLocation() {
+    public String getLocation() {
         return location;
     }
 
-    public void setLocation(Location location) {
+    public void setLocation(String location) {
         this.location = location;
     }
 
@@ -195,9 +195,9 @@ public class Event implements Parcelable{
 
     public void writeToParcel(Parcel out, int flags) {
         out.writeString(name);
-        out.writeParcelable(sport,0);
+        out.writeString(sport);
         out.writeString(timeString);
-        out.writeParcelable(location, 0);
+        out.writeString(location);
         out.writeInt(cost);
         out.writeString(notes);
         out.writeInt(isPublic ? 1 : 0);
@@ -220,9 +220,9 @@ public class Event implements Parcelable{
 
     private Event(Parcel in) {
         name = in.readString();
-        sport = in.readParcelable(Sport.class.getClassLoader());
+        sport = in.readString();
         timeString = in.readString();
-        location = in.readParcelable(Location.class.getClassLoader());
+        location = in.readString();
         cost = in.readInt();
         notes = in.readString();
         isPublic = in.readInt() == 1;

@@ -1,8 +1,10 @@
 var fs = require('fs');
 
-var event_path 	= "./events.json";
-var user_path 	= "./users.json";
-var sport_path 	= "./sports.json"
+var event_path 		= "./events.json";
+var user_path 		= "./users.json";
+var sport_path 		= "./sports.json";
+var location_path 	= "./locations.json";
+
 
 //returns specified event
 exports.getEvent = function(name, res) {
@@ -188,7 +190,7 @@ exports.deleteUser = function(name, res) {
 }
 
 //returns specified sport
-exports.getSport = function(sport, res) {
+exports.getSport = function(sportName, res) {
 	fs.readFile(sport_path, function(err, sports) {
 		if (err) {
 			console.log("error while reading " + sport_path);
@@ -198,7 +200,7 @@ exports.getSport = function(sport, res) {
 		} else {
 			var sport_list = JSON.parse(sports.toString()).sports;
 			for (var i = 0; i < sport_list.length; i++) {
-				if (sport_list[i].sportName == sport) {
+				if (sport_list[i].sportName == sportName) {
 					console.log("found it");
 					console.log(JSON.stringify(sport_list[i]));
 					res.write(JSON.stringify(sport_list[i]));
@@ -206,7 +208,7 @@ exports.getSport = function(sport, res) {
 					return;
 				}
 			}
-			console.log("couldn't find sport " + sport);
+			console.log("couldn't find sport " + sportName);
 			res.write(null);
 			return;
 		}
@@ -259,13 +261,98 @@ exports.deleteSport = function(sport, res) {
 							if (err) {
 								console.log("Error while writing file");
 							} else {
-								console.log("Event written to " + sport_path);
+								console.log("Sport written to " + sport_path);
 							}
 					});
 					return;
 				}
 			}
 			console.log("couldn't find sport " + sport);
+			return;
+		}
+		return;
+	});
+}
+
+//returns specified location
+exports.getLocation = function(locationName, res) {
+	fs.readFile(location_path, function(err, locations) {
+		if (err) {
+			console.log("error while reading " + location_path);
+			res.write(null);
+			res.end();
+			return;
+		} else {
+			var location_list = JSON.parse(locations.toString()).locations;
+			for (var i = 0; i < location_list.length; i++) {
+				if (location_list[i].locationName == locationName) {
+					console.log("found it");
+					console.log(JSON.stringify(location_list[i]));
+					res.write(JSON.stringify(location_list[i]));
+					res.end();
+					return;
+				}
+			}
+			console.log("couldn't find location " + locationName);
+			res.write(null);
+			return;
+		}
+		console.log("res Ending");
+		res.end();
+		return;
+	});
+}
+
+//adds specified location
+exports.addLocation = function(location) {
+	fs.readFile(location_path, function(err, locations) {
+		if (err) {
+			console.log("error while reading " + location_path);
+		} else {
+			console.log(JSON.stringify(location));
+			var location_list = JSON.parse(locations.toString()).locations;
+			location_list.push(location);
+			fs.writeFile(location_path, 
+				"{\"locations\":" + JSON.stringify(location_list, null, 4) +"}", 
+				function(err) {
+					if (err) {
+						console.log("Error while writing file");
+					} else {
+						console.log("Event written to " + location_path);
+					}
+			});
+		}
+		return;
+	});
+}
+
+//deletes specified location
+exports.deleteLocation = function(location, res) {
+	fs.readFile(location_path, function(err, locations) {
+		if (err) {
+			console.log("error while reading " + location_path);
+			res.write(null);
+			res.end();
+			return;
+		} else {
+			var location_list = JSON.parse(locations.toString()).locations;
+			for (var i = 0; i < location_list.length; i++) {
+				if (location_list[i].location == location) {
+					console.log("found it");
+					location_list.splice(i,1);
+					fs.writeFile(location_path, 
+						"{\"locations\":" + JSON.stringify(location_list, null, 4) +"}", 
+						function(err) {
+							if (err) {
+								console.log("Error while writing file");
+							} else {
+								console.log("location written to " + location_path);
+							}
+					});
+					return;
+				}
+			}
+			console.log("couldn't find location " + location);
 			return;
 		}
 		return;

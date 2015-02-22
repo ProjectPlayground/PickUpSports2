@@ -13,6 +13,7 @@ import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 import ridgewell.pickupsports2.common.Event;
+import ridgewell.pickupsports2.common.Location;
 import ridgewell.pickupsports2.common.Sport;
 import ridgewell.pickupsports2.common.User;
 
@@ -62,6 +63,27 @@ public class ServerRequest {
                     @Override
                     public void failure(RetrofitError error) {
                         Log.e("Retrofit Error", "addUser Failed");
+                    }
+                });
+            }
+        };
+        Thread t = new Thread(r);
+        t.start();
+    }
+
+    public void deleteUser(final User user) {
+        Runnable r = new Runnable() {
+            @Override
+            public void run() {
+                svc.deleteUser(user.getUsername(), new Callback<User>() {
+                    @Override
+                    public void success(User user, Response response) {
+                        Log.v("Retrofit Success", "User response");
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+                        Log.e("Retrofit Error", "deleteUser Failed");
                     }
                 });
             }
@@ -182,6 +204,88 @@ public class ServerRequest {
                     @Override
                     public void failure(RetrofitError error) {
                         Log.e("addSport Failed", error.getMessage());
+                    }
+                });
+            }
+        };
+        Thread t = new Thread(r);
+        t.start();
+    }
+
+    public void deleteSport(final Sport sport) {
+        Runnable r = new Runnable() {
+            @Override
+            public void run() {
+                svc.deleteSport(sport.getSportName(), new Callback<Sport>() {
+                    @Override
+                    public void success(Sport sport, Response response) {
+                        Log.v("Retrofit Success", "Sport response");
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+                        Log.e("Retrofit Error", "deleteSport Failed");
+                    }
+                });
+            }
+        };
+        Thread t = new Thread(r);
+        t.start();
+    }
+
+    public Location getLocation(final String location) {
+        try {
+            Callable<Location> callable = new Callable<Location>() {
+                @Override
+                public Location call() {
+                    return svc.getLocation(location);
+                }
+            };
+            ExecutorService exec = Executors.newFixedThreadPool(3 );
+            return exec.submit(callable).get();
+        } catch (ExecutionException e) {
+            Log.e("Interrupted Exception", e.getMessage());
+            return null;
+        } catch (InterruptedException e) {
+            Log.e("Execution Exception", e.getMessage());
+            return null;
+        }
+    }
+
+    public void addLocation(final Location location) {
+        Runnable r = new Runnable() {
+            @Override
+            public void run() {
+                svc.addLocation(location, new Callback<Location>() {
+                    @Override
+                    public void success(Location location, Response response) {
+                        Log.v("Retrofit Success", "Location response");
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+                        Log.e("addLocation Failed", error.getMessage());
+                    }
+                });
+            }
+        };
+        Thread t = new Thread(r);
+        t.start();
+    }
+
+    public void deleteLocation(final Location location) {
+        Runnable r = new Runnable() {
+            @Override
+            public void run() {
+                svc.deleteLocation(location.getLocation(), new Callback<Location>() {
+                    @Override
+                    public void success(Location location, Response response) {
+                        Log.v("Retrofit Success", "Location response");
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+                        Log.e("Retrofit Error", "deleteLocation Failed");
                     }
                 });
             }

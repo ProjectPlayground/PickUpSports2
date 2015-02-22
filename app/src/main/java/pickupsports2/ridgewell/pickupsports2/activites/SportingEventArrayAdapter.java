@@ -47,10 +47,10 @@ public class SportingEventArrayAdapter extends ArrayAdapter<Event> {
         listItemTextTitle.setText(event.getName());
 
         TextView listItemTextSport = (TextView)view.findViewById(R.id.event_view_adapter_sport);
-        listItemTextSport.setText(event.getSport().getSportName());
+        listItemTextSport.setText(event.getSport());
 
         TextView listItemTextLocation = (TextView)view.findViewById(R.id.event_view_adapter_location);
-        listItemTextLocation.setText(event.getLocation().getLocation());
+        listItemTextLocation.setText(event.getLocation());
 
         TextView listItemTextDate = (TextView)view.findViewById(R.id.event_view_adapter_date);
         listItemTextDate.setText(event.getTime().toString("MMMM d, yyyy"));

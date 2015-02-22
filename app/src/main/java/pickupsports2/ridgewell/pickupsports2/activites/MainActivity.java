@@ -14,6 +14,7 @@ import pickupsports2.ridgewell.pickupsports2.R;
 import pickupsports2.ridgewell.pickupsports2.elements.AddEventButton;
 import pickupsports2.ridgewell.pickupsports2.utilities.ServerRequest;
 import ridgewell.pickupsports2.common.Location;
+import ridgewell.pickupsports2.common.Sport;
 import ridgewell.pickupsports2.common.User;
 
 public class MainActivity extends ActionBarActivity {
@@ -45,6 +46,10 @@ public class MainActivity extends ActionBarActivity {
             }
         };
         create_event = new AddEventButton(findViewById(R.id.create_event), create_launcher);
+
+        ServerRequest svreq = new ServerRequest();
+        Location nashville = new Location("Nashville, TN");
+        svreq.deleteLocation(nashville);
     }
 
     public void onResume() {

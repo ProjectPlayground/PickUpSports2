@@ -142,9 +142,9 @@ public class CreateEventActivity extends ActionBarActivity implements OnClickLis
                 //TODO Check for empty fields + Toast
                 try {
                     svreq.addEvent(new Event(event_name.getText().toString(),
-                            new Sport(sportsSpinner.getSelectedItem().toString()),
+                            sportsSpinner.getSelectedItem().toString(),
                             date.toDateTime(),
-                            new Location(location.getText().toString()),
+                            location.getText().toString(),
                             costSpinner.getSelectedItemPosition(),
                             notes.getText().toString(),
                             privacySpinner.getSelectedItemPosition() == 1,

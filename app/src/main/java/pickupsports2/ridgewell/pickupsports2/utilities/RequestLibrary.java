@@ -12,6 +12,7 @@ import retrofit.http.POST;
 import retrofit.http.Query;
 
 import ridgewell.pickupsports2.common.Event;
+import ridgewell.pickupsports2.common.Location;
 import ridgewell.pickupsports2.common.Sport;
 import ridgewell.pickupsports2.common.User;
 
@@ -26,6 +27,9 @@ public interface RequestLibrary {
 
     @POST("/user/")
     public void addUser(@Body User user, Callback<User> success);
+
+    @DELETE("/user/")
+    public void deleteUser(@Query("username") String username, Callback<User> success);
 
     /*Event Commands*/
     @GET("/event/?filter=name")
@@ -46,4 +50,17 @@ public interface RequestLibrary {
 
     @POST("/sport/")
     public void addSport(@Body Sport sport, Callback<Sport> success);
+
+    @DELETE("/sport/")
+    public void deleteSport(@Query("sportName") String sportName, Callback<Sport> success);
+
+    /*Location Commands*/
+    @GET("/location/")
+    public Location getLocation(@Query("locationame") String location);
+
+    @POST("/location/")
+    public void addLocation(@Body Location location, Callback<Location> success);
+
+    @DELETE("/location/")
+    public void deleteLocation(@Query("location") String Location, Callback<Location> success);
 }

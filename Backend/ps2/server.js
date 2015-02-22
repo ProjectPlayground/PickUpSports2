@@ -9,7 +9,7 @@ var MongoClient = require('mongodb').MongoClient;
 /**
  *  Define the sample application.
  */
-var PickUpSports2 = function() {
+var PickUplocations2 = function() {
 
     //  Scope.
     var self = this;
@@ -39,7 +39,7 @@ var PickUpSports2 = function() {
         };
 
         // default to a 'localhost' configuration:
-        self.connection_string = '127.0.0.1:27017/PickUpSports2';
+        self.connection_string = '127.0.0.1:27017/PickUplocations2';
 
         // if OPENSHIFT env variables are present, use the available connection info:
         if(process.env.OPENSHIFT_MONGODB_DB_PASSWORD){
@@ -127,9 +127,6 @@ var PickUpSports2 = function() {
     self.initializeServer = function() {
         self.createRoutes();
         self.app = express();
-
-        var event_path = "./events.json";
-        var user_path = "./users.json";
 
         self.app.get('/', function(req, res) {
             res.writeHead(200);
@@ -220,21 +217,21 @@ var PickUpSports2 = function() {
                 /*
          * Express code to use module to get a user from the commandinterpreter
          */
-        self.app.get('/sport/', function(req, res) {
+        self.app.get('/location/', function(req, res) {
             console.log("get " + url.parse(req.url, true).path);
-            var sport = url.parse(req.url, true).query.sport;
+            var location = url.parse(req.url, true).query.location;
             res.writeHead(200);
-            cs.getSport(sport, res);
+            cs.getLocation(location, res);
         });
 
         /*
          * Express code to use module to add a user from the commandinterpreter
          */
-        self.app.post('/sport/', function(req, res) {
+        self.app.post('/location/', function(req, res) {
             console.log("post " + url.parse(req.url, true).path);
             res.writeHead(201);
             req.on('data', function(chunk) {
-                cs.addSport(JSON.parse(chunk.toString()));
+                cs.addLocation(JSON.parse(chunk.toString()));
             });
             res.end();
         });
@@ -242,11 +239,11 @@ var PickUpSports2 = function() {
         /*
          * Express code to use module to add a user from the commandinterpreter
          */
-        self.app.delete('/sport/', function(req, res) {
+        self.app.delete('/location/', function(req, res) {
             console.log("delete " + url.parse(req.url, true).path);
-            var name = url.parse(req.url, true).query.sport;
+            var location = url.parse(req.url, true).query.location;
             res.writeHead(200);
-            cs.deleteSport(sport);
+            cs.deleteLocation(location, res);
             res.end();
         });
     };
@@ -273,7 +270,7 @@ var PickUpSports2 = function() {
         self.initializeServer();
 
         //acquire collections
-        self.findDB();
+        //self.findDB();
     };
 
 
@@ -295,7 +292,7 @@ var PickUpSports2 = function() {
 /**
  *  main():  Main code.
  */
-var zapp = new PickUpSports2();
+var zapp = new PickUplocations2();
 zapp.initialize();
 zapp.start();
 

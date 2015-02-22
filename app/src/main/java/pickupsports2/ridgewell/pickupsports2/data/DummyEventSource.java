@@ -32,9 +32,12 @@ public class DummyEventSource implements EventSource {
         Location loc1 = new Location("Nashville, TN");
         String user1 = "Cameron Ridgewell";
 
-        Event event1 = new Event("Music Bowl", football, date1, loc1, 0, "", false, 35, user1);
-        Event event2 = new Event("Kicking and Screaming", soccer, date2, loc1, 3, "notes here", true, 20, user1);
-        Event event3 = new Event("Top Gun Volleyball", volleyball, date3, loc1, 3, "notes here", true, 8, user1);
+        Event event1 = new Event("Music Bowl", football.getSportName(), date1, loc1.getLocation(),
+                0, "", false, 35, user1);
+        Event event2 = new Event("Kicking and Screaming", soccer.getSportName(), date2,
+                loc1.getLocation(), 3, "notes here", true, 20, user1);
+        Event event3 = new Event("Top Gun Volleyball", volleyball.getSportName(), date3,
+                loc1.getLocation(), 3, "notes here", true, 8, user1);
 
         events.add(event1);
         events.add(event2);

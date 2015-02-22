@@ -40,10 +40,10 @@ public class ViewEventActivity extends ActionBarActivity {
         viewItemTextCreator.setText(event.getCreator());
 
         TextView viewItemTextSport = (TextView) findViewById(R.id.event_sport_text);
-        viewItemTextSport.setText(event.getSport().getSportName());
+        viewItemTextSport.setText(event.getSport());
 
         TextView viewItemTextLocation = (TextView) findViewById(R.id.event_location_text);
-        viewItemTextLocation.setText(event.getLocation().getLocation());
+        viewItemTextLocation.setText(event.getLocation());
 
         TextView viewItemTextDate = (TextView) findViewById(R.id.event_date_text);
         viewItemTextDate.setText(event.getTime().toString("MMMM d, yyyy")

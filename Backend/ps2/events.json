@@ -1,14 +1,10 @@
 {"events":[
     {
         "creator": "Cameron Ridgewell",
-        "location": {
-            "location": "Nashville, TN"
-        },
+        "location": "Nashville, TN",
         "name": "Top Gun Volleyball",
         "notes": "notes here",
-        "sport": {
-            "sportName": "Volleyball"
-        },
+        "location": "Volleyball",
         "timeString": "2015-02-11T20:54:59.721-06:00",
         "WAITLISTMAX": 10,
         "cost": 3,
@@ -18,14 +14,10 @@
     },
     {
         "creator": "Cameron Ridgewell",
-        "location": {
-            "location": "Nashville, TN"
-        },
+        "location": "Nashville, TN",
         "name": "Kicking and Screaming",
         "notes": "notes here",
-        "sport": {
-            "sportName": "Soccer"
-        },
+        "location": "Soccer",
         "timeString": "2015-02-09T20:54:59.721-06:00",
         "WAITLISTMAX": 10,
         "cost": 3,
@@ -35,14 +27,10 @@
     },
     {
         "creator": "Cameron Ridgewell",
-        "location": {
-            "location": "Nashville, TN"
-        },
+        "location": "Nashville, TN",
         "name": "Music City Bowl",
         "notes": "",
-        "sport": {
-            "sportName": "Football"
-        },
+        "location": "Football",
         "timeString": "2015-02-10T20:54:59.721-06:00",
         "WAITLISTMAX": 10,
         "cost": 0,

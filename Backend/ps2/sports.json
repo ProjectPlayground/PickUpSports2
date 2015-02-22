@@ -1,1 +1,77 @@
-{"sports":[]}
+{"locations":[
+    {
+        "locationName": "Basketball"
+    },
+    {
+        "locationName": "Swimming"
+    },
+    {
+        "locationName": "Racquetball"
+    },
+    {
+        "locationName": "Softball"
+    },
+    {
+        "locationName": "Squash"
+    },
+    {
+        "locationName": "Rock Climbing"
+    },
+    {
+        "locationName": "Golf"
+    },
+    {
+        "locationName": "Track and Field"
+    },
+    {
+        "locationName": "Rowing"
+    },
+    {
+        "locationName": "Rugby"
+    },
+    {
+        "locationName": "Hiking"
+    },
+    {
+        "locationName": "Fencing"
+    },
+    {
+        "locationName": "Hockey"
+    },
+    {
+        "locationName": "Baseball"
+    },
+    {
+        "locationName": "Football"
+    },
+    {
+        "locationName": "Volleyball"
+    },
+    {
+        "locationName": "Soccer"
+    },
+    {
+        "locationName": "Boxing"
+    },
+    {
+        "locationName": "Bowling"
+    },
+    {
+        "locationName": "Tennis"
+    },
+    {
+        "locationName": "Water Polo"
+    },
+    {
+        "locationName": "Cross Country Running"
+    },
+    {
+        "locationName": "Cycling"
+    },
+    {
+        "locationName": "Cricket"
+    },
+    {
+        "locationName": "Lacrosse"
+    }
+]}
