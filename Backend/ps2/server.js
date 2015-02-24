@@ -150,10 +150,10 @@ var PickUplocations2 = function() {
                     self.getFromDB('events', null, function(err, data) {
                         if (err) {
                             console.log(err);
-                            return res(err);
+                            res.send(err);
                         } else {
                             console.log(data);
-                            return res.json(data);
+                            res.json(data);
                         }
                     });
                     break;
@@ -162,10 +162,10 @@ var PickUplocations2 = function() {
                     self.getFromDB('events', {'_id': new ObjectID(id)}, function(err, data) {
                         if (err) {
                             console.log(err);
-                            return res(err);
+                            res.send(err);
                         } else {
                             console.log(data[0]);
-                            return res.json(data[0]);
+                            res.json(data[0]);
                         }
                     });
                     break;
@@ -174,10 +174,10 @@ var PickUplocations2 = function() {
                     self.getFromDB('events', {'name':name}, function(err, data) {
                         if (err) {
                             console.log(err);
-                            return res(err);
+                            res.send(err);
                         } else {
                             console.log(data[0]);
-                            return res.json(data[0]);
+                            res.json(data[0]);
                         }
                     });
                     break;
@@ -212,7 +212,9 @@ var PickUplocations2 = function() {
                 if (err) {
                     console.log(err);
                     res.send(err);
+                    res.status(400).end();
                 } else {
+                    res.status(200).end();
                     console.log(result);
                 }
             });
@@ -226,10 +228,10 @@ var PickUplocations2 = function() {
             self.getFromDB('users', {'_id': new ObjectID(id)}, function(err, data) {
                 if (err) {
                     console.log(err);
-                    return res(err);
+                    res.send(err);
                 } else {
                     console.log(data[0]);
-                    return res.json(data[0]);
+                    res.json(data[0]);
                 }
             });
         });
@@ -272,10 +274,10 @@ var PickUplocations2 = function() {
             self.getFromDB('sports', {'_id': new ObjectID(id)}, function(err, data) {
                 if (err) {
                     console.log(err);
-                    return res(err);
+                    res.send(err);
                 } else {
                     console.log(data[0]);
-                    return res.json(data[0]);
+                    res.json(data[0]);
                 }
             });
         });
@@ -318,10 +320,10 @@ var PickUplocations2 = function() {
             self.getFromDB('locations', {'_id': new ObjectID(id)}, function(err, data) {
                 if (err) {
                     console.log(err);
-                    return res(err);
+                    res.send(err);
                 } else {
                     console.log(data[0]);
-                    return res.json(data[0]);
+                    res.json(data[0]);
                 }
             });
         });
