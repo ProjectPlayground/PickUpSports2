@@ -25,6 +25,10 @@ Build Cycle 2:
  * establish Node.js backend for application
  * create retrofit adaptation of front end information and communicate jsons over http
 
+Build Cycle 3:
+ * run backend on server
+ * integrate database entries useing MongoDB on backend
+
 ## User Stories
 1. I want to be able to create and delete my own events.
 2. I've recently moved, I want to be able to find other people to exercise with.

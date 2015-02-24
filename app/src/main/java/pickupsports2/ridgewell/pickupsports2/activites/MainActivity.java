@@ -13,7 +13,9 @@ import java.util.concurrent.ExecutionException;
 import pickupsports2.ridgewell.pickupsports2.R;
 import pickupsports2.ridgewell.pickupsports2.elements.AddEventButton;
 import pickupsports2.ridgewell.pickupsports2.utilities.ServerRequest;
+import ridgewell.pickupsports2.common.Event;
 import ridgewell.pickupsports2.common.Location;
+import ridgewell.pickupsports2.common.Sport;
 import ridgewell.pickupsports2.common.User;
 
 public class MainActivity extends ActionBarActivity {
@@ -45,13 +47,6 @@ public class MainActivity extends ActionBarActivity {
             }
         };
         create_event = new AddEventButton(findViewById(R.id.create_event), create_launcher);
-        /*
-        User user = new User("Robert Saget");
-        user.setNickname("Bob");
-        user.setLocation(new Location("Philidelphia, PA"));
-        ServerRequest svcreq = new ServerRequest();
-        svcreq.addUser(user);
-        */
     }
 
     public void onResume() {

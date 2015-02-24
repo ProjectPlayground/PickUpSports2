@@ -2,6 +2,8 @@ package pickupsports2.ridgewell.pickupsports2.utilities;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
+
 import retrofit.Callback;
 import retrofit.http.Body;
 import retrofit.http.DELETE;
@@ -10,6 +12,8 @@ import retrofit.http.POST;
 import retrofit.http.Query;
 
 import ridgewell.pickupsports2.common.Event;
+import ridgewell.pickupsports2.common.Location;
+import ridgewell.pickupsports2.common.Sport;
 import ridgewell.pickupsports2.common.User;
 
 /**
@@ -18,22 +22,48 @@ import ridgewell.pickupsports2.common.User;
 public interface RequestLibrary {
 
     /*User Commands*/
-    @GET("/?cmd=get&type=user")
+    @GET("/user/")
     public User getUser(@Query("username") String username);
 
-    @POST("/?cmd=add&type=user")
+    @POST("/user/")
     public void addUser(@Body User user, Callback<User> success);
 
-    /*Event Commands*/
-    @GET("/?cmd=get&type=event&filter=name")
-    public Event getEvent(@Query("name") String name);
+    @DELETE("/user/")
+    public void deleteUser(@Query("username") String username, Callback<User> success);
 
-    @GET("/?cmd=get&type=event&filter=none")
+    /*Event Commands*/
+    @GET("/event/?filter=id")
+    public Event getEvent(@Query("id") String id);
+
+    @GET("/event/?filter=name")
+    public Event getEventFromName(@Query("name") String name);
+
+    @GET("/event/?filter=none")
     public List<Event> getAllEvents();
 
-    @POST("/?cmd=add&type=event")
+    @POST("/event/")
     public void addEvent(@Body Event event, Callback<Event> success);
 
-    @DELETE("/?cmd=delete&type=event")
-    public void deleteEvent(@Query("name") String name, Callback<Event> success);
+    @DELETE("/event/")
+    public void deleteEvent(@Query("id") String id, Callback<Event> success);
+
+    /*Sport Commands*/
+    @GET("/sport/")
+    public Sport getSport(@Query("sport") String sport);
+
+    @POST("/sport/")
+    public void addSport(@Body Sport sport, Callback<Sport> success);
+
+    @DELETE("/sport/")
+    public void deleteSport(@Query("sportName") String sportName, Callback<Sport> success);
+
+    /*Location Commands*/
+    @GET("/location/")
+    public Location getLocation(@Query("locationame") String location);
+
+    @POST("/location/")
+    public void addLocation(@Body Location location, Callback<Location> success);
+
+    @DELETE("/location/")
+    public void deleteLocation(@Query("location") String Location, Callback<Location> success);
 }

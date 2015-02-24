@@ -40,10 +40,10 @@ public class ViewEventActivity extends ActionBarActivity {
         viewItemTextCreator.setText(event.getCreator());
 
         TextView viewItemTextSport = (TextView) findViewById(R.id.event_sport_text);
-        viewItemTextSport.setText(event.getSport().getSportName());
+        viewItemTextSport.setText(event.getSport());
 
         TextView viewItemTextLocation = (TextView) findViewById(R.id.event_location_text);
-        viewItemTextLocation.setText(event.getLocation().getLocation());
+        viewItemTextLocation.setText(event.getLocation());
 
         TextView viewItemTextDate = (TextView) findViewById(R.id.event_date_text);
         viewItemTextDate.setText(event.getTime().toString("MMMM d, yyyy")
@@ -101,14 +101,14 @@ public class ViewEventActivity extends ActionBarActivity {
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int id) {
+                                Log.v("attempt to delete",event.getName());
+                                Log.v("Event ID to be deleted", event.get_id());
                                 svreq.deleteEvent(event);
                                 finish();
                             }
                         }).setNegativeButton("No", new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        //do nothing? go back somehow?
-                    }
+                    public void onClick(DialogInterface dialog, int which) {}
                 });
                 AlertDialog dialog = builder.create();
                 dialog.show();
