@@ -46,10 +46,6 @@ public class MainActivity extends ActionBarActivity {
             }
         };
         create_event = new AddEventButton(findViewById(R.id.create_event), create_launcher);
-
-        ServerRequest svreq = new ServerRequest();
-        Location nashville = new Location("Nashville, TN");
-        svreq.deleteLocation(nashville);
     }
 
     public void onResume() {

@@ -22,7 +22,7 @@ import ridgewell.pickupsports2.common.User;
  */
 public class ServerRequest {
     //http://ps2-wintra.rhcloud.com for server
-    //http://192.168.56.1:8080 for genymotion
+    //http://192.168.56.1:8080 for genymotion NOTE: sometimes http://10.0.3.2:8080
     //http://10.0.2.2:8080 for android emulator
     private final String ip_address = "http://ps2-wintra.rhcloud.com";
     private final RequestLibrary svc = new RestAdapter.Builder()

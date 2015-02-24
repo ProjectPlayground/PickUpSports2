@@ -39,15 +39,18 @@ var PickUplocations2 = function() {
         };
 
         // default to a 'localhost' configuration:
-        self.connection_string = '127.0.0.1:27017/PickUplocations2';
+        //127.12.206.130:27017
+        //127.0.0.1:27017
+        self.connection_string = '127.0.0.1:27017/PickUpSports2';
 
         // if OPENSHIFT env variables are present, use the available connection info:
         if(process.env.OPENSHIFT_MONGODB_DB_PASSWORD){
-          self.connection_string = process.env.OPENSHIFT_MONGODB_DB_USERNAME + ":" +
-          process.env.OPENSHIFT_MONGODB_DB_PASSWORD + "@" +
-          process.env.OPENSHIFT_MONGODB_DB_HOST + ':' +
-          process.env.OPENSHIFT_MONGODB_DB_PORT + '/' +
-          process.env.OPENSHIFT_APP_NAME;
+            self.connection_string = 
+            process.env.OPENSHIFT_MONGODB_DB_USERNAME + ":" +
+            process.env.OPENSHIFT_MONGODB_DB_PASSWORD + "@" +
+            process.env.OPENSHIFT_MONGODB_DB_HOST + ':' +
+            process.env.OPENSHIFT_MONGODB_DB_PORT + '/' +
+            "PickUpSports2";
         }
     };
 
@@ -79,9 +82,9 @@ var PickUplocations2 = function() {
      */
     self.terminator = function(sig){
         if (typeof sig === "string") {
-           console.log('%s: Received %s - terminating sample app ...',
-                       Date(Date.now()), sig);
-           process.exit(1);
+            console.log('%s: Received %s - terminating sample app ...',
+                Date(Date.now()), sig);
+            process.exit(1);
         }
         console.log('%s: Node server stopped.', Date(Date.now()) );
     };
@@ -96,7 +99,7 @@ var PickUplocations2 = function() {
 
         // Removed 'SIGPIPE' from the list - bugz 852598.
         ['SIGHUP', 'SIGINT', 'SIGQUIT', 'SIGILL', 'SIGTRAP', 'SIGABRT',
-         'SIGBUS', 'SIGFPE', 'SIGUSR1', 'SIGSEGV', 'SIGUSR2', 'SIGTERM'
+            'SIGBUS', 'SIGFPE', 'SIGUSR1', 'SIGSEGV', 'SIGUSR2', 'SIGTERM'
         ].forEach(function(element, index, array) {
             process.on(element, function() { self.terminator(element); });
         });
@@ -127,6 +130,7 @@ var PickUplocations2 = function() {
     self.initializeServer = function() {
         self.createRoutes();
         self.app = express();
+        self.app.use(express.bodyParser());
 
         self.app.get('/', function(req, res) {
             res.writeHead(200);
@@ -143,8 +147,13 @@ var PickUplocations2 = function() {
             var filter = url.parse(req.url, true).query.filter;
             switch (filter) {
                 case 'none': 
-                    res.writeHead(200);
-                    cs.getAllEvents(res);
+                    self.getFromDB('events', null, function(err, result) {
+                        if(err) {
+                            console.log(err);
+                        } else {
+                            res.send(result);
+                        }
+                    });
                     break;
                 case "name":
                     var name = url.parse(req.url, true).query.name;
@@ -163,11 +172,14 @@ var PickUplocations2 = function() {
          */
         self.app.post('/event/', function(req, res) {
             console.log("post " + url.parse(req.url, true).path);
-            res.writeHead(201);
-            req.on('data', function(chunk) {
-                cs.addEvent(JSON.parse(chunk.toString()));
+
+            self.addToDB('events', req.body, function(err, result) {
+                if(err) {
+                    console.log(err);
+                } else {
+                    res.send(result);
+                }
             });
-            res.end();
         });
 
         /*
@@ -214,7 +226,40 @@ var PickUplocations2 = function() {
             res.end();
         });
 
-                /*
+        /*
+         * Express code to use module to get a sport from the commandinterpreter
+         */
+        self.app.get('/sport/', function(req, res) {
+            console.log("get " + url.parse(req.url, true).path);
+            var sport = url.parse(req.url, true).query.sportName;
+            res.writeHead(200);
+            cs.getSport(sport, res);
+        });
+
+        /*
+         * Express code to use module to add a sport from the commandinterpreter
+         */
+        self.app.post('/sport/', function(req, res) {
+            console.log("post " + url.parse(req.url, true).path);
+            res.writeHead(201);
+            req.on('data', function(chunk) {
+                cs.addSport(JSON.parse(chunk.toString()));
+            });
+            res.end();
+        });
+
+        /*
+         * Express code to use module to add a sport from the commandinterpreter
+         */
+        self.app.delete('/sport/', function(req, res) {
+            console.log("delete " + url.parse(req.url, true).path);
+            var sport = url.parse(req.url, true).query.sportName;
+            res.writeHead(200);
+            cs.deleteSport(sport, res);
+            res.end();
+        });
+
+        /*
          * Express code to use module to get a user from the commandinterpreter
          */
         self.app.get('/location/', function(req, res) {
@@ -248,14 +293,39 @@ var PickUplocations2 = function() {
         });
     };
 
-    self.findDB = function() {
-        MongoClient.connect('mongodb://'+self.connection_string, function(err, db) {
-          if(err) throw err;
-          self.events_c = db.collection('events').find().limit(10).toArray(function(err, docs) {
-            console.dir(docs);
-            db.close();
-          })
-        })
+    /*
+     * Get from Database
+     */
+    self.getFromDB = function(collection, object, callback) {
+        self.db.collection(collection).find().toArray(callback);
+    }
+
+    /*
+     * Add to Database
+     */
+    self.addToDB = function(collection, object, callback) {
+        console.log('attempt to insert' + object);
+        self.db.collection(collection).insert(object, callback);
+    }
+
+    /*
+     * Delete from Database
+     */
+    self.deleteFromDB = function(collection, object) {
+        
+    }
+
+    /*
+     * Connect to Database
+     */
+    self.connectDB = function() {
+        MongoClient.connect('mongodb://' + self.connection_string, function(err, db) {
+              if(err) {
+                  console.log("unable to connect to database");
+                  throw err;
+              }
+              self.db = db;
+        });
     }
 
     /**
@@ -269,10 +339,9 @@ var PickUplocations2 = function() {
         // Create the express server and routes.
         self.initializeServer();
 
-        //acquire collections
-        //self.findDB();
+        // Connect Database
+        self.connectDB();
     };
-
 
     /**
      *  Start the server
@@ -281,12 +350,10 @@ var PickUplocations2 = function() {
         //  Start the app on the specific interface (and port).
         self.app.listen(self.port, self.ipaddress, function() {
             console.log('%s: Node server started on %s:%d ...',
-                        Date(Date.now() ), self.ipaddress, self.port);
+                Date(Date.now() ), self.ipaddress, self.port);
         });
     };
-
 }; 
-
 
 
 /**
