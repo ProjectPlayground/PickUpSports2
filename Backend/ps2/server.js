@@ -147,23 +147,25 @@ var PickUplocations2 = function() {
             var filter = url.parse(req.url, true).query.filter;
             switch (filter) {
                 case 'none': 
-                    self.getFromDB('events', null, function(err, result) {
-                        if(err) {
+                    self.getFromDB('events', null, function(err, data) {
+                        if (err) {
                             console.log(err);
+                            return res(err);
                         } else {
-                            res.send(result);
+                            console.log(data);
+                            return res.json(data);
                         }
                     });
                     break;
                 case "name":
                     var name = url.parse(req.url, true).query.name;
-                    console.log(JSON.stringify(name));
-                    self.getFromDB('events', '{\"name\":\"' + name + '\"}', function(err, result) {
+                    self.getFromDB('events', {'name':name}, function(err, data) {
                         if (err) {
                             console.log(err);
+                            return res(err);
                         } else {
-                            console.log(result);
-                            res.send(result);
+                            console.log(data[0]);
+                            return res.json(data[0]);
                         }
                     });
                     break;
