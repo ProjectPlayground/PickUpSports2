@@ -3,7 +3,6 @@
 var express     = require('express');
 var fs          = require('fs');
 var url         = require('url');
-var cs          = require('./commandinterpreter.js');
 var ObjectID    = require('mongodb').ObjectID;
 var MongoClient = require('mongodb').MongoClient;
 
@@ -194,7 +193,6 @@ var PickUplocations2 = function() {
          */
         self.app.post('/event/', function(req, res) {
             console.log("post " + url.parse(req.url, true).path);
-
             self.addToDB('events', req.body, function(err, result) {
                 if(err) {
                     console.log(err);
@@ -224,18 +222,23 @@ var PickUplocations2 = function() {
          * Express code to use module to get a user from the commandinterpreter
          */
         self.app.get('/user/', function(req, res) {
-            console.log("get " + url.parse(req.url, true).path);
-            var username = url.parse(req.url, true).query.username;
-            res.writeHead(200);
-            cs.getUser(username, res);
+            var id = url.parse(req.url, true).query.id;
+            self.getFromDB('users', {'_id': new ObjectID(id)}, function(err, data) {
+                if (err) {
+                    console.log(err);
+                    return res(err);
+                } else {
+                    console.log(data[0]);
+                    return res.json(data[0]);
+                }
+            });
         });
 
         /*
          * Express code to use module to add a user from the commandinterpreter
          */
         self.app.post('/user/', function(req, res) {
-            console.log("post " + url.parse(req.url, true).path);
-            
+            console.log("post " + url.parse(req.url, true).path);        
             self.addToDB('users', req.body, function(err, result) {
                 if(err) {
                     console.log(err);
@@ -250,28 +253,38 @@ var PickUplocations2 = function() {
          */
         self.app.delete('/user/', function(req, res) {
             console.log("delete " + url.parse(req.url, true).path);
-            var name = url.parse(req.url, true).query.name;
-            res.writeHead(200);
-            cs.deleteUser(name);
-            res.end();
+            var id = url.parse(req.url, true).query.id;
+            self.deleteFromDB('users', {'_id': new ObjectID(id)}, function(err, result) {
+                if (err) {
+                    console.log(err);
+                    res.send(err);
+                } else {
+                    console.log(result);
+                }
+            });
         });
 
         /*
          * Express code to use module to get a sport from the commandinterpreter
          */
         self.app.get('/sport/', function(req, res) {
-            console.log("get " + url.parse(req.url, true).path);
-            var sport = url.parse(req.url, true).query.sportName;
-            res.writeHead(200);
-            cs.getSport(sport, res);
+            var id = url.parse(req.url, true).query.id;
+            self.getFromDB('sports', {'_id': new ObjectID(id)}, function(err, data) {
+                if (err) {
+                    console.log(err);
+                    return res(err);
+                } else {
+                    console.log(data[0]);
+                    return res.json(data[0]);
+                }
+            });
         });
 
         /*
          * Express code to use module to add a sport from the commandinterpreter
          */
         self.app.post('/sport/', function(req, res) {
-            console.log("post " + url.parse(req.url, true).path);
-
+            console.log("post " + url.parse(req.url, true).path); 
             self.addToDB('sports', req.body, function(err, result) {
                 if(err) {
                     console.log(err);
@@ -286,20 +299,31 @@ var PickUplocations2 = function() {
          */
         self.app.delete('/sport/', function(req, res) {
             console.log("delete " + url.parse(req.url, true).path);
-            var sport = url.parse(req.url, true).query.sportName;
-            res.writeHead(200);
-            cs.deleteSport(sport, res);
-            res.end();
+            var id = url.parse(req.url, true).query.id;
+            self.deleteFromDB('sports', {'_id': new ObjectID(id)}, function(err, result) {
+                if (err) {
+                    console.log(err);
+                    res.send(err);
+                } else {
+                    console.log(result);
+                }
+            });
         });
 
         /*
          * Express code to use module to get a user from the commandinterpreter
          */
         self.app.get('/location/', function(req, res) {
-            console.log("get " + url.parse(req.url, true).path);
-            var location = url.parse(req.url, true).query.location;
-            res.writeHead(200);
-            cs.getLocation(location, res);
+            var id = url.parse(req.url, true).query.id;
+            self.getFromDB('locations', {'_id': new ObjectID(id)}, function(err, data) {
+                if (err) {
+                    console.log(err);
+                    return res(err);
+                } else {
+                    console.log(data[0]);
+                    return res.json(data[0]);
+                }
+            });
         });
 
         /*
@@ -321,10 +345,15 @@ var PickUplocations2 = function() {
          */
         self.app.delete('/location/', function(req, res) {
             console.log("delete " + url.parse(req.url, true).path);
-            var location = url.parse(req.url, true).query.location;
-            res.writeHead(200);
-            cs.deleteLocation(location, res);
-            res.end();
+            var id = url.parse(req.url, true).query.id;
+            self.deleteFromDB('locations', {'_id': new ObjectID(id)}, function(err, result) {
+                if (err) {
+                    console.log(err);
+                    res.send(err);
+                } else {
+                    console.log(result);
+                }
+            });
         });
     };
 
