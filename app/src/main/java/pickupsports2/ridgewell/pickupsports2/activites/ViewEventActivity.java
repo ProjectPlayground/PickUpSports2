@@ -101,14 +101,14 @@ public class ViewEventActivity extends ActionBarActivity {
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int id) {
+                                Log.v("attempt to delete",event.getName());
+                                Log.v("Event ID to be deleted", event.get_id());
                                 svreq.deleteEvent(event);
                                 finish();
                             }
                         }).setNegativeButton("No", new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        //do nothing? go back somehow?
-                    }
+                    public void onClick(DialogInterface dialog, int which) {}
                 });
                 AlertDialog dialog = builder.create();
                 dialog.show();

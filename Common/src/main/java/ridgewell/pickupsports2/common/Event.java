@@ -13,7 +13,7 @@ import java.util.List;
  * Created by cameronridgewell on 1/16/15.
  */
 public class Event implements Parcelable{
-    private int event_id;
+    private String _id;
     private String name;
     private String sport;
     private String timeString;
@@ -194,6 +194,7 @@ public class Event implements Parcelable{
     }
 
     public void writeToParcel(Parcel out, int flags) {
+        out.writeString(_id);
         out.writeString(name);
         out.writeString(sport);
         out.writeString(timeString);
@@ -205,6 +206,7 @@ public class Event implements Parcelable{
         out.writeInt(maxAttendance);
         //out.writeTypedList(waitlist);
         out.writeString(creator);
+
     }
 
     public static final Parcelable.Creator<Event> CREATOR
@@ -218,7 +220,12 @@ public class Event implements Parcelable{
         }
     };
 
+    public String get_id() {
+        return _id;
+    }
+
     private Event(Parcel in) {
+        _id = in.readString();
         name = in.readString();
         sport = in.readString();
         timeString = in.readString();

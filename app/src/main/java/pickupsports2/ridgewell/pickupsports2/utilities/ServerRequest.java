@@ -92,12 +92,31 @@ public class ServerRequest {
         t.start();
     }
 
-    public Event getEvent(final String event_name) {
+    public Event getEvent(final String id) {
         try {
             Callable<Event> callable = new Callable<Event>() {
                 @Override
                 public Event call() {
-                    return svc.getEvent(event_name);
+                    return svc.getEvent(id);
+                }
+            };
+            ExecutorService exec = Executors.newFixedThreadPool(3 );
+            return exec.submit(callable).get();
+        } catch (ExecutionException e) {
+            Log.e("Interrupted Exception", e.getMessage());
+            return null;
+        } catch (InterruptedException e) {
+            Log.e("Execution Exception", e.getMessage());
+            return null;
+        }
+    }
+
+    public Event getEventFromName(final String event_name) {
+        try {
+            Callable<Event> callable = new Callable<Event>() {
+                @Override
+                public Event call() {
+                    return svc.getEventFromName(event_name);
                 }
             };
             ExecutorService exec = Executors.newFixedThreadPool(3 );
@@ -155,7 +174,7 @@ public class ServerRequest {
         Runnable r = new Runnable() {
             @Override
             public void run() {
-                svc.deleteEvent(event.getName(), new Callback<Event>() {
+                svc.deleteEvent(event.get_id(), new Callback<Event>() {
                     @Override
                     public void success(Event event, Response response) {
                         Log.v("Retrofit Success", "Event response");

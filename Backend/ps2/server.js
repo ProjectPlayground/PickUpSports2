@@ -1,9 +1,10 @@
 #!/bin/env node
 //  OpenShift sample Node application
-var express = require('express');
-var fs      = require('fs');
-var url     = require('url');
-var cs      = require('./commandinterpreter.js');
+var express     = require('express');
+var fs          = require('fs');
+var url         = require('url');
+var cs          = require('./commandinterpreter.js');
+var ObjectID    = require('mongodb').ObjectID;
 var MongoClient = require('mongodb').MongoClient;
 
 /**
@@ -157,7 +158,19 @@ var PickUplocations2 = function() {
                         }
                     });
                     break;
-                case "name":
+                case 'id': 
+                    var id = url.parse(req.url, true).query.id;
+                    self.getFromDB('events', {'_id': new ObjectID(id)}, function(err, data) {
+                        if (err) {
+                            console.log(err);
+                            return res(err);
+                        } else {
+                            console.log(data[0]);
+                            return res.json(data[0]);
+                        }
+                    });
+                    break;
+                case 'name':
                     var name = url.parse(req.url, true).query.name;
                     self.getFromDB('events', {'name':name}, function(err, data) {
                         if (err) {
@@ -194,12 +207,17 @@ var PickUplocations2 = function() {
         /*
          * Express code to use module to delete an event from the commandinterpreter
          */
-        self.app.delete('/event', function(req, res) {
+        self.app.delete('/event/', function(req, res) {
             console.log("delete " + url.parse(req.url, true).path);
-            var name = url.parse(req.url, true).query.name;
-            res.writeHead(200);
-            cs.deleteEvent(name);
-            res.end();
+            var id = url.parse(req.url, true).query.id;
+            self.deleteFromDB('events', {'_id': new ObjectID(id)}, function(err, result) {
+                if (err) {
+                    console.log(err);
+                    res.send(err);
+                } else {
+                    console.log(result);
+                }
+            });
         });
 
         /*
@@ -328,8 +346,8 @@ var PickUplocations2 = function() {
     /*
      * Delete from Database
      */
-    self.deleteFromDB = function(collection, object) {
-        
+    self.deleteFromDB = function(collection, object, callback) {
+        self.db.collection(collection).remove(object, callback);
     }
 
     /*

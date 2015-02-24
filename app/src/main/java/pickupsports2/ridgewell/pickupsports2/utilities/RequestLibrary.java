@@ -32,8 +32,11 @@ public interface RequestLibrary {
     public void deleteUser(@Query("username") String username, Callback<User> success);
 
     /*Event Commands*/
+    @GET("/event/?filter=id")
+    public Event getEvent(@Query("id") String id);
+
     @GET("/event/?filter=name")
-    public Event getEvent(@Query("name") String name);
+    public Event getEventFromName(@Query("name") String name);
 
     @GET("/event/?filter=none")
     public List<Event> getAllEvents();
@@ -42,7 +45,7 @@ public interface RequestLibrary {
     public void addEvent(@Body Event event, Callback<Event> success);
 
     @DELETE("/event/")
-    public void deleteEvent(@Query("name") String name, Callback<Event> success);
+    public void deleteEvent(@Query("id") String id, Callback<Event> success);
 
     /*Sport Commands*/
     @GET("/sport/")

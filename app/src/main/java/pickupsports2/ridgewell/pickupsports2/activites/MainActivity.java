@@ -47,16 +47,6 @@ public class MainActivity extends ActionBarActivity {
             }
         };
         create_event = new AddEventButton(findViewById(R.id.create_event), create_launcher);
-
-        ServerRequest svreq = new ServerRequest();
-        Event e = svreq.getEvent("Top Gun Volleyball");
-        Log.v("here","here");
-        if (e != null) {
-            Log.v("--------", e.getSport());
-        } else {
-            Log.v("error", "nothing returned");
-        }
-        Log.v("there","there");
     }
 
     public void onResume() {
