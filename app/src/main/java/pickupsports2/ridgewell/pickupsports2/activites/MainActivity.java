@@ -13,6 +13,7 @@ import java.util.concurrent.ExecutionException;
 import pickupsports2.ridgewell.pickupsports2.R;
 import pickupsports2.ridgewell.pickupsports2.elements.AddEventButton;
 import pickupsports2.ridgewell.pickupsports2.utilities.ServerRequest;
+import ridgewell.pickupsports2.common.Event;
 import ridgewell.pickupsports2.common.Location;
 import ridgewell.pickupsports2.common.Sport;
 import ridgewell.pickupsports2.common.User;
@@ -51,6 +52,13 @@ public class MainActivity extends ActionBarActivity {
     public void onResume() {
         super.onResume();
         eventList.refreshEvents();
+        ServerRequest svreq = new ServerRequest();
+        Event e = svreq.getEvent("Top Gun Volleyball");
+        if (e != null) {
+            Log.v("--------", e.getSport());
+        } else {
+            Log.v("error", "nothing returned");
+        }
     }
 
     @Override

@@ -157,8 +157,15 @@ var PickUplocations2 = function() {
                     break;
                 case "name":
                     var name = url.parse(req.url, true).query.name;
-                    res.writeHead(200);
-                    cs.getEvent(name, res);
+                    console.log(JSON.stringify(name));
+                    self.getFromDB('events', '{\"name\":\"' + name + '\"}', function(err, result) {
+                        if (err) {
+                            console.log(err);
+                        } else {
+                            console.log(result);
+                            res.send(result);
+                        }
+                    });
                     break;
                 default:
                     res.writeHead(400);
@@ -208,11 +215,14 @@ var PickUplocations2 = function() {
          */
         self.app.post('/user/', function(req, res) {
             console.log("post " + url.parse(req.url, true).path);
-            res.writeHead(201);
-            req.on('data', function(chunk) {
-                cs.addUser(JSON.parse(chunk.toString()));
+            
+            self.addToDB('users', req.body, function(err, result) {
+                if(err) {
+                    console.log(err);
+                } else {
+                    res.send(result);
+                }
             });
-            res.end();
         });
 
         /*
@@ -241,11 +251,14 @@ var PickUplocations2 = function() {
          */
         self.app.post('/sport/', function(req, res) {
             console.log("post " + url.parse(req.url, true).path);
-            res.writeHead(201);
-            req.on('data', function(chunk) {
-                cs.addSport(JSON.parse(chunk.toString()));
+
+            self.addToDB('sports', req.body, function(err, result) {
+                if(err) {
+                    console.log(err);
+                } else {
+                    res.send(result);
+                }
             });
-            res.end();
         });
 
         /*
@@ -274,11 +287,13 @@ var PickUplocations2 = function() {
          */
         self.app.post('/location/', function(req, res) {
             console.log("post " + url.parse(req.url, true).path);
-            res.writeHead(201);
-            req.on('data', function(chunk) {
-                cs.addLocation(JSON.parse(chunk.toString()));
+            self.addToDB('locations', req.body, function(err, result) {
+                if(err) {
+                    console.log(err);
+                } else {
+                    res.send(result);
+                }
             });
-            res.end();
         });
 
         /*
@@ -297,7 +312,7 @@ var PickUplocations2 = function() {
      * Get from Database
      */
     self.getFromDB = function(collection, object, callback) {
-        self.db.collection(collection).find().toArray(callback);
+        self.db.collection(collection).find(object).toArray(callback);
     }
 
     /*
