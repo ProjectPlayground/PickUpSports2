@@ -6,9 +6,6 @@ import android.os.Parcelable;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Created by cameronridgewell on 1/16/15.
  */
