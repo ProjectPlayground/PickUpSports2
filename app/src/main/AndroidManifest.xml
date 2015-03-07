@@ -1,42 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="pickupsports2.ridgewell.pickupsports2" >
-    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
         android:icon="@drawable/playball_border_icon"
         android:label="@string/app_name"
         android:theme="@style/Theme.Pickupsports" >
-
         <activity
-            android:launchMode="singleTop"
             android:name=".activites.MainActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:launchMode="singleTop" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".activites.ViewEventActivity"
-            android:label="@string/app_name"
+            android:label="@string/title_activity_view_event"
             android:parentActivityName=".activites.MainActivity" >
-
         </activity>
-
         <activity
             android:name=".activites.CreateEventActivity"
-            android:label="@string/app_name"
-            android:parentActivityName=".activites.MainActivity">
+            android:label="@string/title_activity_create_event"
+            android:parentActivityName=".activites.MainActivity" >
         </activity>
-
         <activity
             android:name=".activites.ViewUserActivity"
-            android:label="@string/app_name"
+            android:label="@string/title_activity_view_user"
             android:parentActivityName=".activites.MainActivity" >
-
+        </activity>
+        <activity
+            android:name=".NavigationPane"
+            android:label="@string/title_activity_navigation_pane"
+            android:parentActivityName=".activites.MainActivity" >
         </activity>
     </application>
 

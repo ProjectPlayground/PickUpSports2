@@ -188,7 +188,7 @@ var PickUplocations2 = function() {
                     //date 1 and 2
                     var date1 = new Date(date1_s);
                     var date2 = new Date(date2_s);
-                    if (date1 < date2) {
+                    if (date1 > date2) {
                         var temp = date1;
                         date2 = date1;
                         date1 = temp;
@@ -196,14 +196,12 @@ var PickUplocations2 = function() {
                     self.db.collection('events').mapReduce(
                         function() {
                             var dateTime = new Date(this.timeString);
-                            if (dateTime >= date2 && dateTime <= date1) {
+                            if (dateTime >= date1 && dateTime <= date2) {
                                 emit(new Date(this.timeString), this);
                             }
                         }, 
                         function(datetime, line) {
-                            if (datetime <= date1 && datetime >= date2) {
-                                return line.value;
-                            }
+                            return line.value;
                         }, 
                         {out : { inline : 1 },
                         scope: {
@@ -220,10 +218,9 @@ var PickUplocations2 = function() {
                                     output += JSON.stringify(data[i].value);
                                     if (i < data.length - 1) {
                                         output += ",";
-                                    } else {
-                                        output += "]";
                                     }
                                 }
+                                output += "]";
                                 console.log(JSON.parse(output));
                                 res.send(JSON.parse(output)); 
                             }
