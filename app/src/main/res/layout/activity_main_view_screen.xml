@@ -28,15 +28,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 
-        <!-- The drawer is given a fixed width in dp and extends the full height of
-             the container. -->
-        <fragment android:id="@+id/navigation_drawer"
-            android:layout_width="@dimen/navigation_drawer_width"
-            android:layout_height="match_parent"
-            android:layout_gravity="start"
-            android:name="pickupsports2.ridgewell.pickupsports2.NavigationDrawerFragment"
-            tools:layout="@layout/fragment_navigation_drawer" />
-
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="fill_parent">
@@ -65,5 +56,15 @@
                     app:fab_colorPressed="@color/accent_app_color_900"/>
             </FrameLayout>
         </RelativeLayout>
+
+        <!-- The drawer is given a fixed width in dp and extends the full height of
+             the container. -->
+        <fragment android:id="@+id/navigation_drawer"
+            android:layout_width="@dimen/navigation_drawer_width"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:clickable="true"
+            android:name="pickupsports2.ridgewell.pickupsports2.NavigationDrawerFragment"
+            tools:layout="@layout/fragment_navigation_drawer" />
     </android.support.v4.widget.DrawerLayout>
 </RelativeLayout>
