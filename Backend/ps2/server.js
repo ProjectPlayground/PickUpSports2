@@ -86,6 +86,7 @@ var PickUplocations2 = function() {
                 Date(Date.now()), sig);
             process.exit(1);
         }
+        self.db.close();
         console.log('%s: Node server stopped.', Date(Date.now()) );
     };
 
@@ -150,10 +151,10 @@ var PickUplocations2 = function() {
                     self.getFromDB('events', null, function(err, data) {
                         if (err) {
                             console.log(err);
-                            return res(err);
+                            res.send(err);
                         } else {
                             console.log(data);
-                            return res.json(data);
+                            res.json(data);
                         }
                     });
                     break;
@@ -162,10 +163,10 @@ var PickUplocations2 = function() {
                     self.getFromDB('events', {'_id': new ObjectID(id)}, function(err, data) {
                         if (err) {
                             console.log(err);
-                            return res(err);
+                            res.send(err);
                         } else {
                             console.log(data[0]);
-                            return res.json(data[0]);
+                            res.json(data[0]);
                         }
                     });
                     break;
@@ -174,12 +175,59 @@ var PickUplocations2 = function() {
                     self.getFromDB('events', {'name':name}, function(err, data) {
                         if (err) {
                             console.log(err);
-                            return res(err);
+                            res.send(err);
                         } else {
                             console.log(data[0]);
-                            return res.json(data[0]);
+                            res.json(data[0]);
                         }
                     });
+                    break;
+                case 'dateRange':
+                    var date1_s = url.parse(req.url, true).query.date1;
+                    var date2_s = url.parse(req.url, true).query.date2;
+                    //date 1 and 2
+                    var date1 = new Date(date1_s);
+                    var date2 = new Date(date2_s);
+                    if (date1 < date2) {
+                        var temp = date1;
+                        date2 = date1;
+                        date1 = temp;
+                    }
+                    self.db.collection('events').mapReduce(
+                        function() {
+                            var dateTime = new Date(this.timeString);
+                            if (dateTime >= date2 && dateTime <= date1) {
+                                emit(new Date(this.timeString), this);
+                            }
+                        }, 
+                        function(datetime, line) {
+                            if (datetime <= date1 && datetime >= date2) {
+                                return line.value;
+                            }
+                        }, 
+                        {out : { inline : 1 },
+                        scope: {
+                            date1 : date1,
+                            date2 : date2
+                        }},
+                        function (err, data) {
+                            if (err) {
+                                console.log(err);
+                                res.send(err);
+                            } else {
+                                var output = "[";
+                                for (var i = 0; i < data.length; i++) {
+                                    output += JSON.stringify(data[i].value);
+                                    if (i < data.length - 1) {
+                                        output += ",";
+                                    } else {
+                                        output += "]";
+                                    }
+                                }
+                                console.log(JSON.parse(output));
+                                res.send(JSON.parse(output)); 
+                            }
+                        });
                     break;
                 default:
                     res.writeHead(400);
@@ -212,7 +260,9 @@ var PickUplocations2 = function() {
                 if (err) {
                     console.log(err);
                     res.send(err);
+                    res.status(400).end();
                 } else {
+                    res.status(200).end();
                     console.log(result);
                 }
             });
@@ -226,10 +276,10 @@ var PickUplocations2 = function() {
             self.getFromDB('users', {'_id': new ObjectID(id)}, function(err, data) {
                 if (err) {
                     console.log(err);
-                    return res(err);
+                    res.send(err);
                 } else {
                     console.log(data[0]);
-                    return res.json(data[0]);
+                    res.json(data[0]);
                 }
             });
         });
@@ -272,10 +322,10 @@ var PickUplocations2 = function() {
             self.getFromDB('sports', {'_id': new ObjectID(id)}, function(err, data) {
                 if (err) {
                     console.log(err);
-                    return res(err);
+                    res.send(err);
                 } else {
                     console.log(data[0]);
-                    return res.json(data[0]);
+                    res.json(data[0]);
                 }
             });
         });
@@ -318,10 +368,10 @@ var PickUplocations2 = function() {
             self.getFromDB('locations', {'_id': new ObjectID(id)}, function(err, data) {
                 if (err) {
                     console.log(err);
-                    return res(err);
+                    res.send(err);
                 } else {
                     console.log(data[0]);
-                    return res.json(data[0]);
+                    res.json(data[0]);
                 }
             });
         });

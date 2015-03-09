@@ -7,16 +7,14 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-
-import java.util.concurrent.ExecutionException;
+import java.util.ArrayList;
+import java.util.List;
 
 import pickupsports2.ridgewell.pickupsports2.R;
 import pickupsports2.ridgewell.pickupsports2.elements.AddEventButton;
 import pickupsports2.ridgewell.pickupsports2.utilities.ServerRequest;
 import ridgewell.pickupsports2.common.Event;
-import ridgewell.pickupsports2.common.Location;
-import ridgewell.pickupsports2.common.Sport;
-import ridgewell.pickupsports2.common.User;
+import org.joda.time.DateTime;
 
 public class MainActivity extends ActionBarActivity {
     final int CREATE_EVENT_CODE = 1;
@@ -47,6 +45,16 @@ public class MainActivity extends ActionBarActivity {
             }
         };
         create_event = new AddEventButton(findViewById(R.id.create_event), create_launcher);
+
+        DateTime date1 = DateTime.now();
+        DateTime date2 = date1.minusDays(30);
+        ServerRequest svreq = new ServerRequest();
+        List<Event> events_list = svreq.getEventsInDateRange(date1, date2);
+        if (events_list != null) {
+            Log.v("size", "" + events_list.size());
+        } else {
+            Log.v("error", "No object returned");
+        }
     }
 
     public void onResume() {

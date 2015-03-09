@@ -16,6 +16,7 @@ import ridgewell.pickupsports2.common.Event;
 import ridgewell.pickupsports2.common.Location;
 import ridgewell.pickupsports2.common.Sport;
 import ridgewell.pickupsports2.common.User;
+import org.joda.time.DateTime;
 
 /**
  * Created by cameronridgewell on 2/10/15.
@@ -120,6 +121,25 @@ public class ServerRequest {
                 }
             };
             ExecutorService exec = Executors.newFixedThreadPool(3 );
+            return exec.submit(callable).get();
+        } catch (ExecutionException e) {
+            Log.e("Interrupted Exception", e.getMessage());
+            return null;
+        } catch (InterruptedException e) {
+            Log.e("Execution Exception", e.getMessage());
+            return null;
+        }
+    }
+
+    public List<Event> getEventsInDateRange(final DateTime date1, final DateTime date2) {
+        try {
+            Callable<List<Event>> callable = new Callable<List<Event>>() {
+                @Override
+                public List<Event> call() throws Exception {
+                    return svc.getEventsInDateRange(date1.toString(), date2.toString());
+                }
+            };
+            ExecutorService exec = Executors.newFixedThreadPool(3);
             return exec.submit(callable).get();
         } catch (ExecutionException e) {
             Log.e("Interrupted Exception", e.getMessage());
