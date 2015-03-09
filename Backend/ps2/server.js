@@ -148,7 +148,8 @@ var PickUplocations2 = function() {
             var filter = url.parse(req.url, true).query.filter;
             switch (filter) {
                 case 'none': 
-                    self.getFromDB('events', null, function(err, data) {
+                    self.getFromDBAndSort('events', null, {'timeLong':1},
+                    	function(err, data) {
                         if (err) {
                             console.log(err);
                             res.send(err);
@@ -160,7 +161,8 @@ var PickUplocations2 = function() {
                     break;
                 case 'id': 
                     var id = url.parse(req.url, true).query.id;
-                    self.getFromDB('events', {'_id': new ObjectID(id)}, function(err, data) {
+                    self.getFromDB('events', {'_id': new ObjectID(id)},
+                    	function(err, data) {
                         if (err) {
                             console.log(err);
                             res.send(err);
@@ -172,7 +174,8 @@ var PickUplocations2 = function() {
                     break;
                 case 'name':
                     var name = url.parse(req.url, true).query.name;
-                    self.getFromDB('events', {'name':name}, function(err, data) {
+                    self.getFromDB('events', {'name': name}, {'name':-1},
+                    	function(err, data) {
                         if (err) {
                             console.log(err);
                             res.send(err);
@@ -193,7 +196,7 @@ var PickUplocations2 = function() {
                     }
                     console.log("greater than" + date2);
                     console.log("less than" + date1);
-                    self.getFromDB('events', {'timeLong': {'$gte': date2, '$lte': date1}},
+                    self.getFromDB('events', {'timeLong': {'$gte': date2, '$lte': date1ls}}, {'timeLong':1},
                     	function(err, data) {
                     		if (err) {
 	                            console.log(err);
@@ -294,7 +297,8 @@ var PickUplocations2 = function() {
          */
         self.app.get('/sport/', function(req, res) {
             var id = url.parse(req.url, true).query.id;
-            self.getFromDB('sports', {'_id': new ObjectID(id)}, function(err, data) {
+            self.getFromDB('sports', {'_id': new ObjectID(id)},
+            	function(err, data) {
                 if (err) {
                     console.log(err);
                     res.send(err);
@@ -340,7 +344,8 @@ var PickUplocations2 = function() {
          */
         self.app.get('/location/', function(req, res) {
             var id = url.parse(req.url, true).query.id;
-            self.getFromDB('locations', {'_id': new ObjectID(id)}, function(err, data) {
+            self.getFromDB('locations', {'_id': new ObjectID(id)},
+            	function(err, data) {
                 if (err) {
                     console.log(err);
                     res.send(err);
@@ -388,6 +393,15 @@ var PickUplocations2 = function() {
     self.getFromDB = function(collection, object, callback) {
         self.db.collection(collection).find(object).toArray(callback);
     }
+
+    /*
+     * Get from Database and Sort
+     */
+    self.getFromDBAndSort = function(collection, object, sortby, callback) {
+        self.db.collection(collection).find(object).sort(sortby).toArray(callback);
+    }
+
+
 
     /*
      * Add to Database
