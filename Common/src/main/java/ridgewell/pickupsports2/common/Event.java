@@ -13,7 +13,7 @@ public class Event implements Parcelable{
     private String _id;
     private String name;
     private String sport;
-    private String timeString;
+    private long timeLong;
     private String location;
     private int cost;
     private String notes;
@@ -32,7 +32,7 @@ public class Event implements Parcelable{
                  String notes, boolean isPublic, int maxAttendance, String creator) {
         this.name = name;
         this.sport = sport;
-        this.timeString = time.toString();
+        this.timeLong = time.getMillis();
         this.location = location;
         this.cost = cost;
         this.notes = notes;
@@ -52,19 +52,19 @@ public class Event implements Parcelable{
     }
 
     public DateTime getTime() {
-        return new DateTime(timeString);
+        return new DateTime(timeLong);
     }
 
-    public String getTimeString() {
-        return timeString;
+    public long getTimeLong() {
+        return timeLong;
     }
 
     public void setTime(DateTime time) {
-        this.timeString = time.toString();
+        this.timeLong = time.getMillis();
     }
 
-    public void setTimeString(String time) {
-        this.timeString = time;
+    public void setTimeLong(long time) {
+        this.timeLong = time;
     }
 
     public String getDaysUntil() {
@@ -194,7 +194,7 @@ public class Event implements Parcelable{
         out.writeString(_id);
         out.writeString(name);
         out.writeString(sport);
-        out.writeString(timeString);
+        out.writeLong(timeLong);
         out.writeString(location);
         out.writeInt(cost);
         out.writeString(notes);
@@ -225,7 +225,7 @@ public class Event implements Parcelable{
         _id = in.readString();
         name = in.readString();
         sport = in.readString();
-        timeString = in.readString();
+        timeLong = in.readLong();
         location = in.readString();
         cost = in.readInt();
         notes = in.readString();
