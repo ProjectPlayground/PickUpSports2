@@ -39,8 +39,8 @@ public interface RequestLibrary {
     public Event getEventFromName(@Query("name") String name);
 
     @GET("/event/?filter=dateRange")
-    public List<Event> getEventsInDateRange(@Query("date1") String date1,
-                                            @Query("date2") String date2);
+    public List<Event> getEventsInDateRange(@Query("date1") long date1,
+                                            @Query("date2") long date2);
 
     @GET("/event/?filter=none")
     public List<Event> getAllEvents();

@@ -17,7 +17,7 @@ public class User implements Parcelable{
     private String username;
     private String nickname;
     private Location location;
-    private String joiningTime;
+    private long joiningTime;
 
     //private List<Sport> favoriteSports = new ArrayList<Sport>();
     //private List<Event> attendedEvents = new ArrayList<Event>();
@@ -28,7 +28,7 @@ public class User implements Parcelable{
 
     public User(String username) {
         this.username = username;
-        this.joiningTime = DateTime.now().toString();
+        this.joiningTime = DateTime.now().getMillis();
         //Fetch from phone or have user input
         this.location = new Location("fetch current position");
         this.nickname = "";
@@ -63,7 +63,7 @@ public class User implements Parcelable{
      * returns the user's join Date
      */
 
-    public String getJoiningTime() {
+    public long getJoiningTime() {
         return joiningTime;
     }
 
@@ -135,7 +135,7 @@ public class User implements Parcelable{
         out.writeString(username);
         out.writeString(nickname);
         out.writeParcelable(location, 0);
-        out.writeString(joiningTime);
+        out.writeLong(joiningTime);
         //out.writeTypedList(favoriteSports);
         //out.writeTypedList(attendedEvents);
         //out.writeTypedList(createdEvents);
@@ -157,7 +157,7 @@ public class User implements Parcelable{
         username = in.readString();
         nickname = in.readString();
         location = in.readParcelable(Location.class.getClassLoader());
-        joiningTime = in.readString();
+        joiningTime = in.readLong();
         //favoriteSports = in.createTypedArrayList(Sport.CREATOR);
         //attendedEvents = in.createTypedArrayList(Event.CREATOR);
         //createdEvents = in.createTypedArrayList(Event.CREATOR);

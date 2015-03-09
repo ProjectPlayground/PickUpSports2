@@ -47,7 +47,7 @@ public class MainActivity extends ActionBarActivity {
         create_event = new AddEventButton(findViewById(R.id.create_event), create_launcher);
 
         DateTime date1 = DateTime.now();
-        DateTime date2 = date1.minusDays(30);
+        DateTime date2 = date1.minusDays(29);
         ServerRequest svreq = new ServerRequest();
         List<Event> events_list = svreq.getEventsInDateRange(date1, date2);
         if (events_list != null) {

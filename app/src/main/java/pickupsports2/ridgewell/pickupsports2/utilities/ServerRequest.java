@@ -136,7 +136,7 @@ public class ServerRequest {
             Callable<List<Event>> callable = new Callable<List<Event>>() {
                 @Override
                 public List<Event> call() throws Exception {
-                    return svc.getEventsInDateRange(date1.toString(), date2.toString());
+                    return svc.getEventsInDateRange(date1.getMillis(), date2.getMillis());
                 }
             };
             ExecutorService exec = Executors.newFixedThreadPool(3);
