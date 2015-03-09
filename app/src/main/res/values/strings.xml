@@ -80,6 +80,7 @@
 
     <!-- Navigation Pane -->
     <string name="title_activity_navigation_pane">NavigationPane</string>
+    <string name="drawer_open_text">Navigation</string>
     <string-array name="navigation_pane_titles">
         <item>Profile</item>
         <item>Teams</item>
@@ -87,4 +88,5 @@
         <item>Invitations</item>
         <item>Calendar</item>
     </string-array>
+
 </resources>

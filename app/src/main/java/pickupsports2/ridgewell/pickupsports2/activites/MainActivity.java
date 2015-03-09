@@ -19,7 +19,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import pickupsports2.ridgewell.pickupsports2.NavigationDrawerFragment;
-import pickupsports2.ridgewell.pickupsports2.NavigationPane;
 import pickupsports2.ridgewell.pickupsports2.R;
 import pickupsports2.ridgewell.pickupsports2.elements.AddEventButton;
 import pickupsports2.ridgewell.pickupsports2.utilities.ServerRequest;
@@ -46,7 +45,6 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle("Games");
 
         setContentView(R.layout.activity_main_view_screen);
         Log.v("", "creating navigation drawer fragment");
@@ -94,6 +92,7 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
     public void onResume() {
         super.onResume();
         eventList.refreshEvents();
+        mTitle = "Games";
     }
 
     public void restoreActionBar() {
@@ -141,12 +140,23 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
         switch (number) {
             case 1:
                 mTitle = getResources().getStringArray(R.array.navigation_pane_titles)[0];
+                //Launch to Profile
                 break;
             case 2:
                 mTitle = getResources().getStringArray(R.array.navigation_pane_titles)[1];
+                //Launch to Teams View
                 break;
             case 3:
                 mTitle = getResources().getStringArray(R.array.navigation_pane_titles)[2];
+                //Launch to Events
+                break;
+            case 4:
+                mTitle = getResources().getStringArray(R.array.navigation_pane_titles)[3];
+                //Launch to Invitations
+                break;
+            case 5:
+                mTitle = getResources().getStringArray(R.array.navigation_pane_titles)[4];
+                //Launch to Calendar
                 break;
             default:
                 break;

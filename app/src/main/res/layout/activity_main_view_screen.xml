@@ -51,7 +51,7 @@
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
-                    app:fab_plusIconColor="@color/back_primary_text_color"
+                    app:fab_plusIconColor="@color/primary_light_text_color"
                     app:fab_colorNormal="@color/accent_app_color_500"
                     app:fab_colorPressed="@color/accent_app_color_900"/>
             </FrameLayout>

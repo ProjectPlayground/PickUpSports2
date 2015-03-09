@@ -33,11 +33,6 @@
             android:label="@string/title_activity_view_user"
             android:parentActivityName=".activites.MainActivity" >
         </activity>
-        <activity
-            android:name=".NavigationPane"
-            android:label="@string/title_activity_navigation_pane"
-            android:parentActivityName=".activites.MainActivity" >
-        </activity>
     </application>
 
 </manifest>
