@@ -2,7 +2,7 @@ package pickupsports2.ridgewell.pickupsports2.activites;
 
 import android.app.Activity;
 import android.app.FragmentManager;
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
@@ -30,7 +30,6 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
     EventFragment eventList;
 
     AddEventButton create_event;
-
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
@@ -40,24 +39,27 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
      */
     private CharSequence mTitle;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main_view_screen);
-        Log.v("", "creating navigation drawer fragment");
+
+        if (savedInstanceState == null) {
+            displayView(1);
+        }
+
+        /* Navigation Drawer */
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
-
-        Log.v("", "setting up navigation drawer fragment");
         // Set up the drawer.
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
 
-        Log.v("", "completed");
+
+        /* Main View List */
         FragmentManager fm = getFragmentManager();
 
         if (fm.findFragmentById(R.id.event_list_fragment) == null) {
@@ -73,25 +75,53 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
             }
         };
         create_event = new AddEventButton(findViewById(R.id.create_event), create_launcher);
-
-        DateTime date1 = DateTime.now().withTimeAtStartOfDay();
-        DateTime date2 = date1.minusDays(3);
-        ServerRequest svreq = new ServerRequest();
-        List<Event> events_list = svreq.getEventsInDateRange(date1, date2);
-        if (events_list != null) {
-            Log.v("size", "" + events_list.size());
-            for (Event e : events_list) {
-                Log.v("event", e.getName());
-            }
-        } else {
-            Log.v("error", "No object returned");
-        }
     }
 
     public void onResume() {
         super.onResume();
         eventList.refreshEvents();
         mTitle = "Games";
+    }
+
+    private void displayView(final int position) {
+        Log.d("here","1");
+        Fragment fragment = null;
+        switch (position) {
+            case 1:
+                Log.d("here","2");
+                fragment = Profile.newInstance();
+                //Launch to Profile
+                break;
+            case 2:
+                mTitle = getResources().getStringArray(R.array.navigation_pane_titles)[1];
+                //Launch to Teams View
+                break;
+            case 3:
+                mTitle = getResources().getStringArray(R.array.navigation_pane_titles)[2];
+                //Launch to Events
+                break;
+            case 4:
+                mTitle = getResources().getStringArray(R.array.navigation_pane_titles)[3];
+                //Launch to Invitations
+                break;
+            case 5:
+                mTitle = getResources().getStringArray(R.array.navigation_pane_titles)[4];
+                //Launch to Calendar
+                break;
+            default:
+        }
+
+        if (fragment != null) {
+            Log.v("fragment loading","");
+            FragmentManager fragmentManager = getFragmentManager();
+            fragmentManager.beginTransaction()
+                    .replace(R.id.container, fragment).commit();
+            Log.d("Fragment Loaded","");
+            setTitle(getResources().getStringArray(R.array.navigation_pane_titles)[position-1]);
+        } else {
+            // error in creating fragment
+            Log.e("MainActivity", "Error in creating fragment");
+        }
     }
 
     public void restoreActionBar() {
@@ -117,11 +147,9 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
 
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
-        android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
-                .commit();
+        displayView(position);
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -162,44 +190,8 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
         }
     }
 
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private static final String ARG_SECTION_NUMBER = "section_number";
-
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        public static PlaceholderFragment newInstance(int sectionNumber) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
-        }
-
-        public PlaceholderFragment() {
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_navigation_pane, container, false);
-            return rootView;
-        }
-
-        @Override
-        public void onAttach(Activity activity) {
-            super.onAttach(activity);
-            ((MainActivity) activity).onSectionAttached(
-                    getArguments().getInt(ARG_SECTION_NUMBER));
-        }
+    public void OnFragmentInteractionListener(String string) {
+        Log.v(string, string);
     }
 }
 

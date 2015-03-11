@@ -3,3 +3,7 @@
 .settings
 build
 .DS_Store
+Backend/ps2/node_modules/*
+app/app-release.apk
+app/manifest-merger-release-report.txt
+
