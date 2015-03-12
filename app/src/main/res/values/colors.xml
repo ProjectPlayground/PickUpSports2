@@ -23,4 +23,10 @@
     <item name="accent_app_color_500" type="color">#E91E63</item>
     <item name="accent_app_color_900" type="color">#880E4F</item>
     <item name="shadow_color" type="color">#E0E0E0</item>
+
+    <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
+    <color name="bg_gradient_start">#EB5038</color>
+    <color name="bg_gradient_end">#CA3822</color>
+    <color name="bg_button_login">#A92815</color>
 </resources> 
