@@ -52,20 +52,10 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
         /* Navigation Drawer */
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
-        mTitle = getTitle();
-        // Set up the drawer.
+
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
-
-
-        /* Main View List */
-        FragmentManager fm = getFragmentManager();
-
-        if (fm.findFragmentById(R.id.event_list_fragment) == null) {
-            eventList = new EventFragment();
-            fm.beginTransaction().add(R.id.event_list_fragment, eventList).commit();
-        }
 
         Runnable create_launcher = new Runnable() {
             @Override
@@ -79,32 +69,26 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
 
     public void onResume() {
         super.onResume();
-        eventList.refreshEvents();
-        mTitle = "Games";
     }
 
     private void displayView(final int position) {
-        Log.d("here","1");
         Fragment fragment = null;
         switch (position) {
-            case 1:
-                Log.d("here","2");
+            case 0:
                 fragment = Profile.newInstance();
-                //Launch to Profile
                 break;
-            case 2:
+            case 1:
                 mTitle = getResources().getStringArray(R.array.navigation_pane_titles)[1];
                 //Launch to Teams View
                 break;
-            case 3:
-                mTitle = getResources().getStringArray(R.array.navigation_pane_titles)[2];
-                //Launch to Events
+            case 2:
+                fragment = new EventFragment();
                 break;
-            case 4:
+            case 3:
                 mTitle = getResources().getStringArray(R.array.navigation_pane_titles)[3];
                 //Launch to Invitations
                 break;
-            case 5:
+            case 4:
                 mTitle = getResources().getStringArray(R.array.navigation_pane_titles)[4];
                 //Launch to Calendar
                 break;
@@ -112,12 +96,10 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
         }
 
         if (fragment != null) {
-            Log.v("fragment loading","");
             FragmentManager fragmentManager = getFragmentManager();
             fragmentManager.beginTransaction()
                     .replace(R.id.container, fragment).commit();
-            Log.d("Fragment Loaded","");
-            setTitle(getResources().getStringArray(R.array.navigation_pane_titles)[position-1]);
+            mTitle = getResources().getStringArray(R.array.navigation_pane_titles)[position];
         } else {
             // error in creating fragment
             Log.e("MainActivity", "Error in creating fragment");
@@ -161,37 +143,6 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    public void onSectionAttached(int number) {
-        switch (number) {
-            case 1:
-                mTitle = getResources().getStringArray(R.array.navigation_pane_titles)[0];
-                //Launch to Profile
-                break;
-            case 2:
-                mTitle = getResources().getStringArray(R.array.navigation_pane_titles)[1];
-                //Launch to Teams View
-                break;
-            case 3:
-                mTitle = getResources().getStringArray(R.array.navigation_pane_titles)[2];
-                //Launch to Events
-                break;
-            case 4:
-                mTitle = getResources().getStringArray(R.array.navigation_pane_titles)[3];
-                //Launch to Invitations
-                break;
-            case 5:
-                mTitle = getResources().getStringArray(R.array.navigation_pane_titles)[4];
-                //Launch to Calendar
-                break;
-            default:
-                break;
-        }
-    }
-
-    public void OnFragmentInteractionListener(String string) {
-        Log.v(string, string);
     }
 }
 
