@@ -21,6 +21,11 @@ public class IntentProtocol {
     public static final String CREATED_EVENT = "created_event";
     public static final ServerRequest svreq = new ServerRequest();
 
+    public static void launchMain(Activity context){
+        Intent intent = new Intent(context, MainActivity.class);
+        context.startActivity(intent);
+    }
+
     public static void viewEvent(Activity context, Event event){
         Intent intent = new Intent(context, ViewEventActivity.class);
         intent.putExtra(VIEWABLE_EVENT, event);
