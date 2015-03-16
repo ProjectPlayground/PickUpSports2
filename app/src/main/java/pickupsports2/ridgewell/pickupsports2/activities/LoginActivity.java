@@ -1,13 +1,12 @@
 package pickupsports2.ridgewell.pickupsports2.activities;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
-
 import com.facebook.Request;
 import com.facebook.Response;
 import com.facebook.Session;
@@ -16,13 +15,12 @@ import com.facebook.UiLifecycleHelper;
 import com.facebook.model.GraphUser;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 
 import pickupsports2.ridgewell.pickupsports2.R;
 import pickupsports2.ridgewell.pickupsports2.intents.IntentProtocol;
 
-public class LoginActivity extends ActionBarActivity {
+public class LoginActivity extends Activity {
     // Create, automatically open (if applicable), save, and restore the
     // Active Session in a way that is similar to Android UI lifecycles.
     private UiLifecycleHelper uiHelper;
@@ -53,9 +51,6 @@ public class LoginActivity extends ActionBarActivity {
     // When session is changed, this method is called from callback method
     private void onSessionStateChange(Session session, SessionState state,
                                       Exception exception) {
-        final TextView name = (TextView) findViewById(R.id.name);
-        final TextView gender = (TextView) findViewById(R.id.gender);
-        final TextView location = (TextView) findViewById(R.id.location);
         // When Session is successfully opened (User logged-in)
         if (state.isOpened()) {
             Log.i(TAG, "Logged in...");
@@ -86,13 +81,10 @@ public class LoginActivity extends ActionBarActivity {
                             while( (ch = fis.read()) != -1) {
                                 fileContent.append((char) ch);
                             }
-                            String user_id = new String(fileContent);
-                            Log.v("here",user_id);
-
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
-                        //IntentProtocol.launchMain(null);
+                        IntentProtocol.launchMain(LoginActivity.this);
                     }
                 }
             }).executeAsync();

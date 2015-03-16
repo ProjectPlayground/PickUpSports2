@@ -4,10 +4,15 @@
     <string name="app_name">PickUpSports2</string>
     <string name="user_storage_file">current_user</string>
     <string name="app_id">1634667900087388</string>
-    <string name="action_settings">Settings</string>
+
     <string name="cancel">Cancel</string>
     <string name="invite_friends">Invite Friends</string>
     <string name="post">Post</string>
+
+
+    <!-- menu items -->
+    <string name="action_settings">Settings</string>
+    <string name="log_out">Log Out</string>
 
     <!-- activity_main_view_screen -->
 

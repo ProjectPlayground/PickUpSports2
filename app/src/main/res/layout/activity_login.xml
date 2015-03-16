@@ -11,10 +11,11 @@
     tools:context="pickupsports2.ridgewell.pickupsports2.activities.LoginActivity" >
 
     <ImageView
+        android:layout_marginTop="50dp"
         android:layout_width="300dp"
-        android:layout_height="100dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:src="@drawable/myapp_bg_image" />
+        android:src="@drawable/pickupsports_title" />
 
     <LinearLayout
         android:id="@+id/other_views"
@@ -23,36 +24,6 @@
         android:layout_weight="1"
         android:orientation="vertical"
         android:padding="5dp" >
-
-        <TextView
-            android:id="@+id/name"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dip"
-            android:gravity="left"
-            android:text="Name"
-            android:textColor="@color/white"
-            android:textSize="30dp" />
-
-        <TextView
-            android:id="@+id/gender"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dip"
-            android:gravity="left"
-            android:text="Gender"
-            android:textColor="@color/white"
-            android:textSize="15dp" />
-
-        <TextView
-            android:id="@+id/location"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dip"
-            android:gravity="left"
-            android:text="Location"
-            android:textColor="@color/white"
-            android:textSize="15dp" />
     </LinearLayout>
 
     <LinearLayout

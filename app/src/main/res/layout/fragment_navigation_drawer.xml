@@ -6,6 +6,6 @@
     android:divider="@android:color/transparent"
     android:dividerHeight="0dp"
     android:background="@color/light_background_color"
-    tools:context="pickupsports2.ridgewell.pickupsports2.NavigationDrawerFragment" />
+    tools:context="pickupsports2.ridgewell.pickupsports2.elements.NavigationDrawerFragment" />
 
 

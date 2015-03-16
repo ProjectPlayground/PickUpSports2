@@ -2,22 +2,22 @@ package pickupsports2.ridgewell.pickupsports2.activities;
 
 import android.app.FragmentManager;
 import android.app.Fragment;
-import android.content.ClipData;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.internal.view.menu.MenuView;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import pickupsports2.ridgewell.pickupsports2.NavigationDrawerFragment;
+import com.facebook.Session;
+
+import pickupsports2.ridgewell.pickupsports2.elements.NavigationDrawerFragment;
 import pickupsports2.ridgewell.pickupsports2.R;
 import pickupsports2.ridgewell.pickupsports2.elements.AddEventButton;
+import pickupsports2.ridgewell.pickupsports2.intents.IntentProtocol;
 
 public class MainActivity extends ActionBarActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks {
     final int CREATE_EVENT_CODE = 1;
@@ -152,6 +152,12 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
             //TODO: make edit work?
             Toast.makeText(this, "Edit", Toast.LENGTH_SHORT).show();
             return true;
+        } else if (id == R.id.log_out) {
+            if (Session.getActiveSession() != null) {
+                Session.getActiveSession().closeAndClearTokenInformation();
+            }
+            Session.setActiveSession(null);
+            finish();
         }
         return super.onOptionsItemSelected(item);
     }

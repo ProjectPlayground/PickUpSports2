@@ -59,7 +59,7 @@
             android:layout_height="match_parent"
             android:layout_gravity="start"
             android:clickable="true"
-            android:name="pickupsports2.ridgewell.pickupsports2.NavigationDrawerFragment"
+            android:name="pickupsports2.ridgewell.pickupsports2.elements.NavigationDrawerFragment"
             tools:layout="@layout/fragment_navigation_drawer" />
     </android.support.v4.widget.DrawerLayout>
 </RelativeLayout>
