@@ -29,6 +29,14 @@ Build Cycle 3:
  * run backend on server
  * integrate database entries useing MongoDB on backend
 
+Build Cycle 4:
+ * integrate Facebook Logins
+ * add User accounts linked to Facebook Logins
+ * Add Navigation Drawer and profile view
+ * Switch Unnecessary activities to views
+ * integrate Google Maps Location Storage
+ * allow for Event and User information editing
+
 ## User Stories
 1. I want to be able to create and delete my own events.
 2. I've recently moved, I want to be able to find other people to exercise with.

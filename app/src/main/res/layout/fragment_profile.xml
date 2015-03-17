@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="15dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                style="@style/viewable_heading_text"
+                android:id="@+id/user_name"
+                android:text="Username"/>
+
+            <TextView
+                style="@style/minor_text"
+                android:id="@+id/user_join_date"
+                android:text="join date"
+                android:layout_marginLeft="15dp"
+                android:layout_below="@+id/user_name"/>
+        </RelativeLayout>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/profile_picture" />
+    </LinearLayout>
+
+    <TextView
+        style="@style/badge_display"
+        android:text="badges"
+        android:id="@+id/user_badges"
+        android:paddingLeft="10dp"/>
+
+    <TextView
+        style="@style/sport_tag_display"
+        android:text="favorite sports"
+        android:id="@+id/user_favorite_sports"
+        android:paddingLeft="10dp"/>
+
+    <TextView
+        style="@style/minor_text"
+        android:text="location"
+        android:id="@+id/user_location" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Edit"/>
+
+</LinearLayout>

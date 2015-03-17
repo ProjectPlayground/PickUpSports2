@@ -68,6 +68,7 @@ public class SwipeRefreshListFragment extends ListFragment {
         mSwipeRefreshLayout.setRefreshing(refreshing);
     }
 
+    //TODO: Set these to theme colors
     /**
      * Set the color scheme for the {@link android.support.v4.widget.SwipeRefreshLayout}.
      */
