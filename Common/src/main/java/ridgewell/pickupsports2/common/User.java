@@ -14,40 +14,65 @@ import org.joda.time.DateTime;
  */
 public class User implements Parcelable{
 
-    private String username;
+    private String _id;
+    private String firstname;
+    private String lastname;
     private String nickname;
     private Location location;
     private long joiningTime;
+    private String fb_id;
 
     //private List<Sport> favoriteSports = new ArrayList<Sport>();
-    //private List<Event> attendedEvents = new ArrayList<Event>();
+    private List<String> attendedEvents = new ArrayList<String>();
     //private List<Event> createdEvents = new ArrayList<Event>();
     //private List<Badge> badges = new ArrayList<Badge>();
 
     public User() {}
 
-    public User(String username) {
-        this.username = username;
+    public User(String firstname, String lastname, Location location) {
+        this.firstname = firstname;
+        this.lastname = lastname;
         this.joiningTime = DateTime.now().getMillis();
         //Fetch from phone or have user input
-        this.location = new Location("fetch current position");
+        this.location = location;
         this.nickname = "";
     }
 
-    /*
-     * returns the String username
-     */
-    public String getUsername() {
-        return username;
+    public String getFirstname() {
+        return firstname;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+
+    public String get_id() {
+        return _id;
+    }
+
+    public void set_id(String _id) {
+        this._id = _id;
+    }
+
+    public List<String> getAttendedEvents() {
+        return attendedEvents;
+    }
+
+    public void setAttendedEvents(List<String> attendedEvents) {
+        this.attendedEvents = attendedEvents;
     }
 
     /*
-         * returns the String nickname
-         */
+                 * returns the String nickname
+                 */
     public String getNickname() {
         return nickname;
     }
@@ -132,12 +157,15 @@ public class User implements Parcelable{
     }
 
     public void writeToParcel(Parcel out, int flags) {
-        out.writeString(username);
+        out.writeString(_id);
+        out.writeString(firstname);
+        out.writeString(lastname);
         out.writeString(nickname);
         out.writeParcelable(location, 0);
         out.writeLong(joiningTime);
+        out.writeString(fb_id);
         //out.writeTypedList(favoriteSports);
-        //out.writeTypedList(attendedEvents);
+        out.writeStringList(attendedEvents);
         //out.writeTypedList(createdEvents);
         //out.writeTypedList(badges);
     }
@@ -154,12 +182,15 @@ public class User implements Parcelable{
     };
 
     private User(Parcel in) {
-        username = in.readString();
+        _id = in.readString();
+        firstname = in.readString();
+        lastname = in.readString();
         nickname = in.readString();
         location = in.readParcelable(Location.class.getClassLoader());
         joiningTime = in.readLong();
+        fb_id = in.readString();
         //favoriteSports = in.createTypedArrayList(Sport.CREATOR);
-        //attendedEvents = in.createTypedArrayList(Event.CREATOR);
+        in.readStringList(attendedEvents);
         //createdEvents = in.createTypedArrayList(Event.CREATOR);
         //badges = in.createTypedArrayList(Badge.CREATOR);
     }

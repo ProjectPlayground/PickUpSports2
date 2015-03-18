@@ -32,12 +32,12 @@ public class ServerRequest {
 
     public ServerRequest(){};
 
-    public User getUser(final String username) {
+    public User getUser(final String id) {
         try {
             Callable<User> callable = new Callable<User>() {
                 @Override
                 public User call() {
-                    return svc.getUser(username);
+                    return svc.getUser(id, false);
                 }
             };
             ExecutorService exec = Executors.newFixedThreadPool(3);
@@ -48,6 +48,25 @@ public class ServerRequest {
         } catch (InterruptedException e) {
             Log.e("Execution Exception", e.getMessage());
             return null;
+        }
+    }
+
+    public boolean isExistingUser(final String id, final boolean facebookid) {
+        try {
+            Callable<User> callable = new Callable<User>() {
+                @Override
+                public User call() {
+                    return svc.getUser(id, facebookid);
+                }
+            };
+            ExecutorService exec = Executors.newFixedThreadPool(3);
+            return exec.submit(callable).get() != null;
+        } catch (ExecutionException e) {
+            Log.e("Interrupted Exception", e.getMessage());
+            return false;
+        } catch (InterruptedException e) {
+            Log.e("Execution Exception", e.getMessage());
+            return false;
         }
     }
 
@@ -76,7 +95,7 @@ public class ServerRequest {
         Runnable r = new Runnable() {
             @Override
             public void run() {
-                svc.deleteUser(user.getUsername(), new Callback<User>() {
+                svc.deleteUser(user.get_id(), new Callback<User>() {
                     @Override
                     public void success(User user, Response response) {
                         Log.v("Retrofit Success", "User response");

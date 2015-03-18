@@ -251,15 +251,29 @@ var PickUplocations2 = function() {
          */
         self.app.get('/user/', function(req, res) {
             var id = url.parse(req.url, true).query.id;
-            self.getFromDB('users', {'_id': new ObjectID(id)}, function(err, data) {
-                if (err) {
-                    console.log(err);
-                    res.send(err);
-                } else {
-                    console.log(data[0]);
-                    res.json(data[0]);
-                }
-            });
+            //id is from facebook
+            if (url.parse(req.url, true).query.fb != null) {
+                self.getFromDB('users', {'_id': new ObjectID(id)}, function(err, data) {
+                    if (err) {
+                        console.log(err);
+                        res.send(err);
+                    } else {
+                        console.log(data[0]);
+                        res.json(data[0]);
+                    }
+                });
+            } else {
+                //pickupsportsid
+                self.getFromDB('users', {'fb_id': id}, function(err, data) {
+                    if (err) {
+                        console.log(err);
+                        res.send(err);
+                    } else {
+                        console.log(data[0]);
+                        res.json(data[0]);
+                    }
+                });
+            }
         });
 
         /*

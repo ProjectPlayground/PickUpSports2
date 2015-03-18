@@ -6,6 +6,9 @@ import android.os.Parcelable;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by cameronridgewell on 1/16/15.
  */
@@ -18,7 +21,7 @@ public class Event implements Parcelable{
     private int cost;
     private String notes;
     private boolean isPublic;
-    //private List<User> attendees;
+    private List<String> attendees;
     private int maxAttendance;
     //private List<User> waitlist; //queue
     private String creator;
@@ -38,7 +41,7 @@ public class Event implements Parcelable{
         this.notes = notes;
         this.isPublic = isPublic;
         this.maxAttendance = maxAttendance;
-        //this.attendees = new ArrayList<User>();
+        this.attendees = new ArrayList<String>();
         //this.waitlist = new ArrayList<User>();
         this.creator = creator;
     }
@@ -124,8 +127,8 @@ public class Event implements Parcelable{
     public void setPublic(boolean isPublic) {
         this.isPublic = isPublic;
     }
-/*
-    public List<User> getAttendees() {
+
+    public List<String> getAttendees() {
         return attendees;
     }
 
@@ -134,13 +137,13 @@ public class Event implements Parcelable{
     }
 
     public void addAttendee(User user) {
-        this.attendees.add(user);
+        this.attendees.add(user.get_id());
     }
 
     public void removeAttendee(User user) {
-        this.attendees.remove(user);
+        this.attendees.remove(user.get_id());
     }
-*/
+
     public int getMaxAttendance() {
         return maxAttendance;
     }
@@ -199,7 +202,7 @@ public class Event implements Parcelable{
         out.writeInt(cost);
         out.writeString(notes);
         out.writeInt(isPublic ? 1 : 0);
-        //out.writeTypedList(attendees);
+        out.writeStringList(attendees);
         out.writeInt(maxAttendance);
         //out.writeTypedList(waitlist);
         out.writeString(creator);
@@ -230,9 +233,13 @@ public class Event implements Parcelable{
         cost = in.readInt();
         notes = in.readString();
         isPublic = in.readInt() == 1;
-        //attendees = in.createTypedArrayList(User.CREATOR);
+        in.readStringList(attendees);
         maxAttendance = in.readInt();
         //waitlist = in.createTypedArrayList(User.CREATOR);
         creator = in.readString();
+    }
+
+    public boolean isCreator(final User user) {
+        return user.get_id().equals(this.creator);
     }
 }

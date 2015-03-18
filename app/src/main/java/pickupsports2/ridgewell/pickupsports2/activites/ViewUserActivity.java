@@ -27,10 +27,10 @@ public class ViewUserActivity extends ActionBarActivity {
 
         this.user = IntentProtocol.getUser(this);
 
-        setTitle(user.getUsername());
+        setTitle(user.getFirstname() + " " + user.getLastname());
 
         TextView username = (TextView) findViewById(R.id.user_name);
-        username.setText(user.getUsername());
+        username.setText(user.getFirstname() + " " + user.getLastname());
 
         TextView joindate = (TextView) findViewById(R.id.user_join_date);
         joindate.setText(user.getJoinTime().toString("MMMM d, yyyy"));
