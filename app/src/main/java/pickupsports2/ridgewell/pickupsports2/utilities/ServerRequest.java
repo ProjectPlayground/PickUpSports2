@@ -30,6 +30,8 @@ public class ServerRequest {
             .setEndpoint(ip_address).build()
             .create(RequestLibrary.class);
 
+    private static ExecutorService exec = Executors.newFixedThreadPool(1);
+
     public ServerRequest(){};
 
     public User getUser(final String id) {
@@ -40,7 +42,6 @@ public class ServerRequest {
                     return svc.getUser(id, false);
                 }
             };
-            ExecutorService exec = Executors.newFixedThreadPool(3);
             return exec.submit(callable).get();
         } catch (ExecutionException e) {
             Log.e("Interrupted Exception", e.getMessage());
@@ -87,8 +88,7 @@ public class ServerRequest {
                 });
             }
         };
-        Thread t = new Thread(r);
-        t.start();
+        exec.execute(r);
     }
 
     public void deleteUser(final User user) {
@@ -108,8 +108,7 @@ public class ServerRequest {
                 });
             }
         };
-        Thread t = new Thread(r);
-        t.start();
+        exec.execute(r);
     }
 
     public Event getEvent(final String id) {
@@ -120,7 +119,6 @@ public class ServerRequest {
                     return svc.getEvent(id);
                 }
             };
-            ExecutorService exec = Executors.newFixedThreadPool(3 );
             return exec.submit(callable).get();
         } catch (ExecutionException e) {
             Log.e("Interrupted Exception", e.getMessage());
@@ -158,7 +156,6 @@ public class ServerRequest {
                     return svc.getEventsInDateRange(date1.getMillis(), date2.getMillis());
                 }
             };
-            ExecutorService exec = Executors.newFixedThreadPool(3);
             return exec.submit(callable).get();
         } catch (ExecutionException e) {
             Log.e("Interrupted Exception", e.getMessage());
@@ -177,7 +174,6 @@ public class ServerRequest {
                     return svc.getAllEvents();
                 }
             };
-            ExecutorService exec = Executors.newFixedThreadPool(3);
             return exec.submit(callable).get();
         } catch (ExecutionException e) {
             Log.e("Interrupted Exception", e.getMessage());
@@ -205,8 +201,7 @@ public class ServerRequest {
                 });
             }
         };
-        Thread t = new Thread(r);
-        t.start();
+        exec.execute(r);
     }
 
     public void deleteEvent(final Event event) {
@@ -226,8 +221,7 @@ public class ServerRequest {
                 });
             }
         };
-        Thread t = new Thread(r);
-        t.start();
+        exec.execute(r);
     }
 
     public Sport getSport(final String sport) {
@@ -238,7 +232,6 @@ public class ServerRequest {
                     return svc.getSport(sport);
                 }
             };
-            ExecutorService exec = Executors.newFixedThreadPool(3 );
             return exec.submit(callable).get();
         } catch (ExecutionException e) {
             Log.e("Interrupted Exception", e.getMessage());
@@ -266,8 +259,7 @@ public class ServerRequest {
                 });
             }
         };
-        Thread t = new Thread(r);
-        t.start();
+        exec.execute(r);
     }
 
     public void deleteSport(final Sport sport) {
@@ -287,8 +279,7 @@ public class ServerRequest {
                 });
             }
         };
-        Thread t = new Thread(r);
-        t.start();
+        exec.execute(r);
     }
 
     public Location getLocation(final String location) {
@@ -299,7 +290,6 @@ public class ServerRequest {
                     return svc.getLocation(location);
                 }
             };
-            ExecutorService exec = Executors.newFixedThreadPool(3 );
             return exec.submit(callable).get();
         } catch (ExecutionException e) {
             Log.e("Interrupted Exception", e.getMessage());
@@ -327,8 +317,7 @@ public class ServerRequest {
                 });
             }
         };
-        Thread t = new Thread(r);
-        t.start();
+        exec.execute(r);
     }
 
     public void deleteLocation(final Location location) {
@@ -348,7 +337,6 @@ public class ServerRequest {
                 });
             }
         };
-        Thread t = new Thread(r);
-        t.start();
+        exec.execute(r);
     }
 }
