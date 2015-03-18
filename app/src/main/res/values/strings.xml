@@ -2,14 +2,26 @@
 <resources>
 
     <string name="app_name">PickUpSports2</string>
-    <string name="action_settings">Settings</string>
+    <string name="user_storage_file">current_user</string>
+    <string name="app_id">1634667900087388</string>
+
     <string name="cancel">Cancel</string>
     <string name="invite_friends">Invite Friends</string>
     <string name="post">Post</string>
 
+
+    <!-- menu items -->
+    <string name="action_settings">Settings</string>
+    <string name="log_out">Log Out</string>
+
     <!-- activity_main_view_screen -->
 
+    <!-- activity view user -->
+    <string name="title_activity_view_user">View User</string>
+
     <!-- activity_create_event_screen -->
+    <string name="title_activity_create_event">CreateEvent</string>
+
     <string name="create_event_title">Create a Game</string>
     <string name="event_name_heading_text">Event Name: </string>
     <string name="event_location_heading_text">Where? </string>
@@ -61,5 +73,30 @@
     </string-array>
 
     <!-- view event activity -->
+    <string name="title_activity_view_event">ViewEvent</string>
+
     <string name="created_by">Created by </string>
+    <string name="title_activity_main_activity_2">MainActivity_2</string>
+
+    <string name="title_section1">Section 1</string>
+    <string name="title_section2">Section 2</string>
+    <string name="title_section3">Section 3</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <!-- Navigation Pane -->
+    <string name="title_activity_navigation_pane">NavigationPane</string>
+    <string name="drawer_open_text">Navigation</string>
+    <string-array name="navigation_pane_titles">
+        <item>Profile</item>
+        <item>Teams</item>
+        <item>Events</item>
+        <item>Invitations</item>
+        <item>Schedule</item>
+    </string-array>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>

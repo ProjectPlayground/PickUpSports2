@@ -29,4 +29,5 @@ dependencies {
     compile 'com.android.support:appcompat-v7:21.0.+'
     compile 'com.getbase:floatingactionbutton:1.7.0'
     compile 'com.facebook.rebound:rebound:0.3.7'
+    compile 'com.facebook.android:facebook-android-sdk:3.23.0'
 }

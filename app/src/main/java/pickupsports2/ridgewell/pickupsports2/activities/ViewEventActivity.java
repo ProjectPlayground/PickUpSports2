@@ -1,4 +1,4 @@
-package pickupsports2.ridgewell.pickupsports2.activites;
+package pickupsports2.ridgewell.pickupsports2.activities;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;

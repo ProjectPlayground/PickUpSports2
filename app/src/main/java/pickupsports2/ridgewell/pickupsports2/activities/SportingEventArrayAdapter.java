@@ -1,4 +1,4 @@
-package pickupsports2.ridgewell.pickupsports2.activites;
+package pickupsports2.ridgewell.pickupsports2.activities;
 
 import java.util.ArrayList;
 import java.util.List;
