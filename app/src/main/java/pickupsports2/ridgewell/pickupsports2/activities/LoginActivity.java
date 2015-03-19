@@ -1,10 +1,9 @@
 package pickupsports2.ridgewell.pickupsports2.activities;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
 import com.facebook.Request;
@@ -18,17 +17,23 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 
 import pickupsports2.ridgewell.pickupsports2.R;
+import pickupsports2.ridgewell.pickupsports2.elements.EditUserDialog;
 import pickupsports2.ridgewell.pickupsports2.intents.IntentProtocol;
+import pickupsports2.ridgewell.pickupsports2.utilities.ServerRequest;
+import ridgewell.pickupsports2.common.Location;
+import ridgewell.pickupsports2.common.User;
 
-public class LoginActivity extends Activity {
+public class LoginActivity extends FragmentActivity implements EditUserDialog.OnCreateUserListener{
     // Create, automatically open (if applicable), save, and restore the
     // Active Session in a way that is similar to Android UI lifecycles.
     private UiLifecycleHelper uiHelper;
     private View otherView;
     private static final String TAG = "LoginActivity";
 
+    private final int LOGIN_REQUEST_CODE = 555;
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         // Set View that should be visible after log-in invisible initially
@@ -84,7 +89,12 @@ public class LoginActivity extends Activity {
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
-                        IntentProtocol.launchMain(LoginActivity.this);
+
+                        if (!new ServerRequest().isExistingUser(id, true)) {
+                            showCreateDialog(user.getFirstName(),user.getLastName());
+                        } else {
+                            IntentProtocol.launchMain(LoginActivity.this);
+                        }
                     }
                 }
             }).executeAsync();
@@ -124,5 +134,23 @@ public class LoginActivity extends Activity {
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         uiHelper.onSaveInstanceState(outState);
+    }
+
+    private void showCreateDialog(String firstname, String lastname) {
+        User user_expected = new User(firstname, lastname, new Location(""));
+        EditUserDialog createUser = new EditUserDialog();
+        Bundle args = new Bundle();
+        args.putParcelable("user",user_expected);
+        createUser.setArguments(args);
+        createUser.show(getFragmentManager(),"creating user at login");
+    }
+
+    public void onCreateUserListener(User user) {
+        if (user == null) {
+            Session.setActiveSession(null);
+        } else {
+            //add user
+            Log.v("user location", user.getLocation().getLocation());
+        }
     }
 }

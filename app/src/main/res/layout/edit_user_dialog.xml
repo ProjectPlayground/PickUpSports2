@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp">
 
 
     <TextView
@@ -29,7 +31,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/first_name_header"
-                android:text="FirstName"
+                android:hint="First Name"
                 android:id="@+id/firstNameText" />
             </RelativeLayout>
 
@@ -46,7 +48,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/last_name_header"
-                    android:text="LastName"
+                    android:hint="Last Name"
                     android:id="@+id/lastNameText" />
             </RelativeLayout>
         </LinearLayout>
@@ -54,6 +56,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:text="Location"
         android:id="@+id/location_header" />
 
@@ -76,7 +79,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/city_header"
-                android:text="City"
+                android:hint="City"
                 android:id="@+id/cityText" />
         </RelativeLayout>
 
@@ -93,7 +96,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/state_header"
-                android:text="State"
+                android:hint="State"
+                android:maxLength="2"
                 android:id="@+id/stateText" />
         </RelativeLayout>
     </LinearLayout>

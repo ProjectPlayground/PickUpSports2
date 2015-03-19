@@ -60,7 +60,6 @@ public class ServerRequest {
                     return svc.getUser(id, facebookid);
                 }
             };
-            ExecutorService exec = Executors.newFixedThreadPool(3);
             return exec.submit(callable).get() != null;
         } catch (ExecutionException e) {
             Log.e("Interrupted Exception", e.getMessage());
