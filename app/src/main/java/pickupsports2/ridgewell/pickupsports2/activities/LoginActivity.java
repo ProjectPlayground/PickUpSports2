@@ -32,6 +32,8 @@ public class LoginActivity extends FragmentActivity implements EditUserDialog.On
 
     private final int LOGIN_REQUEST_CODE = 555;
 
+    private static ServerRequest svc = new ServerRequest();
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,8 +92,11 @@ public class LoginActivity extends FragmentActivity implements EditUserDialog.On
                             e.printStackTrace();
                         }
 
-                        if (!new ServerRequest().isExistingUser(id, true)) {
-                            showCreateDialog(user.getFirstName(),user.getLastName());
+                        if (!new ServerRequest().isExistingUser(id, "fb")) {
+                            User user_expected = new User(user.getFirstName(),
+                                    user.getLastName(), new Location(""));
+                            user_expected.setFb_id(id);
+                            showCreateDialog(user_expected);
                         } else {
                             IntentProtocol.launchMain(LoginActivity.this);
                         }
@@ -136,8 +141,7 @@ public class LoginActivity extends FragmentActivity implements EditUserDialog.On
         uiHelper.onSaveInstanceState(outState);
     }
 
-    private void showCreateDialog(String firstname, String lastname) {
-        User user_expected = new User(firstname, lastname, new Location(""));
+    private void showCreateDialog(User user_expected) {
         EditUserDialog createUser = new EditUserDialog();
         Bundle args = new Bundle();
         args.putParcelable("user",user_expected);
@@ -149,8 +153,8 @@ public class LoginActivity extends FragmentActivity implements EditUserDialog.On
         if (user == null) {
             Session.setActiveSession(null);
         } else {
-            //add user
-            Log.v("user location", user.getLocation().getLocation());
+            svc.addUser(user);
+            IntentProtocol.launchMain(LoginActivity.this);
         }
     }
 }

@@ -2,6 +2,7 @@ package pickupsports2.ridgewell.pickupsports2.utilities;
 
 import android.util.Log;
 
+import java.security.InvalidParameterException;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
@@ -39,7 +40,7 @@ public class ServerRequest {
             Callable<User> callable = new Callable<User>() {
                 @Override
                 public User call() {
-                    return svc.getUser(id, false);
+                    return svc.getUser(id, "ps2");
                 }
             };
             return exec.submit(callable).get();
@@ -52,12 +53,15 @@ public class ServerRequest {
         }
     }
 
-    public boolean isExistingUser(final String id, final boolean facebookid) {
+    public boolean isExistingUser(final String id, final String id_type) {
+        if (!id_type.equals("fb") && !id_type.equals("ps2")) {
+            throw new InvalidParameterException("Parameter 'id_type' is not valid");
+        }
         try {
             Callable<User> callable = new Callable<User>() {
                 @Override
                 public User call() {
-                    return svc.getUser(id, facebookid);
+                    return svc.getUser(id, id_type);
                 }
             };
             return exec.submit(callable).get() != null;

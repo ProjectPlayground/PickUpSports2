@@ -113,7 +113,16 @@ public class User implements Parcelable{
     public void setLocation(Location location) {
         this.location = location;
     }
-/*
+
+    public String getFb_id() {
+        return fb_id;
+    }
+
+    public void setFb_id(String fb_id) {
+        this.fb_id = fb_id;
+    }
+
+    /*
     public List<Sport> getFavoriteSports() {
         return favoriteSports;
     }

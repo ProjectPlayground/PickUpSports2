@@ -223,7 +223,7 @@ var PickUplocations2 = function() {
                 if(err) {
                     console.log(err);
                 } else {
-                    res.send(result);
+                    res.send(result[0]);
                 }
             });
         });
@@ -264,6 +264,7 @@ var PickUplocations2 = function() {
                 });
             } else {
                 //pickupsportsid
+                console.log(id);
                 self.getFromDB('users', {'fb_id': id}, function(err, data) {
                     if (err) {
                         console.log(err);
@@ -285,7 +286,7 @@ var PickUplocations2 = function() {
                 if(err) {
                     console.log(err);
                 } else {
-                    res.send(result);
+                    res.send(result[0]);
                 }
             });
         });
@@ -332,7 +333,7 @@ var PickUplocations2 = function() {
                 if(err) {
                     console.log(err);
                 } else {
-                    res.send(result);
+                    res.send(result[0]);
                 }
             });
         });
@@ -379,7 +380,7 @@ var PickUplocations2 = function() {
                 if(err) {
                     console.log(err);
                 } else {
-                    res.send(result);
+                    res.send(result[0]);
                 }
             });
         });

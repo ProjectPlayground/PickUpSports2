@@ -23,7 +23,7 @@ public interface RequestLibrary {
 
     /*User Commands*/
     @GET("/user/")
-    public User getUser(@Query("id") String id, @Query("fb") boolean fb);
+    public User getUser(@Query("id") String id, @Query("id_type") String id_type);
 
     @POST("/user/")
     public void addUser(@Body User user, Callback<User> success);
