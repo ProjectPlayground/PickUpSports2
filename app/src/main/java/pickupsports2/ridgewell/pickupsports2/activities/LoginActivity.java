@@ -1,10 +1,9 @@
 package pickupsports2.ridgewell.pickupsports2.activities;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
 import com.facebook.Request;
@@ -14,21 +13,28 @@ import com.facebook.SessionState;
 import com.facebook.UiLifecycleHelper;
 import com.facebook.model.GraphUser;
 
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 
 import pickupsports2.ridgewell.pickupsports2.R;
+import pickupsports2.ridgewell.pickupsports2.elements.EditUserDialog;
 import pickupsports2.ridgewell.pickupsports2.intents.IntentProtocol;
+import pickupsports2.ridgewell.pickupsports2.utilities.ServerRequest;
+import ridgewell.pickupsports2.common.Location;
+import ridgewell.pickupsports2.common.User;
 
-public class LoginActivity extends Activity {
+public class LoginActivity extends FragmentActivity implements EditUserDialog.OnEditUserListener{
     // Create, automatically open (if applicable), save, and restore the
     // Active Session in a way that is similar to Android UI lifecycles.
     private UiLifecycleHelper uiHelper;
     private View otherView;
     private static final String TAG = "LoginActivity";
 
+    private final int LOGIN_REQUEST_CODE = 555;
+
+    private static ServerRequest svreq = ServerRequest.getInstance();
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         // Set View that should be visible after log-in invisible initially
@@ -62,29 +68,17 @@ public class LoginActivity extends Activity {
                 @Override
                 public void onCompleted(GraphUser user, Response response) {
                     if (user != null) {
-                        String id = user.getId();
-                        //finds user id and stores it to internal storage
-                        try {
-                            FileOutputStream fos = openFileOutput(
-                                            getResources().getString(R.string.user_storage_file),
-                                            Context.MODE_PRIVATE);
-                            fos.write(id.getBytes());
-                            fos.close();
-                        } catch (Exception e) {
-                            e.printStackTrace();
+                        String fbid = user.getId();
+                        User userreq = svreq.isExistingUser(fbid, "fb");
+
+                        if (userreq == null) {
+                            User user_expected = new User(user.getFirstName(),
+                                    user.getLastName(), new Location(""));
+                            user_expected.setFb_id(fbid);
+                            showCreateDialog(user_expected);
+                        } else {
+                            successfulLogin(userreq);
                         }
-                        try {
-                            FileInputStream fis = openFileInput(
-                                    getResources().getString(R.string.user_storage_file));
-                            int ch;
-                            StringBuffer fileContent = new StringBuffer("");
-                            while( (ch = fis.read()) != -1) {
-                                fileContent.append((char) ch);
-                            }
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                        IntentProtocol.launchMain(LoginActivity.this);
                     }
                 }
             }).executeAsync();
@@ -124,5 +118,38 @@ public class LoginActivity extends Activity {
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         uiHelper.onSaveInstanceState(outState);
+    }
+
+    private void showCreateDialog(User user_expected) {
+        EditUserDialog createUser = new EditUserDialog();
+        Bundle args = new Bundle();
+        args.putParcelable("user",user_expected);
+        createUser.setArguments(args);
+        createUser.show(getFragmentManager(),"creating user at login");
+    }
+
+    public void onEditUserListener(User user) {
+        if (user == null) {
+            Session.setActiveSession(null);
+        } else {
+            svreq.addUser(user);
+            successfulLogin(user);
+        }
+    }
+
+    /*
+     * Writes the user's id to main memory and launches main activity
+     */
+    private void successfulLogin(User user) {
+        try {
+            FileOutputStream fos = openFileOutput(
+                    getResources().getString(R.string.user_storage_file),
+                    Context.MODE_PRIVATE);
+            fos.write(user.get_id().getBytes());
+            fos.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        IntentProtocol.launchMain(LoginActivity.this);
     }
 }

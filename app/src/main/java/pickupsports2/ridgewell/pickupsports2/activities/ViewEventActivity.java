@@ -21,7 +21,7 @@ public class ViewEventActivity extends ActionBarActivity {
 
     private Event event;
 
-    private ServerRequest svreq = new ServerRequest();
+    private ServerRequest svreq = ServerRequest.getInstance();
 
     public ViewEventActivity() {}
 

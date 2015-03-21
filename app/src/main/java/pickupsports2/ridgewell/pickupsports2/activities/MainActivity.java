@@ -14,12 +14,16 @@ import android.widget.Toast;
 
 import com.facebook.Session;
 
+import pickupsports2.ridgewell.pickupsports2.elements.EditUserDialog;
 import pickupsports2.ridgewell.pickupsports2.elements.NavigationDrawerFragment;
 import pickupsports2.ridgewell.pickupsports2.R;
 import pickupsports2.ridgewell.pickupsports2.elements.AddEventButton;
-import pickupsports2.ridgewell.pickupsports2.intents.IntentProtocol;
+import pickupsports2.ridgewell.pickupsports2.utilities.ServerRequest;
+import ridgewell.pickupsports2.common.User;
 
-public class MainActivity extends ActionBarActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+public class MainActivity extends ActionBarActivity
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks,
+        EditUserDialog.OnEditUserListener {
     final int CREATE_EVENT_CODE = 1;
 
     /**
@@ -41,6 +45,10 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
      * String that contains the value of each options menu button for a given fragment
      */
     private String optionButton;
+
+    private MainActivityFragment myFragment = null;
+
+    private static ServerRequest svreq = ServerRequest.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +78,7 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
 
         //Set start screen
         if (savedInstanceState == null) {
-            onNavigationDrawerItemSelected(1);
+            onNavigationDrawerItemSelected(0);
         }
     }
 
@@ -100,10 +108,9 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
     }
 
     public void onNavigationDrawerItemSelected(int position) {
-        Fragment fragment = null;
         switch (position) {
             case 0:
-                fragment = Profile.newInstance();
+                myFragment = ProfileFragment.newInstance();
                 optionButton = "Edit";
                 //TODO: create edit action
                 break;
@@ -112,7 +119,7 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
                 //Launch to Teams View
                 break;
             case 2:
-                fragment = new EventFragment();
+                myFragment = new EventFragment();
                 optionButton = "Edit";
                 //TODO: create edit action
                 break;
@@ -127,10 +134,10 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
             default:
         }
 
-        if (fragment != null) {
+        if (myFragment != null) {
             FragmentManager fragmentManager = getFragmentManager();
             fragmentManager.beginTransaction()
-                    .replace(R.id.container, fragment).commit();
+                    .replace(R.id.container, (Fragment) myFragment).commit();
             mTitle = getResources().getStringArray(R.array.navigation_pane_titles)[position];
         } else {
             // error in creating fragment
@@ -149,8 +156,7 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
             return true;
         }
         else if (id == R.id.fragment_action) {
-            //TODO: make edit work?
-            Toast.makeText(this, "Edit", Toast.LENGTH_SHORT).show();
+            myFragment.onActionButtonClick();
             return true;
         } else if (id == R.id.log_out) {
             if (Session.getActiveSession() != null) {
@@ -160,5 +166,15 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
             finish();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public abstract interface MainActivityFragment {
+        public abstract void onActionButtonClick();
+        public abstract void refreshFragment();
+    }
+
+    public void onEditUserListener(User user) {
+        svreq.editUser(user);
+        myFragment.refreshFragment();
     }
 }

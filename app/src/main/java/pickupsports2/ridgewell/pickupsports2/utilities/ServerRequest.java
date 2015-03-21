@@ -2,6 +2,7 @@ package pickupsports2.ridgewell.pickupsports2.utilities;
 
 import android.util.Log;
 
+import java.security.InvalidParameterException;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
@@ -32,14 +33,45 @@ public class ServerRequest {
 
     private static ExecutorService exec = Executors.newFixedThreadPool(1);
 
-    public ServerRequest(){};
+    private static ServerRequest instance = null;
 
-    public User getUser(final String username) {
+    protected ServerRequest(){};
+
+    public static ServerRequest getInstance() {
+        if (instance == null) {
+            return new ServerRequest();
+        } else {
+            return instance;
+        }
+    }
+
+    public User getUser(final String id) {
         try {
             Callable<User> callable = new Callable<User>() {
                 @Override
                 public User call() {
-                    return svc.getUser(username);
+                    return svc.getUser(id, "ps2");
+                }
+            };
+            return exec.submit(callable).get();
+        } catch (ExecutionException e) {
+            Log.e("Interrupted Exception", e.getMessage());
+            return null;
+        } catch (InterruptedException e) {
+            Log.e("Execution Exception", e.getMessage());
+            return null;
+        }
+    }
+
+    public User isExistingUser(final String id, final String id_type) {
+        if (!id_type.equals("fb") && !id_type.equals("ps2")) {
+            throw new InvalidParameterException("Parameter 'id_type' is not valid");
+        }
+        try {
+            Callable<User> callable = new Callable<User>() {
+                @Override
+                public User call() {
+                    return svc.getUser(id, id_type);
                 }
             };
             return exec.submit(callable).get();
@@ -72,11 +104,31 @@ public class ServerRequest {
         exec.execute(r);
     }
 
+    public void editUser(final User user) {
+        Runnable r = new Runnable() {
+            @Override
+            public void run() {
+                svc.editUser(user, new Callback<User>() {
+                    @Override
+                    public void success(User user, Response response) {
+                        Log.v("Retrofit Success", "User response");
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+                        Log.e("Retrofit Error", "editUser Failed");
+                    }
+                });
+            }
+        };
+        exec.execute(r);
+    }
+
     public void deleteUser(final User user) {
         Runnable r = new Runnable() {
             @Override
             public void run() {
-                svc.deleteUser(user.getUsername(), new Callback<User>() {
+                svc.deleteUser(user.get_id(), new Callback<User>() {
                     @Override
                     public void success(User user, Response response) {
                         Log.v("Retrofit Success", "User response");

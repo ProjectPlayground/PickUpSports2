@@ -23,10 +23,13 @@ public interface RequestLibrary {
 
     /*User Commands*/
     @GET("/user/")
-    public User getUser(@Query("username") String username);
+    public User getUser(@Query("id") String id, @Query("id_type") String id_type);
 
-    @POST("/user/")
+    @POST("/user/?type=new")
     public void addUser(@Body User user, Callback<User> success);
+
+    @POST("/user/?type=existing")
+    public void editUser(@Body User user, Callback<User> success);
 
     @DELETE("/user/")
     public void deleteUser(@Query("username") String username, Callback<User> success);

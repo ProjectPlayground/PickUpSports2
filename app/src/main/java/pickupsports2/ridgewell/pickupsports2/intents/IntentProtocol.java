@@ -20,7 +20,7 @@ public class IntentProtocol {
     public static final String VIEWABLE_EVENT = "viewable_event";
     public static final String USER_VIEW = "user_view";
     public static final String CREATED_EVENT = "created_event";
-    public static final ServerRequest svreq = new ServerRequest();
+    public static final ServerRequest svreq = ServerRequest.getInstance();
 
     public static void launchLogin(Activity context){
         Intent intent = new Intent(context, LoginActivity.class);
