@@ -22,7 +22,7 @@ import ridgewell.pickupsports2.common.Event;
 /**
  * Created by cameronridgewell on 2/9/15.
  */
-public class EventFragment extends SwipeRefreshListFragment {
+public class EventFragment extends SwipeRefreshListFragment implements MainActivity.MainActivityFragment{
 
     final int CREATE_EVENT_CODE = 1;
     final int SUCCESS_CODE = 1;
@@ -30,7 +30,7 @@ public class EventFragment extends SwipeRefreshListFragment {
     private List<Event> events = new ArrayList<Event>();
 
     private SportingEventArrayAdapter sportingEventArrayAdapter;
-    private ServerRequest svreq = new ServerRequest();
+    private ServerRequest svreq = ServerRequest.getInstance();
 
     View rootView;
 
@@ -46,7 +46,7 @@ public class EventFragment extends SwipeRefreshListFragment {
         swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                refreshEvents();
+                refreshFragment();
                 swipeRefresh.setRefreshing(false);
             }
         });
@@ -66,7 +66,7 @@ public class EventFragment extends SwipeRefreshListFragment {
     @Override
     public void onResume() {
         super.onResume();
-        refreshEvents();
+        refreshFragment();
     }
 
     @Override
@@ -79,7 +79,7 @@ public class EventFragment extends SwipeRefreshListFragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CREATE_EVENT_CODE) {
             if (resultCode == SUCCESS_CODE) {
-                refreshEvents();
+                refreshFragment();
             } else {
                 Toast toast = Toast.makeText(getActivity().getApplicationContext(),
                         "An error occurred while creating your event", Toast.LENGTH_SHORT);
@@ -88,7 +88,11 @@ public class EventFragment extends SwipeRefreshListFragment {
         }
     }
 
-    public void refreshEvents() {
+    public void onActionButtonClick() {
+
+    }
+
+    public void refreshFragment() {
         Log.v("Attempting", "Event Refresh");
         events = svreq.getAllEvents();
         if (events != null) {

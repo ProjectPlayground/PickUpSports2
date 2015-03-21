@@ -23,7 +23,7 @@ import ridgewell.pickupsports2.common.Location;
 import ridgewell.pickupsports2.common.User;
 
 public class EditUserDialog extends DialogFragment {
-    private OnCreateUserListener callback;
+    private OnEditUserListener callback;
 
     User inputUser = null;
 
@@ -51,7 +51,7 @@ public class EditUserDialog extends DialogFragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         inputUser = null;
-                        callback.onCreateUserListener(inputUser);
+                        callback.onEditUserListener(inputUser);
                         dismiss();
                     }
                 });
@@ -91,6 +91,7 @@ public class EditUserDialog extends DialogFragment {
             @Override
             public void validate(TextView textview, String text) {
                 String outputText = "";
+                int word_length = text.length() < 2 ? text.length() : 2;
                 int removedcount = 0;
                 for (int i = 0; i < text.length(); ++i) {
                     if (Character.isLetter(text.charAt(i))) {
@@ -107,7 +108,7 @@ public class EditUserDialog extends DialogFragment {
 
         String userLocation = inputUser.getLocation().getLocation();
         if (! userLocation.equals("")) {
-            String[] citystate = userLocation.split(",");
+            String[] citystate = userLocation.split(", ");
             cityname.setText(citystate[0]);
             statename.setText(citystate[1]);
         }
@@ -142,8 +143,8 @@ public class EditUserDialog extends DialogFragment {
                                 .toString().trim(), delim));
                         inputUser.setLocation(new Location(WordUtils.capitalize(cityname.getText()
                                 .toString().trim(), delim) + ", "
-                                + statename.getText().toString()));
-                        callback.onCreateUserListener(inputUser);
+                                + statename.getText().toString().trim()));
+                        callback.onEditUserListener(inputUser);
                         dismiss();
                     }
                 }
@@ -154,15 +155,15 @@ public class EditUserDialog extends DialogFragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-            this.callback = (OnCreateUserListener)activity;
+            this.callback = (OnEditUserListener)activity;
         }
         catch (final ClassCastException e) {
             throw new ClassCastException(activity.toString()
-                    + " must implement OnCreateUserListener");
+                    + " must implement OnEditUserListener");
         }
     }
 
-    public interface OnCreateUserListener {
-        public void onCreateUserListener(User user);
+    public interface OnEditUserListener {
+        public void onEditUserListener(User user);
     }
 }

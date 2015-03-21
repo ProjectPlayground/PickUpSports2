@@ -33,7 +33,17 @@ public class ServerRequest {
 
     private static ExecutorService exec = Executors.newFixedThreadPool(1);
 
-    public ServerRequest(){};
+    private static ServerRequest instance = null;
+
+    protected ServerRequest(){};
+
+    public static ServerRequest getInstance() {
+        if (instance == null) {
+            return new ServerRequest();
+        } else {
+            return instance;
+        }
+    }
 
     public User getUser(final String id) {
         try {
@@ -53,7 +63,7 @@ public class ServerRequest {
         }
     }
 
-    public boolean isExistingUser(final String id, final String id_type) {
+    public User isExistingUser(final String id, final String id_type) {
         if (!id_type.equals("fb") && !id_type.equals("ps2")) {
             throw new InvalidParameterException("Parameter 'id_type' is not valid");
         }
@@ -64,13 +74,13 @@ public class ServerRequest {
                     return svc.getUser(id, id_type);
                 }
             };
-            return exec.submit(callable).get() != null;
+            return exec.submit(callable).get();
         } catch (ExecutionException e) {
             Log.e("Interrupted Exception", e.getMessage());
-            return false;
+            return null;
         } catch (InterruptedException e) {
             Log.e("Execution Exception", e.getMessage());
-            return false;
+            return null;
         }
     }
 
@@ -87,6 +97,26 @@ public class ServerRequest {
                     @Override
                     public void failure(RetrofitError error) {
                         Log.e("Retrofit Error", "addUser Failed");
+                    }
+                });
+            }
+        };
+        exec.execute(r);
+    }
+
+    public void editUser(final User user) {
+        Runnable r = new Runnable() {
+            @Override
+            public void run() {
+                svc.editUser(user, new Callback<User>() {
+                    @Override
+                    public void success(User user, Response response) {
+                        Log.v("Retrofit Success", "User response");
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+                        Log.e("Retrofit Error", "editUser Failed");
                     }
                 });
             }

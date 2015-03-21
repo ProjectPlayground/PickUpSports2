@@ -44,7 +44,7 @@ public class CreateEventActivity extends ActionBarActivity implements OnClickLis
 
     private MutableDateTime date;
 
-    private ServerRequest svreq = new ServerRequest();
+    private ServerRequest svreq = ServerRequest.getInstance();
 
     static final int DATE_DIALOG_ID = 999;
     static final int TIME_DIALOG_ID = 888;
