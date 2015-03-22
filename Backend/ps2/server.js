@@ -291,10 +291,11 @@ var PickUplocations2 = function() {
                     }
                 });
             } else if (url.parse(req.url, true).query.type == "existing") {
-                self.updateInDB('users',req.body, function(err, result) {
+                self.replaceInDB('users',req.body, function(err, result) {
                     if(err) {
                         console.log(err);
                     } else {
+                        console.log("replacee successful");
                         res.send(result[0]);
                     }
                 });
@@ -410,12 +411,31 @@ var PickUplocations2 = function() {
                 }
             });
         });
+
+        /*
+         * Express code to use module to edit attendance information
+         */
+        self.app.post('/attendance/', function(req, res) {
+            var event_id = url.parse(req.url, true).query.event_id;
+            var user_id = url.parse(req.url, true).query.user_id;
+            if (url.parse(req.url, true).query.type == "add") {
+                self.updateInDB('users', { '_id' : new ObjectId(user_id)}, 
+                    {'$addToSet' : {'attendance' : event_id}}, function(err, result) {
+                    if(err) {
+                        console.log(err);
+                    } else {
+                        res.send(result[0]);
+                    }
+                });
+            }
+        });
     };
 
     /*
      * Get from Database
      */
     self.getFromDB = function(collection, object, callback) {
+        console.log('attempt to get ' + object._id);
         self.db.collection(collection).find(object).toArray(callback);
     }
 
@@ -426,23 +446,30 @@ var PickUplocations2 = function() {
         self.db.collection(collection).find(object).sort(sortby).toArray(callback);
     }
 
-
-
     /*
      * Add to Database
      */
     self.addToDB = function(collection, object, callback) {
-        console.log('attempt to insert' + object);
+        console.log('attempt to insert ' + object._id);
         self.db.collection(collection).insert(object, callback);
+    }
+
+    /*
+     * Replace existing item in Database by ObjectId
+     */
+    self.replaceInDB = function(collection, object, callback) {
+        console.log('attempt to replace ' + object._id);
+        var object_id = object._id;
+        delete object._id;
+        self.db.collection(collection).update({'_id': new ObjectID(object_id)}, 
+            object, callback);
     }
 
     /*
      * Update existing item in Database by ObjectId
      */
     self.updateInDB = function(collection, object, callback) {
-        console.log('attempt to update' + object);
-        var object_id = object._id;
-        delete object._id;
+        console.log('attempt to update ' + object._id);
         self.db.collection(collection).update({'_id': new ObjectID(object_id)}, 
             object, callback);
     }
@@ -451,6 +478,7 @@ var PickUplocations2 = function() {
      * Delete from Database
      */
     self.deleteFromDB = function(collection, object, callback) {
+        console.log('attempt to delete ' + object._id);
         self.db.collection(collection).remove(object, callback);
     }
 

@@ -174,7 +174,9 @@ public class MainActivity extends ActionBarActivity
     }
 
     public void onEditUserListener(User user) {
+        Log.v("Calling","EditUser");
         svreq.editUser(user);
+        Log.v("Called","EditUser");
         myFragment.refreshFragment();
     }
 }

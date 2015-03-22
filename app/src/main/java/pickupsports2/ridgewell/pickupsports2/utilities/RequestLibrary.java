@@ -73,4 +73,9 @@ public interface RequestLibrary {
 
     @DELETE("/location/")
     public void deleteLocation(@Query("location") String Location, Callback<Location> success);
+
+    /* Action commands */
+    @POST("/attendance/?type=add")
+    public void attendEvent(@Query("event_id") String event_id,
+                            @Query("user_id") String user_id, Callback<String> success);
 }

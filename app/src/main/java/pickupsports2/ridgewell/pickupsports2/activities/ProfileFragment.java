@@ -91,7 +91,6 @@ public class ProfileFragment extends Fragment implements MainActivity.MainActivi
     }
 
     public void onActionButtonClick() {
-        Log.v("user1",user.getLocation().getLocation());
         EditUserDialog editUserDialog = new EditUserDialog();
         Bundle args = new Bundle();
         args.putParcelable("user",user);
@@ -100,8 +99,9 @@ public class ProfileFragment extends Fragment implements MainActivity.MainActivi
     }
 
     public void refreshFragment() {
+        Log.v("Calling","GetUser");
         user = svreq.getUser(user.get_id());
-        Log.v("user2",user.getLocation().getLocation());
+        Log.v("Called","GetUser");
         setTexts();
     }
 

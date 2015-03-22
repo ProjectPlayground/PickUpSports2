@@ -53,6 +53,7 @@ public class ServerRequest {
                     return svc.getUser(id, "ps2");
                 }
             };
+            Log.v("In","GetUser");
             return exec.submit(callable).get();
         } catch (ExecutionException e) {
             Log.e("Interrupted Exception", e.getMessage());
@@ -84,6 +85,26 @@ public class ServerRequest {
         }
     }
 
+    public void attendEvent(final Event event, final User user) {
+        Runnable r = new Runnable() {
+            @Override
+            public void run() {
+                svc.attendEvent(event.get_id(), user.get_id(), new Callback<String>() {
+                    @Override
+                    public void success(String string, Response response) {
+                        Log.v("Retrofit Success", "attendEvent response");
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+                        Log.e("Retrofit Error", "attendEvent Failed");
+                    }
+                });
+            }
+        };
+        exec.execute(r);
+    }
+
     public void addUser(final User user) {
         Runnable r = new Runnable() {
             @Override
@@ -108,6 +129,7 @@ public class ServerRequest {
         Runnable r = new Runnable() {
             @Override
             public void run() {
+                Log.v("In","EditUser");
                 svc.editUser(user, new Callback<User>() {
                     @Override
                     public void success(User user, Response response) {
