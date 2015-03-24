@@ -74,7 +74,7 @@ public class SportingEventArrayAdapter extends ArrayAdapter<Event> {
         bundle.putParcelable("user", this.user);
         bundle.putParcelable("event",this.event);
 
-        if (!event.getAttendees().contains(this.user.get_id())) {
+        if (!list.get(position).getAttendees().contains(this.user.get_id())) {
             attendButton.setText(context.getResources().getString(R.string.attendButton));
             attendButton.setOnClickListener(new ActivityOnClickListener(context, bundle){
                 public void onClick(View v) {
@@ -85,7 +85,7 @@ public class SportingEventArrayAdapter extends ArrayAdapter<Event> {
                     svreq.attendEvent(event, user);
                     event.addAttendee(user);
                     user.addEvent(event);
-                    setAttendButton(true);
+                    notifyDataSetChanged();
                 }
             });
         } else {
@@ -98,7 +98,7 @@ public class SportingEventArrayAdapter extends ArrayAdapter<Event> {
                     svreq.leaveEvent(event, user);
                     event.removeAttendee(user);
                     user.removeEvent(event);
-                    setAttendButton(false);
+                    notifyDataSetChanged();
                 }
             });
         }
@@ -107,20 +107,6 @@ public class SportingEventArrayAdapter extends ArrayAdapter<Event> {
 
     public void refreshItems(List<Event> events) {
         this.list = events;
-        notifyDataSetChanged();
-    }
-
-    private void setAttendButton(boolean attending) {
-        Event temp = list.get(position);
-        if (attending) {
-            temp.addAttendee(user);
-            list.set(position, temp);
-            user.addEvent(event);
-        } else {
-            temp.removeAttendee(user);
-            list.set(position, temp);
-            user.removeEvent(event);
-        }
         notifyDataSetChanged();
     }
 }

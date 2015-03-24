@@ -138,7 +138,7 @@ public class Event implements Parcelable{
     }
 
     public void addAttendee(User user) {
-        if (attendees.contains(user.get_id())){
+        if (!attendees.contains(user.get_id())){
             this.attendees.add(user.get_id());
         }
     }
