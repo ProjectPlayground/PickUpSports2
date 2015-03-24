@@ -31,7 +31,7 @@ import ridgewell.pickupsports2.common.User;
 /**
  * Created by cameronridgewell on 1/21/15.
  */
-public class CreateEventActivity extends ActionBarActivity implements OnClickListener {
+public class CreateEventActivity extends ActionBarActivity {
     final int SUCCESS_CODE = 1;
     private Button post;
     private EditText event_name;
@@ -144,7 +144,7 @@ public class CreateEventActivity extends ActionBarActivity implements OnClickLis
                 //TODO Check for empty fields + Toast
                 User user = UserData.getInstance().getThisUser(CreateEventActivity.this);
                 try {
-                    svreq.addEvent(new Event(event_name.getText().toString(),
+                    Event created_event = new Event(event_name.getText().toString(),
                             sportsSpinner.getSelectedItem().toString(),
                             date.toDateTime(),
                             location.getText().toString(),
@@ -152,7 +152,9 @@ public class CreateEventActivity extends ActionBarActivity implements OnClickLis
                             notes.getText().toString(),
                             privacySpinner.getSelectedItemPosition() == 1,
                             Integer.parseInt(maxAttendance.getText().toString()),
-                            user.get_id()));
+                            user.get_id());
+                    created_event.addAttendee(user);
+                    svreq.addEvent(created_event);
 
                     //TODO this is an empty intent, surely it doesn't need to be passed
                     setResult(SUCCESS_CODE, new Intent());
@@ -209,11 +211,4 @@ public class CreateEventActivity extends ActionBarActivity implements OnClickLis
             displayTime.setText(date.toString("h:mm a"));
         }
     };
-
-    @Override
-    public void onClick(View v) {
-        // TODO Auto-generated method stub
-        /*Intent myTriggerActivityIntent=new Intent(this,SecondActivity.class);
-        startActivity(myTriggerActivityIntent);*/
-    }
 }
