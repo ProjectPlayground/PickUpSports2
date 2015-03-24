@@ -6,6 +6,7 @@ import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -19,9 +20,12 @@ import android.widget.Toast;
 
 import org.joda.time.MutableDateTime;
 
+import java.io.FileInputStream;
+
 import pickupsports2.ridgewell.pickupsports2.R;
 import pickupsports2.ridgewell.pickupsports2.utilities.ServerRequest;
 import ridgewell.pickupsports2.common.Event;
+import ridgewell.pickupsports2.common.User;
 
 /**
  * Created by cameronridgewell on 1/21/15.
@@ -138,6 +142,22 @@ public class CreateEventActivity extends ActionBarActivity implements OnClickLis
                 //TODO grab creating user
                 //TODO Check for empty fields + Toast
                 try {
+                    String user_id = "";
+                    try {
+                        FileInputStream fis = openFileInput(
+                                getResources().getString(R.string.user_storage_file));
+                        int ch;
+                        StringBuffer fileContent = new StringBuffer("");
+                        while( (ch = fis.read()) != -1) {
+                            fileContent.append((char) ch);
+                        }
+                        user_id = fileContent.toString();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    if (user_id.equals("")) {
+                        Log.e("Storage Error", "User id could not be read from internal storage");
+                    }
                     svreq.addEvent(new Event(event_name.getText().toString(),
                             sportsSpinner.getSelectedItem().toString(),
                             date.toDateTime(),
@@ -146,7 +166,7 @@ public class CreateEventActivity extends ActionBarActivity implements OnClickLis
                             notes.getText().toString(),
                             privacySpinner.getSelectedItemPosition() == 1,
                             Integer.parseInt(maxAttendance.getText().toString()),
-                            "Creator User"));
+                            user_id));
 
                     //TODO this is an empty intent, surely it doesn't need to be passed
                     setResult(SUCCESS_CODE, new Intent());

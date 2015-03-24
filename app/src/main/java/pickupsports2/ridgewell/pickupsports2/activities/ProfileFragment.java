@@ -28,6 +28,8 @@ public class ProfileFragment extends Fragment implements MainActivity.MainActivi
     User user = null;
 
     View rootView = null;
+
+    private static ProfileFragment instance = null;
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -35,11 +37,12 @@ public class ProfileFragment extends Fragment implements MainActivity.MainActivi
      * @return A new instance of fragment Profile.
      */
     // TODO: Rename and change types and number of parameters
-    public static ProfileFragment newInstance() {
-        ProfileFragment fragment = new ProfileFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
+    public static ProfileFragment getInstance() {
+        if (instance == null) {
+            return new ProfileFragment();
+        } else {
+            return instance;
+        }
     }
 
     public ProfileFragment() {
@@ -99,9 +102,10 @@ public class ProfileFragment extends Fragment implements MainActivity.MainActivi
     }
 
     public void refreshFragment() {
-        Log.v("Calling","GetUser");
+        try{
+            Thread.currentThread().sleep(250);
+        }catch(Exception e){}
         user = svreq.getUser(user.get_id());
-        Log.v("Called","GetUser");
         setTexts();
     }
 

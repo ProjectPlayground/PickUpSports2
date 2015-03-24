@@ -199,7 +199,7 @@ public class User implements Parcelable{
         joiningTime = in.readLong();
         fb_id = in.readString();
         //favoriteSports = in.createTypedArrayList(Sport.CREATOR);
-        in.readStringList(attendedEvents);
+        in.readList(attendedEvents, null);
         //createdEvents = in.createTypedArrayList(Event.CREATOR);
         //badges = in.createTypedArrayList(Badge.CREATOR);
     }

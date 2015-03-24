@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.facebook.Session;
 
@@ -110,7 +109,7 @@ public class MainActivity extends ActionBarActivity
     public void onNavigationDrawerItemSelected(int position) {
         switch (position) {
             case 0:
-                myFragment = ProfileFragment.newInstance();
+                myFragment = ProfileFragment.getInstance();
                 optionButton = "Edit";
                 //TODO: create edit action
                 break;
@@ -119,7 +118,7 @@ public class MainActivity extends ActionBarActivity
                 //Launch to Teams View
                 break;
             case 2:
-                myFragment = new EventFragment();
+                myFragment = new AllEventsFragment();
                 optionButton = "Edit";
                 //TODO: create edit action
                 break;

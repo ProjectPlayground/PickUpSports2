@@ -1,5 +1,7 @@
 package pickupsports2.ridgewell.pickupsports2.activities;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -22,9 +24,9 @@ import ridgewell.pickupsports2.common.Event;
 /**
  * Created by cameronridgewell on 2/9/15.
  */
-public class EventFragment extends SwipeRefreshListFragment implements MainActivity.MainActivityFragment{
+public class AllEventsFragment extends SwipeRefreshListFragment implements MainActivity.MainActivityFragment{
 
-    final int CREATE_EVENT_CODE = 1;
+    final int CREATE_EVENT_CODE = 111;
     final int SUCCESS_CODE = 1;
 
     private List<Event> events = new ArrayList<Event>();
@@ -93,6 +95,9 @@ public class EventFragment extends SwipeRefreshListFragment implements MainActiv
     }
 
     public void refreshFragment() {
+        try{
+            Thread.currentThread().sleep(250);
+        }catch(Exception e){}
         Log.v("Attempting", "Event Refresh");
         events = svreq.getAllEvents();
         if (events != null) {
