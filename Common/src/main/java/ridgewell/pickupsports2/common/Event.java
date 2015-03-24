@@ -138,7 +138,9 @@ public class Event implements Parcelable{
     }
 
     public void addAttendee(User user) {
-        this.attendees.add(user.get_id());
+        if (attendees.contains(user.get_id())){
+            this.attendees.add(user.get_id());
+        }
     }
 
     public void removeAttendee(User user) {
@@ -203,7 +205,11 @@ public class Event implements Parcelable{
         out.writeInt(cost);
         out.writeString(notes);
         out.writeInt(isPublic ? 1 : 0);
-        out.writeStringList(attendees);
+        if (attendees == null) {
+            out.writeStringList(new ArrayList<String>());
+        } else {
+            out.writeStringList(attendees);
+        }
         out.writeInt(maxAttendance);
         //out.writeTypedList(waitlist);
         out.writeString(creator_id);
@@ -234,7 +240,7 @@ public class Event implements Parcelable{
         cost = in.readInt();
         notes = in.readString();
         isPublic = in.readInt() == 1;
-        in.readList(attendees, null);
+        attendees = in.createStringArrayList();
         Log.v("attendees","processed");
         maxAttendance = in.readInt();
         //waitlist = in.createTypedArrayList(User.CREATOR);

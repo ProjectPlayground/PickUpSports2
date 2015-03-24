@@ -78,4 +78,8 @@ public interface RequestLibrary {
     @POST("/attendance/?type=add")
     public void attendEvent(@Query("event_id") String event_id,
                             @Query("user_id") String user_id, Callback<String> success);
+
+    @POST("/attendance/?type=remove")
+    public void leaveEvent(@Query("event_id") String event_id,
+                            @Query("user_id") String user_id, Callback<String> success);
 }

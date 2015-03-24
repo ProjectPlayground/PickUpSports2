@@ -24,6 +24,7 @@ import java.io.FileInputStream;
 
 import pickupsports2.ridgewell.pickupsports2.R;
 import pickupsports2.ridgewell.pickupsports2.utilities.ServerRequest;
+import pickupsports2.ridgewell.pickupsports2.utilities.UserData;
 import ridgewell.pickupsports2.common.Event;
 import ridgewell.pickupsports2.common.User;
 
@@ -141,23 +142,8 @@ public class CreateEventActivity extends ActionBarActivity implements OnClickLis
             public void onClick(View v) {
                 //TODO grab creating user
                 //TODO Check for empty fields + Toast
+                User user = UserData.getInstance().getThisUser(CreateEventActivity.this);
                 try {
-                    String user_id = "";
-                    try {
-                        FileInputStream fis = openFileInput(
-                                getResources().getString(R.string.user_storage_file));
-                        int ch;
-                        StringBuffer fileContent = new StringBuffer("");
-                        while( (ch = fis.read()) != -1) {
-                            fileContent.append((char) ch);
-                        }
-                        user_id = fileContent.toString();
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    if (user_id.equals("")) {
-                        Log.e("Storage Error", "User id could not be read from internal storage");
-                    }
                     svreq.addEvent(new Event(event_name.getText().toString(),
                             sportsSpinner.getSelectedItem().toString(),
                             date.toDateTime(),
@@ -166,7 +152,7 @@ public class CreateEventActivity extends ActionBarActivity implements OnClickLis
                             notes.getText().toString(),
                             privacySpinner.getSelectedItemPosition() == 1,
                             Integer.parseInt(maxAttendance.getText().toString()),
-                            user_id));
+                            user.get_id()));
 
                     //TODO this is an empty intent, surely it doesn't need to be passed
                     setResult(SUCCESS_CODE, new Intent());

@@ -418,15 +418,48 @@ var PickUplocations2 = function() {
         self.app.post('/attendance/', function(req, res) {
             var event_id = url.parse(req.url, true).query.event_id;
             var user_id = url.parse(req.url, true).query.user_id;
+            
             if (url.parse(req.url, true).query.type == "add") {
-                self.updateInDB('users', { '_id' : new ObjectId(user_id)}, 
-                    {'$addToSet' : {'attendance' : event_id}}, function(err, result) {
+                console.log("Adding Event " + event_id + " to User " + user_id);
+                self.updateFieldInDB('users', {'_id': new ObjectID(user_id)},
+                    {'$addToSet' : {'attendedEvents' : event_id}}, 
+                    function(err, result) {
                     if(err) {
                         console.log(err);
                     } else {
                         res.send(result[0]);
                     }
                 });
+                self.updateFieldInDB('events', {'_id': new ObjectID(event_id)},
+                    {'$addToSet' : {'attendees' : user_id}}, 
+                    function(err, result) {
+                    if(err) {
+                        console.log(err);
+                    } else {
+                        res.send(result[0]);
+                    }
+                });
+            } else if (url.parse(req.url, true).query.type == "remove") {
+                console.log("Removing Event " + event_id + " to User " + user_id);
+                self.updateFieldInDB('users', {'_id': new ObjectID(user_id)},
+                    {'$pull' : {'attendedEvents' : event_id}}, 
+                    function(err, result) {
+                    if(err) {
+                        console.log(err);
+                    } else {
+                        res.send(result[0]);
+                    }
+                });
+                self.updateFieldInDB('events', {'_id': new ObjectID(event_id)},
+                    {'$pull' : {'attendees' : user_id}}, 
+                    function(err, result) {
+                    if(err) {
+                        console.log(err);
+                    } else {
+                        res.send(result[0]);
+                    }
+                });
+
             }
         });
     };
@@ -472,6 +505,15 @@ var PickUplocations2 = function() {
         console.log('attempt to update ' + object._id);
         self.db.collection(collection).update({'_id': new ObjectID(object_id)}, 
             object, callback);
+    }
+
+    /*
+     * Update field of existing item in Database by ObjectId
+     */
+    self.updateFieldInDB = function(collection, object, updates, callback) {
+        console.log('attempt to update ' + object._id);
+        self.db.collection(collection).update(object, 
+            updates, callback);
     }
 
     /*

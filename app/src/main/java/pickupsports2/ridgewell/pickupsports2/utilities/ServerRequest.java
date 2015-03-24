@@ -113,6 +113,34 @@ public class ServerRequest {
         }
     }
 
+    public void leaveEvent(final Event event, final User user) {
+        Callable c = new Callable() {
+            @Override
+            public String call() {
+                svc.leaveEvent(event.get_id(), user.get_id(), new Callback<String>() {
+                    @Override
+                    public void success(String string, Response response) {
+                        Log.v("Retrofit Success", "leaveEvent response");
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+                        Log.e("Retrofit Error", "leaveEvent Failed");
+                        Log.e("Error",error.getMessage());
+                    }
+                });
+                return "";
+            }
+        };
+        try {
+            exec.submit(c).get();
+        } catch (ExecutionException e) {
+            Log.e("Interrupted Exception", e.getMessage());
+        } catch (InterruptedException e) {
+            Log.e("Execution Exception", e.getMessage());
+        }
+    }
+
     public void addUser(final User user) {
         Callable c = new Callable() {
             @Override

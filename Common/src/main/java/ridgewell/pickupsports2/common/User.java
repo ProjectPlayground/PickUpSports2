@@ -122,6 +122,16 @@ public class User implements Parcelable{
         this.fb_id = fb_id;
     }
 
+    public void addEvent(Event e) {
+        if (!this.attendedEvents.contains(e.get_id())) {
+            this.attendedEvents.add(e.get_id());
+        }
+    }
+
+    public void removeEvent(Event e) {
+        this.attendedEvents.remove(e.get_id());
+    }
+
     /*
     public List<Sport> getFavoriteSports() {
         return favoriteSports;
@@ -199,7 +209,7 @@ public class User implements Parcelable{
         joiningTime = in.readLong();
         fb_id = in.readString();
         //favoriteSports = in.createTypedArrayList(Sport.CREATOR);
-        in.readList(attendedEvents, null);
+        attendedEvents = in.createStringArrayList();
         //createdEvents = in.createTypedArrayList(Event.CREATOR);
         //badges = in.createTypedArrayList(Badge.CREATOR);
     }
