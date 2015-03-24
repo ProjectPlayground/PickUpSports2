@@ -114,19 +114,27 @@ public class ViewEventActivity extends ActionBarActivity {
         TextView viewItemNotes = (TextView) findViewById(R.id.event_notes_text);
         viewItemNotes.setText(event.getNotes());
 
+        TextView spotsRemaining = (TextView) findViewById(R.id.event_attendance_text);
+        spotsRemaining.setText((this.event.getMaxAttendance() - this.event.getAttendeeCount()) +
+                " of " + this.event.getMaxAttendance() + " spots remaining");
+
         viewItemTextCreator.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 IntentProtocol.viewUser(ViewEventActivity.this, creator);
             }
         });
 
-        updateButtonActions();
+        updateAttendanceActions();
     }
 
-    private void updateButtonActions() {
+    private void updateAttendanceActions() {
+        TextView spotsRemaining = (TextView) findViewById(R.id.event_attendance_text);
+        spotsRemaining.setText((this.event.getMaxAttendance() - this.event.getAttendeeCount()) +
+                " of " + this.event.getMaxAttendance() + " spots remaining");
+        User user = UserData.getInstance().getThisUser(ViewEventActivity.this);
+
         Button attendButton = (Button) findViewById(R.id.attendButton);
 
-        User user = UserData.getInstance().getThisUser(ViewEventActivity.this);
         Bundle bundle = new Bundle();
         bundle.putParcelable("user", user);
         bundle.putParcelable("event",this.event);
@@ -142,7 +150,7 @@ public class ViewEventActivity extends ActionBarActivity {
                     svreq.attendEvent(event, user);
                     event.addAttendee(user);
                     user.addEvent(event);
-                    updateButtonActions();
+                    updateAttendanceActions();
                 }
             });
         } else {
@@ -155,7 +163,7 @@ public class ViewEventActivity extends ActionBarActivity {
                     svreq.leaveEvent(event, user);
                     event.removeAttendee(user);
                     user.removeEvent(event);
-                    updateButtonActions();
+                    updateAttendanceActions();
                 }
             });
         }
