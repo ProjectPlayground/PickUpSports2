@@ -1,9 +1,12 @@
 package pickupsports2.ridgewell.pickupsports2.intents;
 
 import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 
+import pickupsports2.ridgewell.pickupsports2.R;
 import pickupsports2.ridgewell.pickupsports2.activities.LoginActivity;
 import pickupsports2.ridgewell.pickupsports2.activities.MainActivity;
 import pickupsports2.ridgewell.pickupsports2.activities.ViewEventActivity;
@@ -39,8 +42,8 @@ public class IntentProtocol {
     }
 
     public static Event getEvent(Activity context){
-        Intent intent = context.getIntent();
-        Event event = intent.getExtras().getParcelable(VIEWABLE_EVENT);
+        Bundle extras = context.getIntent().getExtras();
+        Event event = extras.getParcelable(VIEWABLE_EVENT);
         return event;
     }
 
@@ -52,9 +55,8 @@ public class IntentProtocol {
         context.setResult(SUCCESS_CODE, intent_return);
     }
 
-    public static void viewUser(Activity context, String user_str){
+    public static void viewUser(Activity context, User user){
         Intent intent = new Intent(context, ViewUserActivity.class);
-        User user = svreq.getUser(user_str);
         intent.putExtra(USER_VIEW, user);
         context.startActivity(intent);
     }

@@ -8,6 +8,7 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 import retrofit.Callback;
 import retrofit.RestAdapter;
@@ -53,6 +54,7 @@ public class ServerRequest {
                     return svc.getUser(id, "ps2");
                 }
             };
+            Log.v("In","GetUser");
             return exec.submit(callable).get();
         } catch (ExecutionException e) {
             Log.e("Interrupted Exception", e.getMessage());
@@ -84,10 +86,65 @@ public class ServerRequest {
         }
     }
 
-    public void addUser(final User user) {
-        Runnable r = new Runnable() {
+    public void attendEvent(final Event event, final User user) {
+        Callable c = new Callable() {
             @Override
-            public void run() {
+            public String call() {
+                svc.attendEvent(event.get_id(), user.get_id(), new Callback<String>() {
+                    @Override
+                    public void success(String string, Response response) {
+                        Log.v("Retrofit Success", "attendEvent response");
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+                        Log.e("Retrofit Error", "attendEvent Failed");
+                    }
+                });
+                return "";
+            }
+        };
+        try {
+            exec.submit(c).get();
+        } catch (ExecutionException e) {
+            Log.e("Interrupted Exception", e.getMessage());
+        } catch (InterruptedException e) {
+            Log.e("Execution Exception", e.getMessage());
+        }
+    }
+
+    public void leaveEvent(final Event event, final User user) {
+        Callable c = new Callable() {
+            @Override
+            public String call() {
+                svc.leaveEvent(event.get_id(), user.get_id(), new Callback<String>() {
+                    @Override
+                    public void success(String string, Response response) {
+                        Log.v("Retrofit Success", "leaveEvent response");
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+                        Log.e("Retrofit Error", "leaveEvent Failed");
+                        Log.e("Error",error.getMessage());
+                    }
+                });
+                return "";
+            }
+        };
+        try {
+            exec.submit(c).get();
+        } catch (ExecutionException e) {
+            Log.e("Interrupted Exception", e.getMessage());
+        } catch (InterruptedException e) {
+            Log.e("Execution Exception", e.getMessage());
+        }
+    }
+
+    public void addUser(final User user) {
+        Callable c = new Callable() {
+            @Override
+            public String call() {
                 svc.addUser(user, new Callback<User>() {
                     @Override
                     public void success(User user, Response response) {
@@ -99,15 +156,23 @@ public class ServerRequest {
                         Log.e("Retrofit Error", "addUser Failed");
                     }
                 });
+                return "";
             }
         };
-        exec.execute(r);
+        try {
+            exec.submit(c).get();
+        } catch (ExecutionException e) {
+            Log.e("Interrupted Exception", e.getMessage());
+        } catch (InterruptedException e) {
+            Log.e("Execution Exception", e.getMessage());
+        }
     }
 
     public void editUser(final User user) {
-        Runnable r = new Runnable() {
+        Callable c = new Callable() {
             @Override
-            public void run() {
+            public String call() {
+                Log.v("In","EditUser");
                 svc.editUser(user, new Callback<User>() {
                     @Override
                     public void success(User user, Response response) {
@@ -119,15 +184,22 @@ public class ServerRequest {
                         Log.e("Retrofit Error", "editUser Failed");
                     }
                 });
+                return "";
             }
         };
-        exec.execute(r);
+        try {
+            exec.submit(c).get();
+        } catch (ExecutionException e) {
+            Log.e("Interrupted Exception", e.getMessage());
+        } catch (InterruptedException e) {
+            Log.e("Execution Exception", e.getMessage());
+        }
     }
 
     public void deleteUser(final User user) {
-        Runnable r = new Runnable() {
+        Callable c = new Callable() {
             @Override
-            public void run() {
+            public String call() {
                 svc.deleteUser(user.get_id(), new Callback<User>() {
                     @Override
                     public void success(User user, Response response) {
@@ -139,9 +211,16 @@ public class ServerRequest {
                         Log.e("Retrofit Error", "deleteUser Failed");
                     }
                 });
+                return "";
             }
         };
-        exec.execute(r);
+        try {
+            exec.submit(c).get();
+        } catch (ExecutionException e) {
+            Log.e("Interrupted Exception", e.getMessage());
+        } catch (InterruptedException e) {
+            Log.e("Execution Exception", e.getMessage());
+        }
     }
 
     public Event getEvent(final String id) {
@@ -218,9 +297,9 @@ public class ServerRequest {
     }
 
     public void addEvent(final Event event) {
-        Runnable r = new Runnable() {
+        Callable c = new Callable() {
             @Override
-            public void run() {
+            public String call() {
                 svc.addEvent(event, new Callback<Event>() {
                     @Override
                     public void success(Event event, Response response) {
@@ -232,15 +311,22 @@ public class ServerRequest {
                         Log.e("addEvent Failed", error.getMessage());
                     }
                 });
+                return "";
             }
         };
-        exec.execute(r);
+        try {
+            exec.submit(c).get();
+        } catch (ExecutionException e) {
+            Log.e("Interrupted Exception", e.getMessage());
+        } catch (InterruptedException e) {
+            Log.e("Execution Exception", e.getMessage());
+        }
     }
 
     public void deleteEvent(final Event event) {
-        Runnable r = new Runnable() {
+        Callable c = new Callable() {
             @Override
-            public void run() {
+            public String call() {
                 svc.deleteEvent(event.get_id(), new Callback<Event>() {
                     @Override
                     public void success(Event event, Response response) {
@@ -252,9 +338,16 @@ public class ServerRequest {
                         Log.e("Retrofit Error", "deleteEvent Failed");
                     }
                 });
+                return "";
             }
         };
-        exec.execute(r);
+        try {
+            exec.submit(c).get();
+        } catch (ExecutionException e) {
+            Log.e("Interrupted Exception", e.getMessage());
+        } catch (InterruptedException e) {
+            Log.e("Execution Exception", e.getMessage());
+        }
     }
 
     public Sport getSport(final String sport) {
@@ -276,9 +369,9 @@ public class ServerRequest {
     }
 
     public void addSport(final Sport sport) {
-        Runnable r = new Runnable() {
+        Callable c = new Callable() {
             @Override
-            public void run() {
+            public String call() {
                 svc.addSport(sport, new Callback<Sport>() {
                     @Override
                     public void success(Sport event, Response response) {
@@ -290,15 +383,22 @@ public class ServerRequest {
                         Log.e("addSport Failed", error.getMessage());
                     }
                 });
+                return "";
             }
         };
-        exec.execute(r);
+        try {
+            exec.submit(c).get();
+        } catch (ExecutionException e) {
+            Log.e("Interrupted Exception", e.getMessage());
+        } catch (InterruptedException e) {
+            Log.e("Execution Exception", e.getMessage());
+        }
     }
 
     public void deleteSport(final Sport sport) {
-        Runnable r = new Runnable() {
+        Callable c = new Callable() {
             @Override
-            public void run() {
+            public String call() {
                 svc.deleteSport(sport.getSportName(), new Callback<Sport>() {
                     @Override
                     public void success(Sport sport, Response response) {
@@ -310,9 +410,16 @@ public class ServerRequest {
                         Log.e("Retrofit Error", "deleteSport Failed");
                     }
                 });
+                return "";
             }
         };
-        exec.execute(r);
+        try {
+            exec.submit(c).get();
+        } catch (ExecutionException e) {
+            Log.e("Interrupted Exception", e.getMessage());
+        } catch (InterruptedException e) {
+            Log.e("Execution Exception", e.getMessage());
+        }
     }
 
     public Location getLocation(final String location) {
@@ -334,9 +441,9 @@ public class ServerRequest {
     }
 
     public void addLocation(final Location location) {
-        Runnable r = new Runnable() {
+        Callable c = new Callable() {
             @Override
-            public void run() {
+            public String call() {
                 svc.addLocation(location, new Callback<Location>() {
                     @Override
                     public void success(Location location, Response response) {
@@ -348,15 +455,22 @@ public class ServerRequest {
                         Log.e("addLocation Failed", error.getMessage());
                     }
                 });
+                return "";
             }
         };
-        exec.execute(r);
+        try {
+            exec.submit(c).get();
+        } catch (ExecutionException e) {
+            Log.e("Interrupted Exception", e.getMessage());
+        } catch (InterruptedException e) {
+            Log.e("Execution Exception", e.getMessage());
+        }
     }
 
     public void deleteLocation(final Location location) {
-        Runnable r = new Runnable() {
+        Callable c = new Callable() {
             @Override
-            public void run() {
+            public String call() {
                 svc.deleteLocation(location.getLocation(), new Callback<Location>() {
                     @Override
                     public void success(Location location, Response response) {
@@ -368,8 +482,15 @@ public class ServerRequest {
                         Log.e("Retrofit Error", "deleteLocation Failed");
                     }
                 });
+                return "";
             }
         };
-        exec.execute(r);
+        try {
+            exec.submit(c).get();
+        } catch (ExecutionException e) {
+            Log.e("Interrupted Exception", e.getMessage());
+        } catch (InterruptedException e) {
+            Log.e("Execution Exception", e.getMessage());
+        }
     }
 }

@@ -2,6 +2,7 @@ package ridgewell.pickupsports2.common;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 import org.joda.time.DateTime;
 import org.joda.time.Days;
@@ -24,7 +25,7 @@ public class Event implements Parcelable{
     private List<String> attendees;
     private int maxAttendance;
     //private List<User> waitlist; //queue
-    private String creator;
+    private String creator_id;
 
     //largest number of users allowed on the waitlist
     public final int WAITLISTMAX = 10;
@@ -32,7 +33,7 @@ public class Event implements Parcelable{
     public Event() {}
 
     public Event(String name, String sport, DateTime time, String location, int cost,
-                 String notes, boolean isPublic, int maxAttendance, String creator) {
+                 String notes, boolean isPublic, int maxAttendance, String creator_id) {
         this.name = name;
         this.sport = sport;
         this.timeLong = time.getMillis();
@@ -40,10 +41,10 @@ public class Event implements Parcelable{
         this.cost = cost;
         this.notes = notes;
         this.isPublic = isPublic;
-        this.maxAttendance = maxAttendance;
         this.attendees = new ArrayList<String>();
+        this.maxAttendance = maxAttendance;
         //this.waitlist = new ArrayList<User>();
-        this.creator = creator;
+        this.creator_id = creator_id;
     }
 
     public String getName() {
@@ -137,7 +138,9 @@ public class Event implements Parcelable{
     }
 
     public void addAttendee(User user) {
-        this.attendees.add(user.get_id());
+        if (!attendees.contains(user.get_id())){
+            this.attendees.add(user.get_id());
+        }
     }
 
     public void removeAttendee(User user) {
@@ -185,8 +188,8 @@ public class Event implements Parcelable{
         return waitlist.size();
     }
 */
-    public String getCreator() {
-        return creator;
+    public String getCreator_id() {
+        return creator_id;
     }
 
     public int describeContents() {
@@ -202,10 +205,14 @@ public class Event implements Parcelable{
         out.writeInt(cost);
         out.writeString(notes);
         out.writeInt(isPublic ? 1 : 0);
-        out.writeStringList(attendees);
+        if (attendees == null) {
+            out.writeStringList(new ArrayList<String>());
+        } else {
+            out.writeStringList(attendees);
+        }
         out.writeInt(maxAttendance);
         //out.writeTypedList(waitlist);
-        out.writeString(creator);
+        out.writeString(creator_id);
 
     }
 
@@ -233,13 +240,14 @@ public class Event implements Parcelable{
         cost = in.readInt();
         notes = in.readString();
         isPublic = in.readInt() == 1;
-        in.readStringList(attendees);
+        attendees = in.createStringArrayList();
+        Log.v("attendees","processed");
         maxAttendance = in.readInt();
         //waitlist = in.createTypedArrayList(User.CREATOR);
-        creator = in.readString();
+        creator_id = in.readString();
     }
 
     public boolean isCreator(final User user) {
-        return user.get_id().equals(this.creator);
+        return user.get_id().equals(this.creator_id);
     }
 }

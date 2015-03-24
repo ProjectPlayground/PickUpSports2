@@ -151,5 +151,6 @@ public class LoginActivity extends FragmentActivity implements EditUserDialog.On
             e.printStackTrace();
         }
         IntentProtocol.launchMain(LoginActivity.this);
+        finish();
     }
 }

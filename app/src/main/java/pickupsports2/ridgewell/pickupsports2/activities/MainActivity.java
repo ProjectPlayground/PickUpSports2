@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.facebook.Session;
 
@@ -102,6 +101,11 @@ public class MainActivity extends ActionBarActivity
             getMenuInflater().inflate(R.menu.navigation_pane, menu);
             restoreActionBar();
             menu.findItem(R.id.fragment_action).setTitle(optionButton);
+            if (optionButton.equals("")) {
+                menu.findItem(R.id.fragment_action).setVisible(false);
+            } else {
+                menu.findItem(R.id.fragment_action).setVisible(true);
+            }
             return true;
         }
         return super.onCreateOptionsMenu(menu);
@@ -110,26 +114,26 @@ public class MainActivity extends ActionBarActivity
     public void onNavigationDrawerItemSelected(int position) {
         switch (position) {
             case 0:
-                myFragment = ProfileFragment.newInstance();
+                myFragment = ProfileFragment.getInstance();
                 optionButton = "Edit";
                 //TODO: create edit action
                 break;
             case 1:
-                optionButton = "Text Here";
+                optionButton = "";
                 //Launch to Teams View
                 break;
             case 2:
-                myFragment = new EventFragment();
-                optionButton = "Edit";
+                myFragment = new AllEventsFragment();
+                optionButton = "";
                 //TODO: create edit action
                 break;
             case 3:
                 //Launch to Invitations
-                optionButton = "Text Here";
+                optionButton = "";
                 break;
             case 4:
                 //Launch to Schedule
-                optionButton = "Text Here";
+                optionButton = "";
                 break;
             default:
         }
@@ -145,12 +149,12 @@ public class MainActivity extends ActionBarActivity
         }
     }
 
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
+
         int id = item.getItemId();
         if (id == R.id.action_settings) {
             return true;
@@ -174,7 +178,9 @@ public class MainActivity extends ActionBarActivity
     }
 
     public void onEditUserListener(User user) {
+        Log.v("Calling","EditUser");
         svreq.editUser(user);
+        Log.v("Called","EditUser");
         myFragment.refreshFragment();
     }
 }

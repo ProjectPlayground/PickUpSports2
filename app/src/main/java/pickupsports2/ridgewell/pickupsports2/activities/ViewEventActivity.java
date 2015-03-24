@@ -11,7 +11,9 @@ import android.widget.TextView;
 
 import pickupsports2.ridgewell.pickupsports2.R;
 import pickupsports2.ridgewell.pickupsports2.intents.IntentProtocol;
+import pickupsports2.ridgewell.pickupsports2.utilities.ActivityOnClickListener;
 import pickupsports2.ridgewell.pickupsports2.utilities.ServerRequest;
+import pickupsports2.ridgewell.pickupsports2.utilities.UserData;
 import ridgewell.pickupsports2.common.*;
 
 /**
@@ -22,22 +24,59 @@ public class ViewEventActivity extends ActionBarActivity {
     private Event event;
 
     private ServerRequest svreq = ServerRequest.getInstance();
+    
+    private User creator = null;
 
     public ViewEventActivity() {}
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(pickupsports2.ridgewell.pickupsports2.R.layout.activity_view_event_screen);
 
         this.event = IntentProtocol.getEvent(this);
 
-        setTitle(event.getName());
+        this.creator = svreq.getUser(event.getCreator_id());
 
+        this.setContentView(R.layout.activity_view_event);
+
+        setTexts();
+
+        startDeleteClickListener();
+    }
+
+    public void startDeleteClickListener() {
+        Button delete_event = (Button) findViewById(R.id.delete_event);
+        delete_event.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(ViewEventActivity.this);
+                builder
+                        .setMessage("Are you sure you want to delete " + event.getName() + "?")
+                        .setTitle("Confirm Delete")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int id) {
+                                Log.v("attempt to delete",event.getName());
+                                Log.v("Event ID to be deleted", event.get_id());
+                                svreq.deleteEvent(event);
+                                finish();
+                            }
+                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int id) {}
+                        });
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            }
+        });
+    }
+    
+    private void setTexts() {
         TextView viewItemTextTitle = (TextView) findViewById(R.id.view_event_title);
         viewItemTextTitle.setText(event.getName());
 
         TextView viewItemTextCreator = (TextView) findViewById(R.id.view_event_creator);
-        viewItemTextCreator.setText(event.getCreator());
+        viewItemTextCreator.setText(creator.getFirstname() + " " + creator.getLastname());
 
         TextView viewItemTextSport = (TextView) findViewById(R.id.event_sport_text);
         viewItemTextSport.setText(event.getSport());
@@ -74,45 +113,59 @@ public class ViewEventActivity extends ActionBarActivity {
 
         TextView viewItemNotes = (TextView) findViewById(R.id.event_notes_text);
         viewItemNotes.setText(event.getNotes());
-        /*
-        TextView viewRemainingAttendance = (TextView) findViewById(R.id.event_attendance_text);
-        viewRemainingAttendance.setText((event.getMaxAttendance()-event.getAttendeeCount())
-                + " out of " + event.getMaxAttendance() + " spots remaining");
-        */
+
+        TextView spotsRemaining = (TextView) findViewById(R.id.event_attendance_text);
+        spotsRemaining.setText((this.event.getMaxAttendance() - this.event.getAttendeeCount()) +
+                " of " + this.event.getMaxAttendance() + " spots remaining");
+
         viewItemTextCreator.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                String user = event.getCreator();
-                IntentProtocol.viewUser(ViewEventActivity.this, user);
+                IntentProtocol.viewUser(ViewEventActivity.this, creator);
             }
         });
 
-        startDeleteClickListener();
+        updateAttendanceActions();
     }
 
-    public void startDeleteClickListener() {
-        Button delete_event = (Button) findViewById(R.id.delete_event);
-        delete_event.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(ViewEventActivity.this);
-                builder
-                        .setMessage("Are you sure you want to delete " + event.getName() + "?")
-                        .setTitle("Confirm Delete")
-                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int id) {
-                                Log.v("attempt to delete",event.getName());
-                                Log.v("Event ID to be deleted", event.get_id());
-                                svreq.deleteEvent(event);
-                                finish();
-                            }
-                        }).setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {}
-                });
-                AlertDialog dialog = builder.create();
-                dialog.show();
-            }
-        });
+    private void updateAttendanceActions() {
+        TextView spotsRemaining = (TextView) findViewById(R.id.event_attendance_text);
+        spotsRemaining.setText((this.event.getMaxAttendance() - this.event.getAttendeeCount()) +
+                " of " + this.event.getMaxAttendance() + " spots remaining");
+        User user = UserData.getInstance().getThisUser(ViewEventActivity.this);
+
+        Button attendButton = (Button) findViewById(R.id.attendButton);
+
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("user", user);
+        bundle.putParcelable("event",this.event);
+
+        if (!event.getAttendees().contains(user.get_id())) {
+            attendButton.setText(getResources().getString(R.string.attendButton));
+            attendButton.setOnClickListener(new ActivityOnClickListener(ViewEventActivity.this, bundle){
+                public void onClick(View v) {
+                    User user = getArguments().getParcelable("user");
+                    Event event = getArguments().getParcelable("event");
+                    Log.v("User", user.get_id() + " Attends Event: " + event.get_id());
+                    Log.v(user.get_id(), event.getAttendees().toString());
+                    svreq.attendEvent(event, user);
+                    event.addAttendee(user);
+                    user.addEvent(event);
+                    updateAttendanceActions();
+                }
+            });
+        } else {
+            attendButton.setText(getResources().getString(R.string.leaveButton));
+            attendButton.setOnClickListener(new ActivityOnClickListener(ViewEventActivity.this, bundle){
+                public void onClick(View v) {
+                    User user = getArguments().getParcelable("user");
+                    Event event = getArguments().getParcelable("event");
+                    Log.v("User", user.get_id() + " Leaves Event: " + event.get_id());
+                    svreq.leaveEvent(event, user);
+                    event.removeAttendee(user);
+                    user.removeEvent(event);
+                    updateAttendanceActions();
+                }
+            });
+        }
     }
 }
