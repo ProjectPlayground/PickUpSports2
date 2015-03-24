@@ -101,6 +101,11 @@ public class MainActivity extends ActionBarActivity
             getMenuInflater().inflate(R.menu.navigation_pane, menu);
             restoreActionBar();
             menu.findItem(R.id.fragment_action).setTitle(optionButton);
+            if (optionButton.equals("")) {
+                menu.findItem(R.id.fragment_action).setVisible(false);
+            } else {
+                menu.findItem(R.id.fragment_action).setVisible(true);
+            }
             return true;
         }
         return super.onCreateOptionsMenu(menu);
@@ -114,21 +119,21 @@ public class MainActivity extends ActionBarActivity
                 //TODO: create edit action
                 break;
             case 1:
-                optionButton = "Text Here";
+                optionButton = "";
                 //Launch to Teams View
                 break;
             case 2:
                 myFragment = new AllEventsFragment();
-                optionButton = "Edit";
+                optionButton = "";
                 //TODO: create edit action
                 break;
             case 3:
                 //Launch to Invitations
-                optionButton = "Text Here";
+                optionButton = "";
                 break;
             case 4:
                 //Launch to Schedule
-                optionButton = "Text Here";
+                optionButton = "";
                 break;
             default:
         }
@@ -149,6 +154,7 @@ public class MainActivity extends ActionBarActivity
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
+
         int id = item.getItemId();
         if (id == R.id.action_settings) {
             return true;
