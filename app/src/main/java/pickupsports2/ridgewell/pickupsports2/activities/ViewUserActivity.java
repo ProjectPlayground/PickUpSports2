@@ -47,7 +47,7 @@ public class ViewUserActivity extends ActionBarActivity {
         user_favorite_sports.setText(favorite_sports_list);
 
         TextView user_location = (TextView) findViewById(R.id.user_location);
-        user_location.setText(user.getLocation().getLocation());
+        user_location.setText(user.getLocation().toString());
 */
     }
 

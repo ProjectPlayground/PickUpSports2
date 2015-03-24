@@ -7,7 +7,6 @@ import org.joda.time.DateTime;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.joda.time.DateTime;
 
 /**
  * Created by cameronridgewell on 1/16/15.
@@ -18,7 +17,7 @@ public class User implements Parcelable{
     private String firstname;
     private String lastname;
     private String nickname;
-    private Location location;
+    private LocationProperties locationProperties;
     private long joiningTime;
     private String fb_id;
 
@@ -29,12 +28,12 @@ public class User implements Parcelable{
 
     public User() {}
 
-    public User(String firstname, String lastname, Location location) {
+    public User(String firstname, String lastname, LocationProperties locationProperties) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.joiningTime = DateTime.now().getMillis();
         //Fetch from phone or have user input
-        this.location = location;
+        this.locationProperties = locationProperties;
         this.nickname = "";
     }
 
@@ -103,15 +102,15 @@ public class User implements Parcelable{
     /*
      * returns the user's location
      */
-    public Location getLocation() {
-        return location;
+    public LocationProperties getLocationProperties() {
+        return locationProperties;
     }
 
     /*
      * sets the user's location
      */
-    public void setLocation(Location location) {
-        this.location = location;
+    public void setLocationProperties(LocationProperties locationProperties) {
+        this.locationProperties = locationProperties;
     }
 
     public String getFb_id() {
@@ -180,7 +179,7 @@ public class User implements Parcelable{
         out.writeString(firstname);
         out.writeString(lastname);
         out.writeString(nickname);
-        out.writeParcelable(location, 0);
+        out.writeParcelable(locationProperties, 0);
         out.writeLong(joiningTime);
         out.writeString(fb_id);
         //out.writeTypedList(favoriteSports);
@@ -205,7 +204,7 @@ public class User implements Parcelable{
         firstname = in.readString();
         lastname = in.readString();
         nickname = in.readString();
-        location = in.readParcelable(Location.class.getClassLoader());
+        locationProperties = in.readParcelable(LocationProperties.class.getClassLoader());
         joiningTime = in.readLong();
         fb_id = in.readString();
         //favoriteSports = in.createTypedArrayList(Sport.CREATOR);
