@@ -11,7 +11,9 @@ import android.widget.TextView;
 
 import pickupsports2.ridgewell.pickupsports2.R;
 import pickupsports2.ridgewell.pickupsports2.intents.IntentProtocol;
+import pickupsports2.ridgewell.pickupsports2.utilities.ActivityOnClickListener;
 import pickupsports2.ridgewell.pickupsports2.utilities.ServerRequest;
+import pickupsports2.ridgewell.pickupsports2.utilities.UserData;
 import ridgewell.pickupsports2.common.*;
 
 /**
@@ -34,7 +36,7 @@ public class ViewEventActivity extends ActionBarActivity {
 
         this.creator = svreq.getUser(event.getCreator_id());
 
-        this.setContentView(R.layout.fragment_view_event_screen);
+        this.setContentView(R.layout.activity_view_event);
 
         setTexts();
 
@@ -116,5 +118,45 @@ public class ViewEventActivity extends ActionBarActivity {
                 IntentProtocol.viewUser(ViewEventActivity.this, creator);
             }
         });
+
+        updateButtonActions();
+    }
+
+    private void updateButtonActions() {
+        Button attendButton = (Button) findViewById(R.id.attendButton);
+
+        User user = UserData.getInstance().getThisUser(ViewEventActivity.this);
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("user", user);
+        bundle.putParcelable("event",this.event);
+
+        if (!event.getAttendees().contains(user.get_id())) {
+            attendButton.setText(getResources().getString(R.string.attendButton));
+            attendButton.setOnClickListener(new ActivityOnClickListener(ViewEventActivity.this, bundle){
+                public void onClick(View v) {
+                    User user = getArguments().getParcelable("user");
+                    Event event = getArguments().getParcelable("event");
+                    Log.v("User", user.get_id() + " Attends Event: " + event.get_id());
+                    Log.v(user.get_id(), event.getAttendees().toString());
+                    svreq.attendEvent(event, user);
+                    event.addAttendee(user);
+                    user.addEvent(event);
+                    updateButtonActions();
+                }
+            });
+        } else {
+            attendButton.setText(getResources().getString(R.string.leaveButton));
+            attendButton.setOnClickListener(new ActivityOnClickListener(ViewEventActivity.this, bundle){
+                public void onClick(View v) {
+                    User user = getArguments().getParcelable("user");
+                    Event event = getArguments().getParcelable("event");
+                    Log.v("User", user.get_id() + " Leaves Event: " + event.get_id());
+                    svreq.leaveEvent(event, user);
+                    event.removeAttendee(user);
+                    user.removeEvent(event);
+                    updateButtonActions();
+                }
+            });
+        }
     }
 }
