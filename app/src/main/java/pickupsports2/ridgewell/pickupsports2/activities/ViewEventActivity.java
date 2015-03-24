@@ -58,12 +58,13 @@ public class ViewEventActivity extends ActionBarActivity {
                                 Log.v("attempt to delete",event.getName());
                                 Log.v("Event ID to be deleted", event.get_id());
                                 svreq.deleteEvent(event);
-                                getFragmentManager().popBackStackImmediate();
+                                finish();
                             }
-                        }).setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {}
-                });
+                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int id) {}
+                        });
                 AlertDialog dialog = builder.create();
                 dialog.show();
             }
