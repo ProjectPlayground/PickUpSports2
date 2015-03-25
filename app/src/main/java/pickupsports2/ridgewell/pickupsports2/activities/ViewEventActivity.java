@@ -3,13 +3,19 @@ package pickupsports2.ridgewell.pickupsports2.activities;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.facebook.Session;
+
 import pickupsports2.ridgewell.pickupsports2.R;
+import pickupsports2.ridgewell.pickupsports2.elements.EditEventDialog;
 import pickupsports2.ridgewell.pickupsports2.intents.IntentProtocol;
 import pickupsports2.ridgewell.pickupsports2.utilities.ActivityOnClickListener;
 import pickupsports2.ridgewell.pickupsports2.utilities.ServerRequest;
@@ -19,7 +25,8 @@ import ridgewell.pickupsports2.common.*;
 /**
  * Created by cameronridgewell on 1/22/15.
  */
-public class ViewEventActivity extends ActionBarActivity {
+public class ViewEventActivity extends ActionBarActivity
+        implements EditEventDialog.OnEditEventListener{
 
     private Event event;
 
@@ -130,6 +137,22 @@ public class ViewEventActivity extends ActionBarActivity {
         updateAttendanceActions();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.navigation_pane, menu);
+        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        actionBar.setNavigationMode(android.support.v7.app.ActionBar.NAVIGATION_MODE_STANDARD);
+        actionBar.setDisplayShowTitleEnabled(true);
+        menu.findItem(R.id.fragment_action).setTitle("Edit");
+        if (!event.isCreator(UserData.getInstance().getThisUser(ViewEventActivity.this))) {
+            menu.findItem(R.id.fragment_action).setVisible(false);
+        } else {
+            menu.findItem(R.id.fragment_action).setVisible(true);
+        }
+        return super.onCreateOptionsMenu(menu);
+    }
+
     private void updateAttendanceActions() {
         TextView spotsRemaining = (TextView) findViewById(R.id.event_attendance_text);
         spotsRemaining.setText((this.event.getMaxAttendance() - this.event.getAttendeeCount()) +
@@ -170,5 +193,49 @@ public class ViewEventActivity extends ActionBarActivity {
                 }
             });
         }
+    }
+
+    public void onEditEventListener(Event event) {
+        Log.v("Calling","EditEvent");
+        svreq.editEvent(event);
+        refreshActivity();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+
+        int id = item.getItemId();
+        if (id == R.id.action_settings) {
+            return true;
+        }
+        else if (id == R.id.fragment_action) {
+            this.onActionButtonClick();
+            return true;
+        } else if (id == R.id.log_out) {
+            if (Session.getActiveSession() != null) {
+                Session.getActiveSession().closeAndClearTokenInformation();
+            }
+            Session.setActiveSession(null);
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+    public void onActionButtonClick() {
+        EditEventDialog editUserDialog = new EditEventDialog();
+        Bundle args = new Bundle();
+        args.putParcelable("event",event);
+        editUserDialog.setArguments(args);
+        editUserDialog.show(getFragmentManager(), "edit event");
+    }
+
+    public void refreshActivity() {
+        try{
+            Thread.currentThread().sleep(250);
+        }catch(Exception e){}
+        event = svreq.getEvent(event.get_id());
+        setTexts();
     }
 }

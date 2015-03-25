@@ -46,11 +46,14 @@ public interface RequestLibrary {
     @GET("/event/?filter=none")
     public List<Event> getAllEvents();
 
-    @POST("/event/")
+    @POST("/event/?type=new")
     public void addEvent(@Body Event event, Callback<Event> success);
 
     @DELETE("/event/")
     public void deleteEvent(@Query("id") String id, Callback<Event> success);
+
+    @POST("/event/?type=existing")
+    public void editEvent(@Body Event event, Callback<Event> success);
 
     /*Sport Commands*/
     @GET("/sport/")

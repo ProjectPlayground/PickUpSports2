@@ -124,7 +124,6 @@ public class MainActivity extends ActionBarActivity
             case 2:
                 myFragment = new AllEventsFragment();
                 optionButton = "";
-                //TODO: create edit action
                 break;
             case 3:
                 //Launch to Invitations

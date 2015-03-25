@@ -218,14 +218,25 @@ var PickUplocations2 = function() {
          * Express code to use module to add an event from the commandinterpreter
          */
         self.app.post('/event/', function(req, res) {
-            console.log("post " + url.parse(req.url, true).path);
-            self.addToDB('events', req.body, function(err, result) {
-                if(err) {
-                    console.log(err);
-                } else {
-                    res.send(result[0]);
-                }
-            });
+            if (url.parse(req.url, true).query.type == "new") {
+                console.log("post " + url.parse(req.url, true).path);        
+                self.addToDB('events', req.body, function(err, result) {
+                    if(err) {
+                        console.log(err);
+                    } else {
+                        res.send(result[0]);
+                    }
+                });
+            } else if (url.parse(req.url, true).query.type == "existing") {
+                self.replaceInDB('events',req.body, function(err, result) {
+                    if(err) {
+                        console.log(err);
+                    } else {
+                        console.log("replace successful");
+                        res.send(result[0]);
+                    }
+                });
+            }
         });
 
         /*
@@ -295,7 +306,7 @@ var PickUplocations2 = function() {
                     if(err) {
                         console.log(err);
                     } else {
-                        console.log("replacee successful");
+                        console.log("replace successful");
                         res.send(result[0]);
                     }
                 });
@@ -494,15 +505,6 @@ var PickUplocations2 = function() {
         console.log('attempt to replace ' + object._id);
         var object_id = object._id;
         delete object._id;
-        self.db.collection(collection).update({'_id': new ObjectID(object_id)}, 
-            object, callback);
-    }
-
-    /*
-     * Update existing item in Database by ObjectId
-     */
-    self.updateInDB = function(collection, object, callback) {
-        console.log('attempt to update ' + object._id);
         self.db.collection(collection).update({'_id': new ObjectID(object_id)}, 
             object, callback);
     }
