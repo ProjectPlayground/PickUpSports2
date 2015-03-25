@@ -45,6 +45,9 @@ public class ViewEventActivity extends ActionBarActivity {
 
     public void startDeleteClickListener() {
         Button delete_event = (Button) findViewById(R.id.delete_event);
+        if (!event.isCreator(UserData.getInstance().getThisUser(ViewEventActivity.this))) {
+            delete_event.setVisibility(View.GONE);
+        }
         delete_event.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -82,7 +85,7 @@ public class ViewEventActivity extends ActionBarActivity {
         viewItemTextSport.setText(event.getSport());
 
         TextView viewItemTextLocation = (TextView) findViewById(R.id.event_location_text);
-        viewItemTextLocation.setText(event.getLocation());
+        viewItemTextLocation.setText(event.getLocation().toString());
 
         TextView viewItemTextDate = (TextView) findViewById(R.id.event_date_text);
         viewItemTextDate.setText(event.getTime().toString("MMMM d, yyyy")

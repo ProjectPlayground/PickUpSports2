@@ -1,7 +1,10 @@
 package pickupsports2.ridgewell.pickupsports2.activities;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebChromeClient;
@@ -10,10 +13,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.AlertDialog;
 
 import pickupsports2.ridgewell.pickupsports2.R;
+import pickupsports2.ridgewell.pickupsports2.intents.IntentProtocol;
 
 public class LocationPickerActivity extends ActionBarActivity {
 
@@ -39,6 +42,9 @@ public class LocationPickerActivity extends ActionBarActivity {
 			locationName = savedInstanceState.getString("locationName");
 		}
 
+        final Bundle extras = getIntent().getExtras();
+        String initial_location = extras.getString("initial_location");
+
 		// LOCATION PICKER WEBVIEW SETUP
 		locationPickerView = (WebView) findViewById(R.id.locationPickerView);
 		locationPickerView.setScrollContainer(false);
@@ -47,13 +53,15 @@ public class LocationPickerActivity extends ActionBarActivity {
 		locationPickerView.addJavascriptInterface(new LocationPickerJSInterface(), "AndroidFunction");
 		
 		locationPickerView.loadUrl("file:///android_asset/locationPickerPage/index.html");
+        locationPickerView.loadUrl("javascript:activityInitialize(" + latitude + "," + longitude + "," + zoom + ")");
 
 		locationPickerView.setWebChromeClient(new WebChromeClient() {
 			@Override
 			public void onProgressChanged(WebView view, int progress) {
 				if (progress == 100) {
 					locationPickerView.loadUrl("javascript:activityInitialize(" + latitude + "," + longitude + "," + zoom + ")");
-				}
+				    Log.v("location", "lat = " + latitude + ", long = " + longitude);
+                }
 			}
 		});
 		// ^^^
@@ -86,16 +94,32 @@ public class LocationPickerActivity extends ActionBarActivity {
 			}
 		});
 		// ^^^
-		
+
 		// EVENT HANDLER FOR SAMPLE QUERY BUTTON
-		Button sampleQueryButton = (Button) findViewById(R.id.queryButton);
-		sampleQueryButton.setOnClickListener(new Button.OnClickListener(){
+		Button finishButton = (Button) findViewById(R.id.finishButton);
+		finishButton.setOnClickListener(new Button.OnClickListener(){
 			@Override
 			public void onClick(View arg0) {
-				AlertDialog alertDialog = new AlertDialog.Builder(LocationPickerActivity.this).create();
-				alertDialog.setTitle("Data");
-				alertDialog.setMessage("lat=" + latitude + ", lng=" + longitude + ", zoom=" + zoom + "\nloc=" + locationName);
-				alertDialog.show();
+                AlertDialog.Builder builder = new AlertDialog.Builder(LocationPickerActivity.this);
+                builder
+                        .setMessage("Set Event Location : " + locationName + "?")
+                        .setTitle("Select Location")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int id) {
+                                Log.v("setting location", "lat: " + latitude +", long: " + longitude);
+                                Log.v("Zoom",zoom+"");
+                                IntentProtocol.returnLocationPicker(LocationPickerActivity.this,
+                                        CreateEventActivity.class, latitude, longitude, locationName);
+                                finish();
+                            }
+                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int id) {}
+                        });
+                AlertDialog dialog = builder.create();
+                dialog.show();
 			}
 		});
 	}
@@ -122,5 +146,4 @@ public class LocationPickerActivity extends ActionBarActivity {
 		outState.putInt("zoom", zoom);
 		outState.putString("locationName", locationName);
 	}
-
 }
