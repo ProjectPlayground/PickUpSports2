@@ -19,7 +19,7 @@ import org.apache.commons.lang.WordUtils;
 
 import pickupsports2.ridgewell.pickupsports2.R;
 import pickupsports2.ridgewell.pickupsports2.utilities.TextValidator;
-import ridgewell.pickupsports2.common.Location;
+import ridgewell.pickupsports2.common.LocationProperties;
 import ridgewell.pickupsports2.common.User;
 
 public class EditUserDialog extends DialogFragment {
@@ -106,7 +106,7 @@ public class EditUserDialog extends DialogFragment {
             }
         });
 
-        String userLocation = inputUser.getLocation().getLocation();
+        String userLocation = inputUser.getLocationProperties().toString();
         if (! userLocation.equals("")) {
             String[] citystate = userLocation.split(", ");
             cityname.setText(citystate[0]);
@@ -141,7 +141,7 @@ public class EditUserDialog extends DialogFragment {
                                 .toString().trim(), delim));
                         inputUser.setLastname(WordUtils.capitalize(lastname.getText()
                                 .toString().trim(), delim));
-                        inputUser.setLocation(new Location(WordUtils.capitalize(cityname.getText()
+                        inputUser.setLocationProperties(new LocationProperties(WordUtils.capitalize(cityname.getText()
                                 .toString().trim(), delim) + ", "
                                 + statename.getText().toString().trim()));
                         callback.onEditUserListener(inputUser);

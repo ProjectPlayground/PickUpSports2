@@ -19,7 +19,7 @@ import pickupsports2.ridgewell.pickupsports2.R;
 import pickupsports2.ridgewell.pickupsports2.elements.EditUserDialog;
 import pickupsports2.ridgewell.pickupsports2.intents.IntentProtocol;
 import pickupsports2.ridgewell.pickupsports2.utilities.ServerRequest;
-import ridgewell.pickupsports2.common.Location;
+import ridgewell.pickupsports2.common.LocationProperties;
 import ridgewell.pickupsports2.common.User;
 
 public class LoginActivity extends FragmentActivity implements EditUserDialog.OnEditUserListener{
@@ -73,7 +73,7 @@ public class LoginActivity extends FragmentActivity implements EditUserDialog.On
 
                         if (userreq == null) {
                             User user_expected = new User(user.getFirstName(),
-                                    user.getLastName(), new Location(""));
+                                    user.getLastName(), new LocationProperties(""));
                             user_expected.setFb_id(fbid);
                             showCreateDialog(user_expected);
                         } else {

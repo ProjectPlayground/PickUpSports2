@@ -3,15 +3,14 @@
     package="pickupsports2.ridgewell.pickupsports2" >
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:allowBackup="true"
         android:icon="@drawable/playball_border_icon"
         android:label="@string/app_name"
-        android:theme="@style/Theme.Pickupsports"
-        android:debuggable="true">
+        android:theme="@style/Theme.Pickupsports">
         <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/app_id"/>
-
 
         <activity android:name="com.facebook.LoginActivity"/>
 
@@ -45,6 +44,11 @@
             android:name=".activities.ViewUserActivity"
             android:label="@string/title_activity_view_user"
             android:parentActivityName=".activities.MainActivity" >
+        </activity>
+        <activity
+            android:name=".activities.LocationPickerActivity"
+            android:label="@string/title_activity_location_picker"
+            android:parentActivityName=".activities.CreateEventActivity">
         </activity>
     </application>
 

@@ -18,7 +18,7 @@ public class Event implements Parcelable{
     private String name;
     private String sport;
     private long timeLong;
-    private String location;
+    private LocationProperties location;
     private int cost;
     private String notes;
     private boolean isPublic;
@@ -32,7 +32,7 @@ public class Event implements Parcelable{
 
     public Event() {}
 
-    public Event(String name, String sport, DateTime time, String location, int cost,
+    public Event(String name, String sport, DateTime time, LocationProperties location, int cost,
                  String notes, boolean isPublic, int maxAttendance, String creator_id) {
         this.name = name;
         this.sport = sport;
@@ -97,11 +97,11 @@ public class Event implements Parcelable{
         this.sport = sport;
     }
 
-    public String getLocation() {
+    public LocationProperties getLocation() {
         return location;
     }
 
-    public void setLocation(String location) {
+    public void setLocation(LocationProperties location) {
         this.location = location;
     }
 
@@ -201,7 +201,7 @@ public class Event implements Parcelable{
         out.writeString(name);
         out.writeString(sport);
         out.writeLong(timeLong);
-        out.writeString(location);
+        out.writeParcelable(location, LocationProperties.PARCELABLE_WRITE_RETURN_VALUE);
         out.writeInt(cost);
         out.writeString(notes);
         out.writeInt(isPublic ? 1 : 0);
@@ -236,7 +236,7 @@ public class Event implements Parcelable{
         name = in.readString();
         sport = in.readString();
         timeLong = in.readLong();
-        location = in.readString();
+        location = in.readParcelable(LocationProperties.class.getClassLoader());
         cost = in.readInt();
         notes = in.readString();
         isPublic = in.readInt() == 1;

@@ -98,7 +98,11 @@
         <item>Schedule</item>
     </string-array>
 
-<!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!--Location Picker Activity -->
+    <string name="title_activity_location_picker">LocationPicker</string>
+    <string name="locationpicker_button_search">Search</string>
+    <string name="locationpicker_button_finish">Finish</string>
+    <string name="locationpicker_button_zoom_in">+</string>
+    <string name="locationpicker_button_zoom_out">-</string>
 
 </resources>

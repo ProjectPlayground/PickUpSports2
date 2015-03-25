@@ -17,13 +17,13 @@ import pickupsports2.ridgewell.pickupsports2.elements.EditUserDialog;
 import pickupsports2.ridgewell.pickupsports2.elements.NavigationDrawerFragment;
 import pickupsports2.ridgewell.pickupsports2.R;
 import pickupsports2.ridgewell.pickupsports2.elements.AddEventButton;
+import pickupsports2.ridgewell.pickupsports2.intents.IntentProtocol;
 import pickupsports2.ridgewell.pickupsports2.utilities.ServerRequest;
 import ridgewell.pickupsports2.common.User;
 
 public class MainActivity extends ActionBarActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks,
         EditUserDialog.OnEditUserListener {
-    final int CREATE_EVENT_CODE = 1;
 
     /**
      * FAB for creating new events
@@ -67,8 +67,7 @@ public class MainActivity extends ActionBarActivity
         Runnable create_launcher = new Runnable() {
             @Override
             public void run() {
-                Intent launch_new_event = new Intent(MainActivity.this, CreateEventActivity.class);
-                startActivityForResult(launch_new_event, CREATE_EVENT_CODE);
+                IntentProtocol.launchCreateEvent(MainActivity.this);
             }
         };
 

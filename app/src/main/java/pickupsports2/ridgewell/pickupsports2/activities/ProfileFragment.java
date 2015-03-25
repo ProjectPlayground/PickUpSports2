@@ -18,8 +18,6 @@ import ridgewell.pickupsports2.common.User;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link ProfileFragment#newInstance} factory method to
- * create an instance of this fragment.
  */
 public class ProfileFragment extends Fragment implements MainActivity.MainActivityFragment{
 
@@ -117,6 +115,6 @@ public class ProfileFragment extends Fragment implements MainActivity.MainActivi
         joinDate.setText(user.getJoinTime().toString("MMMM d, yyyy"));
 
         TextView location = (TextView) rootView.findViewById(R.id.user_location);
-        location.setText(user.getLocation().getLocation());
+        location.setText(user.getLocationProperties().toString());
     }
 }

@@ -8,14 +8,13 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 import ridgewell.pickupsports2.common.Event;
-import ridgewell.pickupsports2.common.Location;
+import ridgewell.pickupsports2.common.LocationProperties;
 import ridgewell.pickupsports2.common.Sport;
 import ridgewell.pickupsports2.common.User;
 import org.joda.time.DateTime;
@@ -304,6 +303,7 @@ public class ServerRequest {
                     @Override
                     public void success(Event event, Response response) {
                         Log.v("Retrofit Success", "Event response");
+                        Log.v("Response",response.toString());
                     }
 
                     @Override
@@ -422,11 +422,11 @@ public class ServerRequest {
         }
     }
 
-    public Location getLocation(final String location) {
+    public LocationProperties getLocation(final String location) {
         try {
-            Callable<Location> callable = new Callable<Location>() {
+            Callable<LocationProperties> callable = new Callable<LocationProperties>() {
                 @Override
-                public Location call() {
+                public LocationProperties call() {
                     return svc.getLocation(location);
                 }
             };
@@ -440,13 +440,13 @@ public class ServerRequest {
         }
     }
 
-    public void addLocation(final Location location) {
+    public void addLocation(final LocationProperties locationProperties) {
         Callable c = new Callable() {
             @Override
             public String call() {
-                svc.addLocation(location, new Callback<Location>() {
+                svc.addLocation(locationProperties, new Callback<LocationProperties>() {
                     @Override
-                    public void success(Location location, Response response) {
+                    public void success(LocationProperties location, Response response) {
                         Log.v("Retrofit Success", "Location response");
                     }
 
@@ -467,13 +467,13 @@ public class ServerRequest {
         }
     }
 
-    public void deleteLocation(final Location location) {
+    public void deleteLocation(final LocationProperties locationProperties) {
         Callable c = new Callable() {
             @Override
             public String call() {
-                svc.deleteLocation(location.getLocation(), new Callback<Location>() {
+                svc.deleteLocation(locationProperties.toString(), new Callback<LocationProperties>() {
                     @Override
-                    public void success(Location location, Response response) {
+                    public void success(LocationProperties location, Response response) {
                         Log.v("Retrofit Success", "Location response");
                     }
 

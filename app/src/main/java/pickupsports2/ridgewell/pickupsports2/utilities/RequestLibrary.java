@@ -1,8 +1,6 @@
 package pickupsports2.ridgewell.pickupsports2.utilities;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Callable;
 
 import retrofit.Callback;
 import retrofit.http.Body;
@@ -12,7 +10,7 @@ import retrofit.http.POST;
 import retrofit.http.Query;
 
 import ridgewell.pickupsports2.common.Event;
-import ridgewell.pickupsports2.common.Location;
+import ridgewell.pickupsports2.common.LocationProperties;
 import ridgewell.pickupsports2.common.Sport;
 import ridgewell.pickupsports2.common.User;
 
@@ -66,13 +64,13 @@ public interface RequestLibrary {
 
     /*Location Commands*/
     @GET("/location/")
-    public Location getLocation(@Query("locationame") String location);
+    public LocationProperties getLocation(@Query("locationame") String location);
 
     @POST("/location/")
-    public void addLocation(@Body Location location, Callback<Location> success);
+    public void addLocation(@Body LocationProperties locationProperties, Callback<LocationProperties> success);
 
     @DELETE("/location/")
-    public void deleteLocation(@Query("location") String Location, Callback<Location> success);
+    public void deleteLocation(@Query("location") String Location, Callback<LocationProperties> success);
 
     /* Action commands */
     @POST("/attendance/?type=add")

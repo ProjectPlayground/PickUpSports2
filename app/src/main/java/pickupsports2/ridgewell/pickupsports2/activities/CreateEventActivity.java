@@ -6,7 +6,6 @@ import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -20,12 +19,12 @@ import android.widget.Toast;
 
 import org.joda.time.MutableDateTime;
 
-import java.io.FileInputStream;
-
 import pickupsports2.ridgewell.pickupsports2.R;
+import pickupsports2.ridgewell.pickupsports2.intents.IntentProtocol;
 import pickupsports2.ridgewell.pickupsports2.utilities.ServerRequest;
 import pickupsports2.ridgewell.pickupsports2.utilities.UserData;
 import ridgewell.pickupsports2.common.Event;
+import ridgewell.pickupsports2.common.LocationProperties;
 import ridgewell.pickupsports2.common.User;
 
 /**
@@ -46,6 +45,8 @@ public class CreateEventActivity extends ActionBarActivity {
     private EditText location;
     private EditText maxAttendance;
     private EditText notes;
+
+    private LocationProperties event_loc = null;
 
     private MutableDateTime date;
 
@@ -82,7 +83,7 @@ public class CreateEventActivity extends ActionBarActivity {
         privacyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         privacySpinner.setAdapter(privacyAdapter);
 
-        location = (EditText) findViewById(R.id.eventLocationInput);
+        //location = (EditText) findViewById(R.id.eventLocationInput);
 
         maxAttendance = (EditText) findViewById(R.id.eventAttendanceInput);
 
@@ -100,6 +101,7 @@ public class CreateEventActivity extends ActionBarActivity {
 
         setCurrentDateOnView();
         addEditTimesListener();
+        addSetLocationListener();
     }
 
     // display current date
@@ -144,10 +146,13 @@ public class CreateEventActivity extends ActionBarActivity {
                 //TODO Check for empty fields + Toast
                 User user = UserData.getInstance().getThisUser(CreateEventActivity.this);
                 try {
+                    if (event_loc == null) {
+                        throw new NullPointerException("Cannot have an event without location");
+                    }
                     Event created_event = new Event(event_name.getText().toString(),
                             sportsSpinner.getSelectedItem().toString(),
                             date.toDateTime(),
-                            location.getText().toString(),
+                            event_loc,
                             costSpinner.getSelectedItemPosition(),
                             notes.getText().toString(),
                             privacySpinner.getSelectedItemPosition() == 1,
@@ -161,12 +166,24 @@ public class CreateEventActivity extends ActionBarActivity {
                     finish();
                 } catch (Exception e) {
                     Toast toast = Toast.makeText(getApplicationContext(),
-                            "An error occurred while creating your event", Toast.LENGTH_SHORT);
+                            "One or more of your fields is incomplete", Toast.LENGTH_SHORT);
                     toast.show();
 
                 }
             }
         });
+    }
+
+    private void addSetLocationListener() {
+        Button set_location = (Button) findViewById(R.id.locationInputButton);
+        set_location
+                .setOnClickListener(new OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            IntentProtocol.launchLocationPicker(CreateEventActivity.this, "");
+                                        }
+                                    });
+
     }
 
     @Override
@@ -211,4 +228,9 @@ public class CreateEventActivity extends ActionBarActivity {
             displayTime.setText(date.toString("h:mm a"));
         }
     };
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        this.event_loc = IntentProtocol.getLocationPickerResult(requestCode, resultCode, data);
+    }
 }
