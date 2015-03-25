@@ -8,8 +8,7 @@
         android:allowBackup="true"
         android:icon="@drawable/playball_border_icon"
         android:label="@string/app_name"
-        android:theme="@style/Theme.Pickupsports"
-        android:debuggable="true">
+        android:theme="@style/Theme.Pickupsports">
         <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/app_id"/>
 
 
