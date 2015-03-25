@@ -140,6 +140,34 @@ public class ServerRequest {
         }
     }
 
+    public void editEvent(final Event event) {
+        Callable c = new Callable() {
+            @Override
+            public String call() {
+                Log.v("In","EditEvent");
+                svc.editEvent(event, new Callback<Event>() {
+                    @Override
+                    public void success(Event event, Response response) {
+                        Log.v("Retrofit Success", "Event response");
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+                        Log.e("Retrofit Error", "editEvent Failed");
+                    }
+                });
+                return "";
+            }
+        };
+        try {
+            exec.submit(c).get();
+        } catch (ExecutionException e) {
+            Log.e("Interrupted Exception", e.getMessage());
+        } catch (InterruptedException e) {
+            Log.e("Execution Exception", e.getMessage());
+        }
+    }
+
     public void addUser(final User user) {
         Callable c = new Callable() {
             @Override
