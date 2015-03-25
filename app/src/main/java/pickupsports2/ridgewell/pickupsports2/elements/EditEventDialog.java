@@ -134,6 +134,7 @@ public class EditEventDialog extends DialogFragment {
                         if (inputEvent.getLocation() == null) {
                             throw new NullPointerException("Cannot have an event without location");
                         }
+                        inputEvent.setName(event_name.getText().toString());
                         inputEvent.setSport(sportsSpinner.getSelectedItem().toString());
                         //inputEvent.setLocation();
                         inputEvent.setCost(costSpinner.getSelectedItemPosition());
