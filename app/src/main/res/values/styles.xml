@@ -87,14 +87,14 @@
     <style name = "badge_display">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textSize">20dp</item>
+        <item name="android:textSize">15dp</item>
         <item name="android:textColor">#33AD33</item>
     </style>
 
     <style name = "sport_tag_display">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textSize">20dp</item>
-        <item name="android:textColor">#7033AD</item>
+        <item name="android:textSize">15dp</item>
+        <item name="android:textColor">@color/sport_color</item>
     </style>
 </resources>

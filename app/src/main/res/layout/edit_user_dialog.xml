@@ -101,5 +101,21 @@
                 android:id="@+id/stateText" />
         </RelativeLayout>
     </LinearLayout>
+    <TextView
+        style="@style/minor_text"
+        android:text="@string/event_sport_heading_text"
+        android:id="@+id/event_sport_heading"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+
+    <pickupsports2.ridgewell.pickupsports2.elements.MultiSelectSpinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/sport_spinner"
+        android:layout_below="@+id/event_sport_heading"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:prompt="@string/multi_sport_prompt"
+    />
 
 </LinearLayout>

@@ -33,6 +33,7 @@
     <string name="event_attendance_heading_text">How many? </string>
     <string name="event_time_heading_text">When? </string>
     <string name="event_notes_heading">Any other notes?</string>
+    <string name="single_sport_prompt">Select a sport</string>
 
     <string-array name="sports">
         <item>Baseball</item>
@@ -40,24 +41,21 @@
         <item>Bowling</item>
         <item>Boxing</item>
         <item>Cricket</item>
-        <item>Cross Country Running</item>
         <item>Cycling</item>
         <item>Fencing</item>
         <item>Football</item>
         <item>Golf</item>
-        <item>Hiking</item>
         <item>Hockey</item>
         <item>Lacrosse</item>
         <item>Racquetball</item>
         <item>Rock Climbing</item>
         <item>Rowing</item>
         <item>Rugby</item>
+        <item>Running</item>
         <item>Soccer</item>
         <item>Softball</item>
         <item>Squash</item>
-        <item>Swimming</item>
         <item>Tennis</item>
-        <item>Track and Field</item>
         <item>Volleyball</item>
         <item>Water Polo</item>
     </string-array>
@@ -104,5 +102,8 @@
     <string name="locationpicker_button_finish">Finish</string>
     <string name="locationpicker_button_zoom_in">+</string>
     <string name="locationpicker_button_zoom_out">-</string>
+
+    <!--Edit User Dialog -->
+    <string name="multi_sport_prompt">Select favorite sports</string>
 
 </resources>
