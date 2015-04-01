@@ -1,11 +1,11 @@
 package pickupsports2.ridgewell.pickupsports2.activities;
 
+import android.app.Dialog;
 import android.app.FragmentManager;
 import android.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -17,6 +17,8 @@ import pickupsports2.ridgewell.pickupsports2.elements.EditUserDialog;
 import pickupsports2.ridgewell.pickupsports2.elements.NavigationDrawerFragment;
 import pickupsports2.ridgewell.pickupsports2.R;
 import pickupsports2.ridgewell.pickupsports2.elements.AddEventButton;
+import pickupsports2.ridgewell.pickupsports2.fragments.AllEventsFragment;
+import pickupsports2.ridgewell.pickupsports2.fragments.ProfileFragment;
 import pickupsports2.ridgewell.pickupsports2.intents.IntentProtocol;
 import pickupsports2.ridgewell.pickupsports2.utilities.ServerRequest;
 import ridgewell.pickupsports2.common.User;

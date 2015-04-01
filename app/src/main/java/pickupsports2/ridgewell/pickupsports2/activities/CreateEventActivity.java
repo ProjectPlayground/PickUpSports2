@@ -183,7 +183,6 @@ public class CreateEventActivity extends ActionBarActivity {
                                             IntentProtocol.launchLocationPicker(CreateEventActivity.this, "");
                                         }
                                     });
-
     }
 
     @Override

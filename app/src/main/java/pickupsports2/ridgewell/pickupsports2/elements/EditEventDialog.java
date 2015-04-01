@@ -6,8 +6,10 @@ package pickupsports2.ridgewell.pickupsports2.elements;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,9 +17,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import org.apache.commons.lang.WordUtils;
@@ -37,6 +41,8 @@ import ridgewell.pickupsports2.common.User;
 public class EditEventDialog extends DialogFragment {
     private OnEditEventListener callback;
 
+    View view;
+
     private Event inputEvent = null;
 
     private Button post;
@@ -52,13 +58,18 @@ public class EditEventDialog extends DialogFragment {
     private EditText maxAttendance;
     private EditText notes;
 
+    private MutableDateTime date;
+
+    static final int DATE_DIALOG_ID = 999;
+    static final int TIME_DIALOG_ID = 888;
+
     public EditEventDialog() {
         // Empty constructor required for DialogFragment
     }
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        View view = getActivity().getLayoutInflater().inflate(R.layout.edit_event_dialog, null);
+        view = getActivity().getLayoutInflater().inflate(R.layout.edit_event_dialog, null);
 
         inputEvent = getArguments().getParcelable("event");
 
@@ -92,6 +103,8 @@ public class EditEventDialog extends DialogFragment {
         maxAttendance = (EditText) view.findViewById(R.id.eventAttendanceInput);
         maxAttendance.setText(inputEvent.getMaxAttendance() + "");
 
+        date = inputEvent.getTime().toMutableDateTime();
+
         displayDate = (TextView) view.findViewById(R.id.selected_date);
         displayDate.setText(inputEvent.getTime().toString("MMMM d, yyyy"));
 
@@ -115,6 +128,8 @@ public class EditEventDialog extends DialogFragment {
                         dismiss();
                     }
                 });
+
+        addEditTimesListener();
 
         return builder.create();
     }
@@ -142,6 +157,7 @@ public class EditEventDialog extends DialogFragment {
                         inputEvent.setPublic(privacySpinner.getSelectedItemPosition() == 1);
                         inputEvent.setMaxAttendance(Integer
                                 .parseInt(maxAttendance.getText().toString()));
+                        inputEvent.setTime(date.toDateTime());
                         callback.onEditEventListener(inputEvent);
                         dismiss();
                     } catch (Exception e) {
@@ -152,6 +168,27 @@ public class EditEventDialog extends DialogFragment {
                 }
             });
         }
+    }
+    public void addEditTimesListener() {
+        editDate = (Button) view.findViewById(R.id.edit_date_button);
+
+        editDate.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                getActivity().showDialog(DATE_DIALOG_ID);
+            }
+        });
+
+        editTime = (Button) view.findViewById(R.id.edit_time_button);
+
+        editTime.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                getActivity().showDialog(TIME_DIALOG_ID);
+            }
+        });
     }
 
     public void onAttach(Activity activity) {
@@ -168,4 +205,46 @@ public class EditEventDialog extends DialogFragment {
     public interface OnEditEventListener {
         public void onEditEventListener(Event event);
     }
+
+    public Dialog createDialog(int id) {
+        switch (id) {
+            case DATE_DIALOG_ID:
+                // set date picker as current date
+                return new DatePickerDialog(getActivity(), datePickerListener,
+                        date.getYear(), date.getMonthOfYear() - 1, date.getDayOfMonth());
+            case TIME_DIALOG_ID:
+                // set time picker as current date
+                return new TimePickerDialog(getActivity(), timePickerListener,
+                        date.getHourOfDay(),date.getMinuteOfHour(), false);
+        }
+        return null;
+    }
+
+    private DatePickerDialog.OnDateSetListener datePickerListener
+            = new DatePickerDialog.OnDateSetListener() {
+
+        // when dialog box is closed, below method will be called.
+        public void onDateSet(DatePicker view, int selectedYear,
+                              int selectedMonth, int selectedDay) {
+            date.setYear(selectedYear);
+            date.setMonthOfYear(selectedMonth + 1);
+            date.setDayOfMonth(selectedDay);
+
+            // set selected date into textview
+            displayDate.setText(date.toString("MMMM d, yyyy"));
+        }
+    };
+
+    private TimePickerDialog.OnTimeSetListener timePickerListener
+            = new TimePickerDialog.OnTimeSetListener() {
+
+        // when dialog box is closed, below method will be called.
+        public void onTimeSet(TimePicker view, int selectedHour, int selectedMinute) {
+            date.setHourOfDay(selectedHour);
+            date.setMinuteOfHour(selectedMinute);
+
+            // set selected date into textview
+            displayTime.setText(date.toString("h:mm a"));
+        }
+    };
 }
