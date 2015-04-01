@@ -10,12 +10,16 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.app.DialogFragment;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import org.apache.commons.lang.WordUtils;
+
+import java.util.ArrayList;
 
 import pickupsports2.ridgewell.pickupsports2.R;
 import pickupsports2.ridgewell.pickupsports2.utilities.TextValidator;
@@ -31,6 +35,7 @@ public class EditUserDialog extends DialogFragment {
     private EditText lastname;
     private EditText cityname;
     private EditText statename;
+    private MultiSelectSpinner sportsSpinner;
 
     public EditUserDialog() {
         // Empty constructor required for DialogFragment
@@ -112,6 +117,11 @@ public class EditUserDialog extends DialogFragment {
             cityname.setText(citystate[0]);
             statename.setText(citystate[1]);
         }
+
+        sportsSpinner = (MultiSelectSpinner) view.findViewById(R.id.sport_spinner);
+        sportsSpinner.setItems(getActivity().getResources().getStringArray(R.array.sports));
+        sportsSpinner.setInitialSelected(inputUser.getFavoriteSports());
+
         return builder.create();
     }
 
@@ -144,6 +154,11 @@ public class EditUserDialog extends DialogFragment {
                         inputUser.setLocationProperties(new LocationProperties(WordUtils.capitalize(cityname.getText()
                                 .toString().trim(), delim) + ", "
                                 + statename.getText().toString().trim()));
+                        ArrayList<String> sports = new ArrayList<String>();
+                        for (String sport : sportsSpinner.getSelectedItemsAsString().split(", ")) {
+                            sports.add(sport);
+                        }
+                        inputUser.setFavoriteSports(sports);
                         callback.onEditUserListener(inputUser);
                         dismiss();
                     }

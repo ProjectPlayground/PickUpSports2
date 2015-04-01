@@ -1,4 +1,4 @@
-package pickupsports2.ridgewell.pickupsports2.activities;
+package pickupsports2.ridgewell.pickupsports2.fragments;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -10,8 +10,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.io.FileInputStream;
+import java.util.List;
 
 import pickupsports2.ridgewell.pickupsports2.R;
+import pickupsports2.ridgewell.pickupsports2.activities.MainActivity;
 import pickupsports2.ridgewell.pickupsports2.elements.EditUserDialog;
 import pickupsports2.ridgewell.pickupsports2.utilities.ServerRequest;
 import ridgewell.pickupsports2.common.User;
@@ -19,7 +21,7 @@ import ridgewell.pickupsports2.common.User;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ProfileFragment extends Fragment implements MainActivity.MainActivityFragment{
+public class ProfileFragment extends Fragment implements MainActivity.MainActivityFragment {
 
     private static ServerRequest svreq = ServerRequest.getInstance();
 
@@ -116,5 +118,17 @@ public class ProfileFragment extends Fragment implements MainActivity.MainActivi
 
         TextView location = (TextView) rootView.findViewById(R.id.user_location);
         location.setText(user.getLocationProperties().toString());
+
+        TextView user_favorite_sports = (TextView) rootView.findViewById(R.id.user_favorite_sports);
+        List<String> favorites = user.getFavoriteSports();
+        if (favorites.size() > 0) {
+            String favorite_sports_list = "| ";
+            for (String sport : user.getFavoriteSports()) {
+                favorite_sports_list = favorite_sports_list + " " + sport + " |";
+            }
+            user_favorite_sports.setText(favorite_sports_list);
+        } else {
+            user_favorite_sports.setText("You don't have any favorite sports!");
+        }
     }
 }

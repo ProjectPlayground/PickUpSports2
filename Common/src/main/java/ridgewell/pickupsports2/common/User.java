@@ -21,7 +21,7 @@ public class User implements Parcelable{
     private long joiningTime;
     private String fb_id;
 
-    //private List<Sport> favoriteSports = new ArrayList<Sport>();
+    private List<String> favoriteSports = new ArrayList<String>();
     private List<String> attendedEvents = new ArrayList<String>();
     //private List<Event> createdEvents = new ArrayList<Event>();
     //private List<Badge> badges = new ArrayList<Badge>();
@@ -131,11 +131,15 @@ public class User implements Parcelable{
         this.attendedEvents.remove(e.get_id());
     }
 
-    /*
-    public List<Sport> getFavoriteSports() {
+
+    public List<String> getFavoriteSports() {
         return favoriteSports;
     }
-*/
+
+    public void setFavoriteSports(List<String> favoriteSports) {
+        this.favoriteSports = favoriteSports;
+    }
+
     /*
          * if the sport is not already in favorites it is added, else nothing
          */
@@ -182,7 +186,7 @@ public class User implements Parcelable{
         out.writeParcelable(locationProperties, 0);
         out.writeLong(joiningTime);
         out.writeString(fb_id);
-        //out.writeTypedList(favoriteSports);
+        out.writeStringList(favoriteSports);
         out.writeStringList(attendedEvents);
         //out.writeTypedList(createdEvents);
         //out.writeTypedList(badges);
@@ -207,7 +211,7 @@ public class User implements Parcelable{
         locationProperties = in.readParcelable(LocationProperties.class.getClassLoader());
         joiningTime = in.readLong();
         fb_id = in.readString();
-        //favoriteSports = in.createTypedArrayList(Sport.CREATOR);
+        favoriteSports = in.createStringArrayList();
         attendedEvents = in.createStringArrayList();
         //createdEvents = in.createTypedArrayList(Event.CREATOR);
         //badges = in.createTypedArrayList(Badge.CREATOR);

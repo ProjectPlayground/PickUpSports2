@@ -1,9 +1,9 @@
 package pickupsports2.ridgewell.pickupsports2.activities;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -33,6 +33,11 @@ public class ViewEventActivity extends ActionBarActivity
     private ServerRequest svreq = ServerRequest.getInstance();
     
     private User creator = null;
+
+    static final int DATE_DIALOG_ID = 999;
+    static final int TIME_DIALOG_ID = 888;
+
+    EditEventDialog editEventDialog = null;
 
     public ViewEventActivity() {}
 
@@ -224,11 +229,20 @@ public class ViewEventActivity extends ActionBarActivity
         return super.onOptionsItemSelected(item);
     }
     public void onActionButtonClick() {
-        EditEventDialog editUserDialog = new EditEventDialog();
+        editEventDialog = new EditEventDialog();
         Bundle args = new Bundle();
         args.putParcelable("event",event);
-        editUserDialog.setArguments(args);
-        editUserDialog.show(getFragmentManager(), "edit event");
+        editEventDialog.setArguments(args);
+        editEventDialog.show(getFragmentManager(), "edit event");
+    }
+
+    @Override
+    public Dialog onCreateDialog(int id) {
+        if (id == DATE_DIALOG_ID || id == TIME_DIALOG_ID) {
+            return editEventDialog.createDialog(id);
+        } else {
+            return super.onCreateDialog(id);
+        }
     }
 
     public void refreshActivity() {

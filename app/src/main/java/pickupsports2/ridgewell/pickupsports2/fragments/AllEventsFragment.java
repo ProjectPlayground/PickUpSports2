@@ -1,7 +1,5 @@
-package pickupsports2.ridgewell.pickupsports2.activities;
+package pickupsports2.ridgewell.pickupsports2.fragments;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -9,7 +7,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -17,17 +14,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import pickupsports2.ridgewell.pickupsports2.R;
+import pickupsports2.ridgewell.pickupsports2.activities.MainActivity;
+import pickupsports2.ridgewell.pickupsports2.elements.SportingEventArrayAdapter;
 import pickupsports2.ridgewell.pickupsports2.utilities.ServerRequest;
 import pickupsports2.ridgewell.pickupsports2.utilities.SwipeRefreshListFragment;
 import pickupsports2.ridgewell.pickupsports2.intents.IntentProtocol;
-import pickupsports2.ridgewell.pickupsports2.utilities.UserData;
 import ridgewell.pickupsports2.common.Event;
-import ridgewell.pickupsports2.common.User;
 
 /**
  * Created by cameronridgewell on 2/9/15.
  */
-public class AllEventsFragment extends SwipeRefreshListFragment implements MainActivity.MainActivityFragment{
+public class AllEventsFragment extends SwipeRefreshListFragment implements MainActivity.MainActivityFragment {
 
     final int CREATE_EVENT_CODE = 111;
     final int SUCCESS_CODE = 1;
