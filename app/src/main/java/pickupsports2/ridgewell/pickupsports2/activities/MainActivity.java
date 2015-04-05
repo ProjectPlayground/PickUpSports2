@@ -18,6 +18,7 @@ import pickupsports2.ridgewell.pickupsports2.elements.NavigationDrawerFragment;
 import pickupsports2.ridgewell.pickupsports2.R;
 import pickupsports2.ridgewell.pickupsports2.elements.AddEventButton;
 import pickupsports2.ridgewell.pickupsports2.fragments.AllEventsFragment;
+import pickupsports2.ridgewell.pickupsports2.fragments.InvitationsFragment;
 import pickupsports2.ridgewell.pickupsports2.fragments.ProfileFragment;
 import pickupsports2.ridgewell.pickupsports2.intents.IntentProtocol;
 import pickupsports2.ridgewell.pickupsports2.utilities.ServerRequest;
@@ -128,7 +129,7 @@ public class MainActivity extends ActionBarActivity
                 optionButton = "";
                 break;
             case 3:
-                //Launch to Invitations
+                myFragment = new InvitationsFragment();
                 optionButton = "";
                 break;
             case 4:
@@ -168,6 +169,8 @@ public class MainActivity extends ActionBarActivity
             }
             Session.setActiveSession(null);
             finish();
+        } else if (id == R.id.action_search) {
+            IntentProtocol.search(this);
         }
         return super.onOptionsItemSelected(item);
     }

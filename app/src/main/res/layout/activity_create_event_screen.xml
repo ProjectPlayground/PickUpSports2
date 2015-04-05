@@ -16,6 +16,7 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:maxLength="30"
             android:id="@+id/eventNameInput"
             android:layout_below="@+id/event_name_heading"
             android:layout_alignParentLeft="true"

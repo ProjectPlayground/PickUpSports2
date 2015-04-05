@@ -15,23 +15,22 @@ import java.util.List;
 
 import pickupsports2.ridgewell.pickupsports2.R;
 import pickupsports2.ridgewell.pickupsports2.activities.MainActivity;
+import pickupsports2.ridgewell.pickupsports2.elements.InvitationArrayAdapter;
 import pickupsports2.ridgewell.pickupsports2.elements.SportingEventArrayAdapter;
+import pickupsports2.ridgewell.pickupsports2.intents.IntentProtocol;
 import pickupsports2.ridgewell.pickupsports2.utilities.ServerRequest;
 import pickupsports2.ridgewell.pickupsports2.utilities.SwipeRefreshListFragment;
-import pickupsports2.ridgewell.pickupsports2.intents.IntentProtocol;
 import ridgewell.pickupsports2.common.Event;
+import ridgewell.pickupsports2.common.Invitation;
 
 /**
  * Created by cameronridgewell on 2/9/15.
  */
-public class AllEventsFragment extends SwipeRefreshListFragment implements MainActivity.MainActivityFragment {
+public class InvitationsFragment extends SwipeRefreshListFragment implements MainActivity.MainActivityFragment {
 
-    final int CREATE_EVENT_CODE = 111;
-    final int SUCCESS_CODE = 1;
+    private List<Invitation> invitations = new ArrayList<Invitation>();
 
-    private List<Event> events = new ArrayList<Event>();
-
-    private SportingEventArrayAdapter sportingEventArrayAdapter;
+    private InvitationArrayAdapter invitationArrayAdapter;
     private ServerRequest svreq = ServerRequest.getInstance();
 
     View rootView;
@@ -39,8 +38,11 @@ public class AllEventsFragment extends SwipeRefreshListFragment implements MainA
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        sportingEventArrayAdapter = new SportingEventArrayAdapter(this.getActivity(), events);
-        this.setListAdapter(sportingEventArrayAdapter);
+        invitations.add(new Invitation("551f7abb8e185ef01634f2df","duck","5513180950cc7ca2d0622111"));
+        invitations.add(new Invitation("551f7a378e185ef01634f2de","wrong","5513180950cc7ca2d0622111"));
+
+        invitationArrayAdapter = new InvitationArrayAdapter(this.getActivity(), invitations);
+        this.setListAdapter(invitationArrayAdapter);
 
         final SwipeRefreshLayout swipeRefresh =
                 (SwipeRefreshLayout) rootView.findViewById(R.id.event_list_fragment);
@@ -73,12 +75,13 @@ public class AllEventsFragment extends SwipeRefreshListFragment implements MainA
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
-        Event toOpen = events.get(position);
-        IntentProtocol.viewEvent(this.getActivity(), toOpen);
+        Invitation toOpen = invitations.get(position);
+        //IntentProtocol.viewInvitation(this.getActivity(), toOpen);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        /*
         if (requestCode == CREATE_EVENT_CODE) {
             if (resultCode == SUCCESS_CODE) {
                 refreshFragment();
@@ -88,6 +91,7 @@ public class AllEventsFragment extends SwipeRefreshListFragment implements MainA
                 toast.show();
             }
         }
+        */
     }
 
     public void onActionButtonClick() {
@@ -95,7 +99,9 @@ public class AllEventsFragment extends SwipeRefreshListFragment implements MainA
     }
 
     public void refreshFragment() {
+        /*
         try{
+
             Thread.currentThread().sleep(250);
         }catch(Exception e){}
         Log.v("Attempting", "Event Refresh");
@@ -108,5 +114,6 @@ public class AllEventsFragment extends SwipeRefreshListFragment implements MainA
                     "PickUpSports was unable to connect to server", Toast.LENGTH_SHORT);
             toast.show();
         }
+        */
     }
 }

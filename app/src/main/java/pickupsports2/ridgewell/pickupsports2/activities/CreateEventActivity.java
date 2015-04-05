@@ -158,8 +158,7 @@ public class CreateEventActivity extends ActionBarActivity {
                             privacySpinner.getSelectedItemPosition() == 1,
                             Integer.parseInt(maxAttendance.getText().toString()),
                             user.get_id());
-                    created_event.addAttendee(user);
-                    svreq.addEvent(created_event);
+                    svreq.addEvent(created_event, CreateEventActivity.this);
 
                     //TODO this is an empty intent, surely it doesn't need to be passed
                     setResult(SUCCESS_CODE, new Intent());

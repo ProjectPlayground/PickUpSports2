@@ -1,5 +1,6 @@
 package pickupsports2.ridgewell.pickupsports2.utilities;
 
+import android.app.Activity;
 import android.util.Log;
 
 import java.security.InvalidParameterException;
@@ -268,25 +269,6 @@ public class ServerRequest {
         }
     }
 
-    public Event getEventFromName(final String event_name) {
-        try {
-            Callable<Event> callable = new Callable<Event>() {
-                @Override
-                public Event call() {
-                    return svc.getEventFromName(event_name);
-                }
-            };
-            ExecutorService exec = Executors.newFixedThreadPool(3 );
-            return exec.submit(callable).get();
-        } catch (ExecutionException e) {
-            Log.e("Interrupted Exception", e.getMessage());
-            return null;
-        } catch (InterruptedException e) {
-            Log.e("Execution Exception", e.getMessage());
-            return null;
-        }
-    }
-
     public List<Event> getEventsInDateRange(final DateTime date1, final DateTime date2) {
         try {
             Callable<List<Event>> callable = new Callable<List<Event>>() {
@@ -323,7 +305,7 @@ public class ServerRequest {
         }
     }
 
-    public void addEvent(final Event event) {
+    public void addEvent(final Event event, final Activity context) {
         Callable c = new Callable() {
             @Override
             public String call() {
@@ -331,7 +313,8 @@ public class ServerRequest {
                     @Override
                     public void success(Event event, Response response) {
                         Log.v("Retrofit Success", "Event response");
-                        Log.v("Response",response.toString());
+                        attendEvent(event,
+                                UserData.getInstance().getThisUser(context));
                     }
 
                     @Override
@@ -502,6 +485,72 @@ public class ServerRequest {
                 svc.deleteLocation(locationProperties.toString(), new Callback<LocationProperties>() {
                     @Override
                     public void success(LocationProperties location, Response response) {
+                        Log.v("Retrofit Success", "Location response");
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+                        Log.e("Retrofit Error", "deleteLocation Failed");
+                    }
+                });
+                return "";
+            }
+        };
+        try {
+            exec.submit(c).get();
+        } catch (ExecutionException e) {
+            Log.e("Interrupted Exception", e.getMessage());
+        } catch (InterruptedException e) {
+            Log.e("Execution Exception", e.getMessage());
+        }
+    }
+
+    public List<Event> searchEventByName(final String name) {
+        try {
+            Callable<List<Event>> callable = new Callable<List<Event>>() {
+                @Override
+                public List<Event> call() throws Exception {
+                    return svc.getEventFromName(name);
+                }
+            };
+            return exec.submit(callable).get();
+        } catch (ExecutionException e) {
+            Log.e("Interrupted Exception", e.getMessage());
+            return null;
+        } catch (InterruptedException e) {
+            Log.e("Execution Exception", e.getMessage());
+            return null;
+        }
+    }
+
+    public List<User> searchUserByName(final String name) {
+        try {
+            Callable<List<User>> callable = new Callable<List<User>>() {
+                @Override
+                public List<User> call() throws Exception {
+                    return svc.getUserFromName(name);
+                }
+            };
+            return exec.submit(callable).get();
+        } catch (ExecutionException e) {
+            Log.e("Interrupted Exception", e.getMessage());
+            return null;
+        } catch (InterruptedException e) {
+            Log.e("Execution Exception", e.getMessage());
+            return null;
+        }
+    }
+
+
+    public void invite(final User user, final Event event, final Activity context) {
+        Callable c = new Callable() {
+            @Override
+            public String call() {
+                svc.invite(user.get_id(), event.get_id(),
+                        UserData.getInstance().getThisUser(context).get_id(), new Callback<String>()
+                {
+                    @Override
+                    public void success(String user, Response response) {
                         Log.v("Retrofit Success", "Location response");
                     }
 

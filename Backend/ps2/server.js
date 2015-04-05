@@ -5,6 +5,7 @@ var fs          = require('fs');
 var url         = require('url');
 var ObjectID    = require('mongodb').ObjectID;
 var MongoClient = require('mongodb').MongoClient;
+var Soundex 	= require('soundex')
 
 /**
  *  Define the sample application.
@@ -167,21 +168,20 @@ var PickUplocations2 = function() {
                             console.log(err);
                             res.send(err);
                         } else {
-                            console.log(data[0]);
                             res.json(data[0]);
                         }
                     });
                     break;
                 case 'name':
                     var name = url.parse(req.url, true).query.name;
-                    self.getFromDB('events', {'name': name}, {'name':-1},
+                    self.searchInDB('events', soundex_name,
                     	function(err, data) {
                         if (err) {
                             console.log(err);
                             res.send(err);
                         } else {
-                            console.log(data[0]);
-                            res.json(data[0]);
+                        	console.log(data);
+                            res.json(data);
                         }
                     });
                     break;
@@ -219,7 +219,7 @@ var PickUplocations2 = function() {
          */
         self.app.post('/event/', function(req, res) {
             if (url.parse(req.url, true).query.type == "new") {
-                console.log("post " + url.parse(req.url, true).path);        
+                console.log("post " + url.parse(req.url, true).path);    
                 self.addToDB('events', req.body, function(err, result) {
                     if(err) {
                         console.log(err);
@@ -228,7 +228,7 @@ var PickUplocations2 = function() {
                     }
                 });
             } else if (url.parse(req.url, true).query.type == "existing") {
-                self.replaceInDB('events',req.body, function(err, result) {
+                self.replaceInDB('events', req.body, function(err, result) {
                     if(err) {
                         console.log(err);
                     } else {
@@ -490,6 +490,11 @@ var PickUplocations2 = function() {
         self.db.collection(collection).find(object).sort(sortby).toArray(callback);
     }
 
+    self.searchInDB = function(collection, soundex_sentence, callback) {
+    	console.log("Searching for " + soundex_sentence + " in " + collection);
+
+    }
+
     /*
      * Add to Database
      */
@@ -564,6 +569,36 @@ var PickUplocations2 = function() {
                 Date(Date.now() ), self.ipaddress, self.port);
         });
     };
+/*
+    self.generateFuzzyList = function(sentence) {
+    	var words = sentence.split(" ");
+    	var output = [];
+    	for (var i = 0; i < words.length; ++i) {
+    		output.push(Soundex(words[i]));
+    	}
+    	return output;
+    }
+
+    self.matchFuzzySentence = function(sent1, sent2) {
+    	if (sent1 === "" || sent2 == "" || sent1 == null || sent2 == null) {
+    		return false;
+    	}
+    	var matchcount = 0;
+    	for (var i = 0; i < sent1.length; ++i) {
+    		for (var j = 0; j < sent2.length; ++j) {
+    			if (sent1[i] === sent2[j]){
+    				matchcount += 1;
+    				break;
+    			}
+    		}
+    	}
+    	if (matchcount >= sent1.length/2) {
+    		return true;
+    	} else {
+    		return false;
+    	}
+    }
+    */
 }; 
 
 

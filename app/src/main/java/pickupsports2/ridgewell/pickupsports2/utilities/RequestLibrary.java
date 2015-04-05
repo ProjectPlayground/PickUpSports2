@@ -1,6 +1,7 @@
 package pickupsports2.ridgewell.pickupsports2.utilities;
 
 import java.util.List;
+import java.util.concurrent.Callable;
 
 import retrofit.Callback;
 import retrofit.http.Body;
@@ -20,8 +21,11 @@ import ridgewell.pickupsports2.common.User;
 public interface RequestLibrary {
 
     /*User Commands*/
-    @GET("/user/")
+    @GET("/user/?filter=id")
     public User getUser(@Query("id") String id, @Query("id_type") String id_type);
+
+    @GET("/user/?filter=name")
+    public List<User> getUserFromName(@Query("name") String name);
 
     @POST("/user/?type=new")
     public void addUser(@Body User user, Callback<User> success);
@@ -37,7 +41,7 @@ public interface RequestLibrary {
     public Event getEvent(@Query("id") String id);
 
     @GET("/event/?filter=name")
-    public Event getEventFromName(@Query("name") String name);
+    public List<Event> getEventFromName(@Query("name") String name);
 
     @GET("/event/?filter=dateRange")
     public List<Event> getEventsInDateRange(@Query("date1") long date1,
@@ -83,4 +87,8 @@ public interface RequestLibrary {
     @POST("/attendance/?type=remove")
     public void leaveEvent(@Query("event_id") String event_id,
                             @Query("user_id") String user_id, Callback<String> success);
+
+    @POST("/invitation/")
+    public void invite(@Query("invitee_id") String invitee_id, @Query("event_id") String event_id,
+                       @Query("inviter_id") String inviter_id, Callback<String> success);
 }

@@ -150,6 +150,7 @@ public class ViewEventActivity extends ActionBarActivity
         actionBar.setNavigationMode(android.support.v7.app.ActionBar.NAVIGATION_MODE_STANDARD);
         actionBar.setDisplayShowTitleEnabled(true);
         menu.findItem(R.id.fragment_action).setTitle("Edit");
+        menu.findItem(R.id.action_search).setVisible(false);
         if (!event.isCreator(UserData.getInstance().getThisUser(ViewEventActivity.this))) {
             menu.findItem(R.id.fragment_action).setVisible(false);
         } else {

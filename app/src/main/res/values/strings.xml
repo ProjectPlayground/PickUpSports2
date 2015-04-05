@@ -13,6 +13,7 @@
     <!-- menu items -->
     <string name="action_settings">Settings</string>
     <string name="log_out">Log Out</string>
+    <string name="action_search">Search</string>
 
     <!-- activity_main_view_screen -->
     <string name="attendButton">Attend</string>
@@ -105,5 +106,14 @@
 
     <!--Edit User Dialog -->
     <string name="multi_sport_prompt">Select favorite sports</string>
+    <string name="title_activity_search">SearchActivity</string>
+
+    <!-- Search Activity -->
+    <string-array name="search_types">
+        <item>Event</item>
+        <item>User</item>
+    </string-array>
+
+
 
 </resources>

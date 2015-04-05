@@ -33,7 +33,7 @@ public class SportingEventArrayAdapter extends ArrayAdapter<Event> {
     private int position;
 
     public SportingEventArrayAdapter(Activity context, List<Event> event_list) {
-        super(context, R.layout.event_view_item, event_list);
+        super(context, R.layout.event_list_item, event_list);
         this.position = position;
         this.list = event_list;
         this.context = context;
@@ -50,7 +50,7 @@ public class SportingEventArrayAdapter extends ArrayAdapter<Event> {
         View view = convertView;
         if (view == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = inflater.inflate(R.layout.event_view_item, null);
+            view = inflater.inflate(R.layout.event_list_item, null);
         }
 
         this.event = this.list.get(position);
