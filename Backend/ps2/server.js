@@ -245,6 +245,17 @@ var PickUplocations2 = function() {
         self.app.delete('/event/', function(req, res) {
             console.log("delete " + url.parse(req.url, true).path);
             var id = url.parse(req.url, true).query.id;
+            var attendees = (url.parse(req.url, true).query.attendees).split(",");
+            for (var i = 0; i < attendees.length; ++i) {
+                self.updateFieldInDB('users', {'_id': new ObjectID(attendees[i])},
+                    {'$pull' : {'attendedEvents' : id}}, 
+                    function(err, result) {
+                        if(err) {
+                            console.log(err);
+                    }
+                });
+            }
+            
             self.deleteFromDB('events', {'_id': new ObjectID(id)}, function(err, result) {
                 if (err) {
                     console.log(err);
@@ -418,6 +429,55 @@ var PickUplocations2 = function() {
                     console.log(err);
                     res.send(err);
                 } else {
+                    console.log(result);
+                }
+            });
+        });
+
+        /*
+         * Express code to use module to get a sport from the commandinterpreter
+         */
+        self.app.get('/invitation/', function(req, res) {
+            var id = url.parse(req.url, true).query.id;
+            self.getFromDB('invitations', {'_id': new ObjectID(id)},
+                function(err, data) {
+                if (err) {
+                    console.log(err);
+                    res.send(err);
+                } else {
+                    console.log(data[0]);
+                    res.json(data[0]);
+                }
+            });
+        });
+
+        /*
+         * Express code to use module to add a sport from the commandinterpreter
+         */
+        self.app.post('/invitation/', function(req, res) {
+            console.log("post " + url.parse(req.url, true).path); 
+            self.addToDB('invitations', req.body, function(err, result) {
+                if(err) {
+                    console.log(err);
+                    res.send(err);
+                } else {
+                    res.send(result[0]);
+                }
+            });
+        });
+
+        /*
+         * Express code to use module to add a sport from the commandinterpreter
+         */
+        self.app.delete('/invitation/', function(req, res) {
+            console.log("delete " + url.parse(req.url, true).path);
+            var id = url.parse(req.url, true).query.id;
+            self.deleteFromDB('invitations', {'_id': new ObjectID(id)}, function(err, result) {
+                if (err) {
+                    console.log(err);
+                    res.send(err);
+                } else {
+                	res.send(result);
                     console.log(result);
                 }
             });

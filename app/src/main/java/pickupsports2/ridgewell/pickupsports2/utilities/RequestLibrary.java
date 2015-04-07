@@ -54,7 +54,8 @@ public interface RequestLibrary {
     public void addEvent(@Body Event event, Callback<Event> success);
 
     @DELETE("/event/")
-    public void deleteEvent(@Query("id") String id, Callback<Event> success);
+    public void deleteEvent(@Query("id") String id, @Query("attendees") String attendees,
+                            Callback<Event> success);
 
     @POST("/event/?type=existing")
     public void editEvent(@Body Event event, Callback<Event> success);

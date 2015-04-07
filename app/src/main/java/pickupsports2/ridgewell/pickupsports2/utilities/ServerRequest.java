@@ -338,7 +338,16 @@ public class ServerRequest {
         Callable c = new Callable() {
             @Override
             public String call() {
-                svc.deleteEvent(event.get_id(), new Callback<Event>() {
+                String[] temp = new String[event.getAttendeeCount()];
+                temp = event.getAttendees().toArray(temp);
+                String commaoutput = "";
+                for (int i = 0; i < temp.length; ++i) {
+                    commaoutput += temp[i];
+                    if (i < temp.length-1) {
+                        commaoutput += ",";
+                    }
+                }
+                svc.deleteEvent(event.get_id(), commaoutput, new Callback<Event>() {
                     @Override
                     public void success(Event event, Response response) {
                         Log.v("Retrofit Success", "Event response");
