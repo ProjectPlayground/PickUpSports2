@@ -51,6 +51,7 @@ public class SearchActivity extends ActionBarActivity {
         createOnSearchListener();
 
         myFragment = new SearchResultsFragment();
+
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction()
                 .replace(R.id.root_view, myFragment).commit();

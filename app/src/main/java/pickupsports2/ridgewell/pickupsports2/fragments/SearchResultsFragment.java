@@ -1,33 +1,27 @@
 package pickupsports2.ridgewell.pickupsports2.fragments;
 
-import android.content.Intent;
+import android.app.ListFragment;
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import pickupsports2.ridgewell.pickupsports2.R;
-import pickupsports2.ridgewell.pickupsports2.activities.MainActivity;
 import pickupsports2.ridgewell.pickupsports2.elements.SearchResultArrayAdapter;
-import pickupsports2.ridgewell.pickupsports2.elements.SportingEventArrayAdapter;
 import pickupsports2.ridgewell.pickupsports2.intents.IntentProtocol;
-import pickupsports2.ridgewell.pickupsports2.utilities.ServerRequest;
-import pickupsports2.ridgewell.pickupsports2.utilities.SwipeRefreshListFragment;
 import ridgewell.pickupsports2.common.Event;
 import ridgewell.pickupsports2.common.User;
 
 /**
  * Created by cameronridgewell on 4/7/15.
  */
-public class SearchResultsFragment extends SwipeRefreshListFragment {
+public class SearchResultsFragment extends ListFragment {
 
     private List<String[]> titles = new ArrayList<>();
     private List<User> users = null;
@@ -40,8 +34,7 @@ public class SearchResultsFragment extends SwipeRefreshListFragment {
 
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        String[] arr = {"string", "wombat"};
-        titles.add(arr);
+
         searchResults = new SearchResultArrayAdapter(this.getActivity(), titles);
         this.setListAdapter(searchResults);
     }
@@ -53,6 +46,7 @@ public class SearchResultsFragment extends SwipeRefreshListFragment {
         // Inflate the layout for this fragment
 
         rootView = inflater.inflate(R.layout.fragment_list_view, container, false);
+
         return rootView;
     }
 
