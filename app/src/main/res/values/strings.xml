@@ -91,10 +91,8 @@
     <string name="drawer_open_text">Navigation</string>
     <string-array name="navigation_pane_titles">
         <item>Profile</item>
-        <item>Teams</item>
         <item>Events</item>
         <item>Invitations</item>
-        <item>Schedule</item>
     </string-array>
 
     <!--Location Picker Activity -->

@@ -73,7 +73,7 @@ public class SearchActivity extends ActionBarActivity {
                 } catch (NullPointerException e) {
                     Log.e("Search Error","Didn't return a useable array from Backend");
                     Toast toast = Toast.makeText(getApplicationContext(),
-                            "An error occured during you search", Toast.LENGTH_SHORT);
+                            "No Results", Toast.LENGTH_SHORT);
                     toast.show();
                 }
             }

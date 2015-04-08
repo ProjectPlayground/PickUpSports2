@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/event_view_adapter">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:weightSum="5"
+        android:id="@+id/event_view_adapter_linear_layout">
+
+        <TextView
+            style="@style/list_view_heading"
+            android:id="@+id/event_adapter_title"
+            android:layout_marginLeft="15dp"
+            android:text="title here"/>
+
+    </LinearLayout>
+
+    <CheckBox
+        android:layout_marginRight="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Invite"
+        android:clickable="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:id="@+id/checkBox"
+        android:layout_alignTop="@+id/event_view_adapter_linear_layout"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+</RelativeLayout>

@@ -121,19 +121,11 @@ public class MainActivity extends ActionBarActivity
                 //TODO: create edit action
                 break;
             case 1:
-                optionButton = "";
-                //Launch to Teams View
-                break;
-            case 2:
                 myFragment = new AllEventsFragment();
                 optionButton = "";
                 break;
-            case 3:
+            case 2:
                 myFragment = new InvitationsFragment();
-                optionButton = "";
-                break;
-            case 4:
-                //Launch to Schedule
                 optionButton = "";
                 break;
             default:
