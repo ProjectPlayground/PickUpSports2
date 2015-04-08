@@ -49,3 +49,6 @@ Build Cycle 5:
 5. I want to be able to establish a league or set of teams to play each other regularly.
 6. I want to be able to search for users and events
 7. For trivial updates about an event, I want to be able to chat with everyone who has joined an event.
+
+APK Link:
+https://drive.google.com/a/vanderbilt.edu/file/d/0ByHu73Aa5SClbHdXdWlDRWJqejg/view?usp=sharing
