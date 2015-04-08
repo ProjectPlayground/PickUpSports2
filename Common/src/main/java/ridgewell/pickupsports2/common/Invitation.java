@@ -21,7 +21,7 @@ public class Invitation implements Parcelable{
     private String invitee_id;
     private String event_id;
 
-    public Invitation(String event_id, String invitee_id, String inviter_id) {
+    public Invitation(String invitee_id, String event_id, String inviter_id) {
         this.event_id = event_id;
         this.invitee_id = invitee_id;
         this.inviter_id = inviter_id;

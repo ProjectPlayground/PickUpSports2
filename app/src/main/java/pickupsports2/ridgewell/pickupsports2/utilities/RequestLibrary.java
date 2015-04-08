@@ -11,6 +11,7 @@ import retrofit.http.POST;
 import retrofit.http.Query;
 
 import ridgewell.pickupsports2.common.Event;
+import ridgewell.pickupsports2.common.Invitation;
 import ridgewell.pickupsports2.common.LocationProperties;
 import ridgewell.pickupsports2.common.Sport;
 import ridgewell.pickupsports2.common.User;
@@ -75,10 +76,12 @@ public interface RequestLibrary {
     public LocationProperties getLocation(@Query("locationame") String location);
 
     @POST("/location/")
-    public void addLocation(@Body LocationProperties locationProperties, Callback<LocationProperties> success);
+    public void addLocation(@Body LocationProperties locationProperties,
+                            Callback<LocationProperties> success);
 
     @DELETE("/location/")
-    public void deleteLocation(@Query("location") String Location, Callback<LocationProperties> success);
+    public void deleteLocation(@Query("location") String Location,
+                               Callback<LocationProperties> success);
 
     /* Action commands */
     @POST("/attendance/?type=add")
@@ -90,6 +93,12 @@ public interface RequestLibrary {
                             @Query("user_id") String user_id, Callback<String> success);
 
     @POST("/invitation/")
-    public void invite(@Query("invitee_id") String invitee_id, @Query("event_id") String event_id,
-                       @Query("inviter_id") String inviter_id, Callback<String> success);
+    public void invite(@Body Invitation invitation, Callback<String> success);
+
+    @GET("/invitation/?filter=user")
+    public List<Invitation> getUserInvitations(@Query("user_id") String user_id);
+
+    @DELETE("/invitation/")
+    public void deleteInvitation(@Query("invitation_id") String invitation_id,
+                                 Callback<Invitation> success);
 }

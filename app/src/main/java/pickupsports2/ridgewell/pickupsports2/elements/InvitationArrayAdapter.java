@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -57,6 +58,16 @@ public class InvitationArrayAdapter extends ArrayAdapter<Invitation> {
 
         TextView inviter = (TextView) view.findViewById(R.id.invitation_adapter_inviter);
         inviter.setText(user.getFirstname() + " " + user.getLastname() + " invited you!");
+
+        Button dismiss = (Button) view.findViewById(R.id.dismiss_invite_button);
+        dismiss.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                svreq.deleteInvitation(list.get(position));
+                list.remove(position);
+                notifyDataSetChanged();
+            }
+        });
         return view;
     }
 

@@ -453,24 +453,39 @@ var PickUplocations2 = function() {
         });
 
         /*
-         * Express code to use module to get a sport from the commandinterpreter
+         * Express code to use module to get a invite for a user
          */
         self.app.get('/invitation/', function(req, res) {
-            var id = url.parse(req.url, true).query.id;
-            self.getFromDB('invitations', {'_id': new ObjectID(id)},
-                function(err, data) {
-                if (err) {
-                    console.log(err);
-                    res.send(err);
-                } else {
-                    console.log(data[0]);
-                    res.json(data[0]);
-                }
-            });
+            var filter = url.parse(req.url, true).query.filter;
+            if (filter == "id") {
+                var id = url.parse(req.url, true).query.id;
+                self.getFromDB('invitations', {'_id': new ObjectID(id)},
+                    function(err, data) {
+                    if (err) {
+                        console.log(err);
+                        res.send(err);
+                    } else {
+                        console.log(data[0]);
+                        res.json(data[0]);
+                    }
+                });
+            } else if (filter == "user") {
+                var user_id = url.parse(req.url, true).query.user_id;
+                self.getFromDB('invitations', {'invitee_id': user_id},
+                    function(err, data) {
+                    if (err) {
+                        console.log(err);
+                        res.send(err);
+                    } else {
+                        console.log(data);
+                        res.json(data);
+                    }
+                });
+            }
         });
 
         /*
-         * Express code to use module to add a sport from the commandinterpreter
+         * Express code to use module to add a invite from the commandinterpreter
          */
         self.app.post('/invitation/', function(req, res) {
             console.log("post " + url.parse(req.url, true).path); 
@@ -479,18 +494,18 @@ var PickUplocations2 = function() {
                     console.log(err);
                     res.send(err);
                 } else {
-                    res.send(result[0]);
+                    res.send("result");
                 }
             });
         });
 
         /*
-         * Express code to use module to add a sport from the commandinterpreter
+         * Express code to use module to delete a invite from the commandinterpreter
          */
         self.app.delete('/invitation/', function(req, res) {
             console.log("delete " + url.parse(req.url, true).path);
-            var id = url.parse(req.url, true).query.id;
-            self.deleteFromDB('invitations', {'_id': new ObjectID(id)}, function(err, result) {
+            var invitation_id = url.parse(req.url, true).query.invitation_id;
+            self.deleteFromDB('invitations', {'_id': new ObjectID(invitation_id)}, function(err, result) {
                 if (err) {
                     console.log(err);
                     res.send(err);
