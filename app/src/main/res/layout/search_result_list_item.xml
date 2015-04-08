@@ -13,7 +13,7 @@
         android:descendantFocusability="blocksDescendants"
         android:orientation="horizontal"
         android:weightSum="5"
-        android:id="@+id/event_view_adapter_linear_layout">
+        android:id="@+id/search_adapter_linear_layout">
 
         <RelativeLayout
             android:layout_width="0dp"
@@ -22,17 +22,16 @@
 
             <TextView
                 style="@style/list_view_heading"
-                android:id="@+id/event_view_adapter_title"
+                android:id="@+id/search_adapter_title"
                 android:layout_marginLeft="15dp"
                 android:text="title here"/>
 
             <TextView
                 style="@style/list_view_subtext"
-                android:id="@+id/event_view_adapter_location"
-                android:layout_below="@+id/event_view_adapter_title"
+                android:id="@+id/search_adapter_location"
+                android:layout_below="@+id/search_adapter_title"
                 android:layout_marginLeft="25dp"
-                android:text="location here" />
+                android:text="location"/>
         </RelativeLayout>
-
     </LinearLayout>
 </RelativeLayout>

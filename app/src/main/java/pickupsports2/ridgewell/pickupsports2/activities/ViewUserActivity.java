@@ -10,6 +10,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import pickupsports2.ridgewell.pickupsports2.R;
+import pickupsports2.ridgewell.pickupsports2.elements.AttendedEventsDialog;
 import pickupsports2.ridgewell.pickupsports2.elements.MultiSelectSpinner;
 import pickupsports2.ridgewell.pickupsports2.intents.IntentProtocol;
 import pickupsports2.ridgewell.pickupsports2.utilities.UserData;
@@ -20,6 +21,8 @@ import ridgewell.pickupsports2.common.User;
  */
 public class ViewUserActivity extends ActionBarActivity {
     User user;
+    Button invite_button = null;
+    AttendedEventsDialog attendedEventsDialog = null;
 
     public ViewUserActivity() {}
 
@@ -35,15 +38,8 @@ public class ViewUserActivity extends ActionBarActivity {
         username.setText(user.getFirstname() + " " + user.getLastname());
 
         TextView joindate = (TextView) findViewById(R.id.user_join_date);
-        joindate.setText(user.getJoinTime().toString("MMMM d, yyyy"));
-/*
-        TextView badges = (TextView) findViewById(R.id.user_badges);
-        String badges_list = "|";
-        for (Badge badge : user.getBadges()) {
-            badges_list = badges_list + " " + badge.getName() + " |";
-        }
-        badges.setText(badges_list);
-*/
+        joindate.setText("Joined: " + user.getJoinTime().toString("MMMM d, yyyy"));
+
         TextView user_favorite_sports = (TextView) findViewById(R.id.user_favorite_sports);
         List<String> favorites = user.getFavoriteSports();
         if (favorites.size() > 0) {
@@ -59,10 +55,25 @@ public class ViewUserActivity extends ActionBarActivity {
         TextView user_location = (TextView) findViewById(R.id.user_location);
         user_location.setText(user.getLocationProperties().toString());
 
-        Button invite_button = (Button) findViewById(R.id.invite_button);
+        invite_button = (Button) findViewById(R.id.invite_button);
         if (user.get_id().equals(UserData.getInstance().getThisUser(this).get_id())) {
             invite_button.setVisibility(View.GONE);
         }
+
+        setInviteListener();
+    }
+
+    private void setInviteListener() {
+        invite_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                attendedEventsDialog = new AttendedEventsDialog();
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("invitee",user);
+                attendedEventsDialog.setArguments(bundle);
+                attendedEventsDialog.show(getFragmentManager(), "launch attended events");
+            }
+        });
     }
 
     @Override

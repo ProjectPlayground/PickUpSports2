@@ -5,6 +5,7 @@ var fs          = require('fs');
 var url         = require('url');
 var ObjectID    = require('mongodb').ObjectID;
 var MongoClient = require('mongodb').MongoClient;
+var Soundex 	= require('soundex')
 
 /**
  *  Define the sample application.
@@ -167,21 +168,21 @@ var PickUplocations2 = function() {
                             console.log(err);
                             res.send(err);
                         } else {
-                            console.log(data[0]);
                             res.json(data[0]);
                         }
                     });
                     break;
                 case 'name':
                     var name = url.parse(req.url, true).query.name;
-                    self.getFromDB('events', {'name': name}, {'name':-1},
-                    	function(err, data) {
+                    var search_query = 'this.name.toLowerCase()  == \'' + name.toLowerCase().trim() + '\'';
+                    console.log(search_query);
+                    self.getFromDB('events', { '$where' : search_query}, function(err, data) {
                         if (err) {
                             console.log(err);
                             res.send(err);
                         } else {
-                            console.log(data[0]);
-                            res.json(data[0]);
+                            console.log(data);
+                            res.json(data);
                         }
                     });
                     break;
@@ -219,7 +220,7 @@ var PickUplocations2 = function() {
          */
         self.app.post('/event/', function(req, res) {
             if (url.parse(req.url, true).query.type == "new") {
-                console.log("post " + url.parse(req.url, true).path);        
+                console.log("post " + url.parse(req.url, true).path);    
                 self.addToDB('events', req.body, function(err, result) {
                     if(err) {
                         console.log(err);
@@ -228,7 +229,7 @@ var PickUplocations2 = function() {
                     }
                 });
             } else if (url.parse(req.url, true).query.type == "existing") {
-                self.replaceInDB('events',req.body, function(err, result) {
+                self.replaceInDB('events', req.body, function(err, result) {
                     if(err) {
                         console.log(err);
                     } else {
@@ -245,6 +246,17 @@ var PickUplocations2 = function() {
         self.app.delete('/event/', function(req, res) {
             console.log("delete " + url.parse(req.url, true).path);
             var id = url.parse(req.url, true).query.id;
+            var attendees = (url.parse(req.url, true).query.attendees).split(",");
+            for (var i = 0; i < attendees.length; ++i) {
+                self.updateFieldInDB('users', {'_id': new ObjectID(attendees[i])},
+                    {'$pull' : {'attendedEvents' : id}}, 
+                    function(err, result) {
+                        if(err) {
+                            console.log(err);
+                    }
+                });
+            }
+            
             self.deleteFromDB('events', {'_id': new ObjectID(id)}, function(err, result) {
                 if (err) {
                     console.log(err);
@@ -285,6 +297,23 @@ var PickUplocations2 = function() {
                         res.json(data[0]);
                     }
                 });
+            } else if (id == null) {
+                var name = url.parse(req.url, true).query.name;
+                if (name != null) {
+                    var search_query = 'this.firstname.toLowerCase() + \" \" + this.lastname.toLowerCase()  == \'' 
+                        + name.toLowerCase().trim() + '\'';
+                    console.log(search_query);
+                    //
+                    self.getFromDB('users', { '$where' : search_query}, function(err, data) {
+                        if (err) {
+                            console.log(err);
+                            res.send(err);
+                        } else {
+                            console.log(data);
+                            res.json(data);
+                        }
+                    });
+                }
             }
         });
 
@@ -424,6 +453,70 @@ var PickUplocations2 = function() {
         });
 
         /*
+         * Express code to use module to get a invite for a user
+         */
+        self.app.get('/invitation/', function(req, res) {
+            var filter = url.parse(req.url, true).query.filter;
+            if (filter == "id") {
+                var id = url.parse(req.url, true).query.id;
+                self.getFromDB('invitations', {'_id': new ObjectID(id)},
+                    function(err, data) {
+                    if (err) {
+                        console.log(err);
+                        res.send(err);
+                    } else {
+                        console.log(data[0]);
+                        res.json(data[0]);
+                    }
+                });
+            } else if (filter == "user") {
+                var user_id = url.parse(req.url, true).query.user_id;
+                self.getFromDB('invitations', {'invitee_id': user_id},
+                    function(err, data) {
+                    if (err) {
+                        console.log(err);
+                        res.send(err);
+                    } else {
+                        console.log(data);
+                        res.json(data);
+                    }
+                });
+            }
+        });
+
+        /*
+         * Express code to use module to add a invite from the commandinterpreter
+         */
+        self.app.post('/invitation/', function(req, res) {
+            console.log("post " + url.parse(req.url, true).path); 
+            self.addToDB('invitations', req.body, function(err, result) {
+                if(err) {
+                    console.log(err);
+                    res.send(err);
+                } else {
+                    res.send("result");
+                }
+            });
+        });
+
+        /*
+         * Express code to use module to delete a invite from the commandinterpreter
+         */
+        self.app.delete('/invitation/', function(req, res) {
+            console.log("delete " + url.parse(req.url, true).path);
+            var invitation_id = url.parse(req.url, true).query.invitation_id;
+            self.deleteFromDB('invitations', {'_id': new ObjectID(invitation_id)}, function(err, result) {
+                if (err) {
+                    console.log(err);
+                    res.send(err);
+                } else {
+                	res.send(result);
+                    console.log(result);
+                }
+            });
+        });
+
+        /*
          * Express code to use module to edit attendance information
          */
         self.app.post('/attendance/', function(req, res) {
@@ -488,6 +581,11 @@ var PickUplocations2 = function() {
      */
     self.getFromDBAndSort = function(collection, object, sortby, callback) {
         self.db.collection(collection).find(object).sort(sortby).toArray(callback);
+    }
+
+    self.searchInDB = function(collection, soundex_sentence, callback) {
+    	console.log("Searching for " + soundex_sentence + " in " + collection);
+
     }
 
     /*
@@ -564,6 +662,36 @@ var PickUplocations2 = function() {
                 Date(Date.now() ), self.ipaddress, self.port);
         });
     };
+/*
+    self.generateFuzzyList = function(sentence) {
+    	var words = sentence.split(" ");
+    	var output = [];
+    	for (var i = 0; i < words.length; ++i) {
+    		output.push(Soundex(words[i]));
+    	}
+    	return output;
+    }
+
+    self.matchFuzzySentence = function(sent1, sent2) {
+    	if (sent1 === "" || sent2 == "" || sent1 == null || sent2 == null) {
+    		return false;
+    	}
+    	var matchcount = 0;
+    	for (var i = 0; i < sent1.length; ++i) {
+    		for (var j = 0; j < sent2.length; ++j) {
+    			if (sent1[i] === sent2[j]){
+    				matchcount += 1;
+    				break;
+    			}
+    		}
+    	}
+    	if (matchcount >= sent1.length/2) {
+    		return true;
+    	} else {
+    		return false;
+    	}
+    }
+    */
 }; 
 
 

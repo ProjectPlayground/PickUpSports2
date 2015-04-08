@@ -12,6 +12,7 @@ import pickupsports2.ridgewell.pickupsports2.activities.CreateEventActivity;
 import pickupsports2.ridgewell.pickupsports2.activities.LocationPickerActivity;
 import pickupsports2.ridgewell.pickupsports2.activities.LoginActivity;
 import pickupsports2.ridgewell.pickupsports2.activities.MainActivity;
+import pickupsports2.ridgewell.pickupsports2.activities.SearchActivity;
 import pickupsports2.ridgewell.pickupsports2.activities.ViewEventActivity;
 import pickupsports2.ridgewell.pickupsports2.activities.ViewUserActivity;
 import pickupsports2.ridgewell.pickupsports2.utilities.ServerRequest;
@@ -37,6 +38,7 @@ public class IntentProtocol {
 
     public static final int CREATE_EVENT_CODE = 100;
     public static final int LOCATION_PICKER_CODE = 101;
+    public static final int SEARCH_CODE = 102;
 
     public static void launchLogin(Activity context){
         Intent intent = new Intent(context, LoginActivity.class);
@@ -105,5 +107,10 @@ public class IntentProtocol {
             return data.getExtras().getParcelable("location_properties");
         }
         return null;
+    }
+
+    public static void search(Activity context) {
+        Intent launch_search = new Intent(context, SearchActivity.class);
+        context.startActivityForResult(launch_search, SEARCH_CODE);
     }
 }

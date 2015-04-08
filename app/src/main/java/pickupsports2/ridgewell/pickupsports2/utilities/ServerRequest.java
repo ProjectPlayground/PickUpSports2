@@ -1,5 +1,6 @@
 package pickupsports2.ridgewell.pickupsports2.utilities;
 
+import android.app.Activity;
 import android.util.Log;
 
 import java.security.InvalidParameterException;
@@ -14,6 +15,7 @@ import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 import ridgewell.pickupsports2.common.Event;
+import ridgewell.pickupsports2.common.Invitation;
 import ridgewell.pickupsports2.common.LocationProperties;
 import ridgewell.pickupsports2.common.Sport;
 import ridgewell.pickupsports2.common.User;
@@ -268,25 +270,6 @@ public class ServerRequest {
         }
     }
 
-    public Event getEventFromName(final String event_name) {
-        try {
-            Callable<Event> callable = new Callable<Event>() {
-                @Override
-                public Event call() {
-                    return svc.getEventFromName(event_name);
-                }
-            };
-            ExecutorService exec = Executors.newFixedThreadPool(3 );
-            return exec.submit(callable).get();
-        } catch (ExecutionException e) {
-            Log.e("Interrupted Exception", e.getMessage());
-            return null;
-        } catch (InterruptedException e) {
-            Log.e("Execution Exception", e.getMessage());
-            return null;
-        }
-    }
-
     public List<Event> getEventsInDateRange(final DateTime date1, final DateTime date2) {
         try {
             Callable<List<Event>> callable = new Callable<List<Event>>() {
@@ -323,7 +306,7 @@ public class ServerRequest {
         }
     }
 
-    public void addEvent(final Event event) {
+    public void addEvent(final Event event, final Activity context) {
         Callable c = new Callable() {
             @Override
             public String call() {
@@ -331,7 +314,8 @@ public class ServerRequest {
                     @Override
                     public void success(Event event, Response response) {
                         Log.v("Retrofit Success", "Event response");
-                        Log.v("Response",response.toString());
+                        attendEvent(event,
+                                UserData.getInstance().getThisUser(context));
                     }
 
                     @Override
@@ -355,7 +339,16 @@ public class ServerRequest {
         Callable c = new Callable() {
             @Override
             public String call() {
-                svc.deleteEvent(event.get_id(), new Callback<Event>() {
+                String[] temp = new String[event.getAttendeeCount()];
+                temp = event.getAttendees().toArray(temp);
+                String commaoutput = "";
+                for (int i = 0; i < temp.length; ++i) {
+                    commaoutput += temp[i];
+                    if (i < temp.length-1) {
+                        commaoutput += ",";
+                    }
+                }
+                svc.deleteEvent(event.get_id(), commaoutput, new Callback<Event>() {
                     @Override
                     public void success(Event event, Response response) {
                         Log.v("Retrofit Success", "Event response");
@@ -508,6 +501,117 @@ public class ServerRequest {
                     @Override
                     public void failure(RetrofitError error) {
                         Log.e("Retrofit Error", "deleteLocation Failed");
+                    }
+                });
+                return "";
+            }
+        };
+        try {
+            exec.submit(c).get();
+        } catch (ExecutionException e) {
+            Log.e("Interrupted Exception", e.getMessage());
+        } catch (InterruptedException e) {
+            Log.e("Execution Exception", e.getMessage());
+        }
+    }
+
+    public List<Event> searchEventByName(final String name) {
+        try {
+            Callable<List<Event>> callable = new Callable<List<Event>>() {
+                @Override
+                public List<Event> call() throws Exception {
+                    return svc.getEventFromName(name);
+                }
+            };
+            return exec.submit(callable).get();
+        } catch (ExecutionException e) {
+            Log.e("Interrupted Exception", e.getMessage());
+            return null;
+        } catch (InterruptedException e) {
+            Log.e("Execution Exception", e.getMessage());
+            return null;
+        }
+    }
+
+    public List<User> searchUserByName(final String name) {
+        try {
+            Callable<List<User>> callable = new Callable<List<User>>() {
+                @Override
+                public List<User> call() throws Exception {
+                    return svc.getUserFromName(name);
+                }
+            };
+            return exec.submit(callable).get();
+        } catch (ExecutionException e) {
+            Log.e("Interrupted Exception", e.getMessage());
+            return null;
+        } catch (InterruptedException e) {
+            Log.e("Execution Exception", e.getMessage());
+            return null;
+        }
+    }
+
+
+    public void invite(final User invitee, final Event event, final User inviter) {
+        Callable c = new Callable() {
+            @Override
+            public String call() {
+                svc.invite(new Invitation(invitee.get_id(),event.get_id(),inviter.get_id()),
+                        new Callback<String>()
+                {
+                    @Override
+                    public void success(String user, Response response) {
+                        Log.v("Retrofit Success", "Invitation response");
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+                        Log.e("Retrofit Error", error.getMessage());
+                    }
+                });
+                return "";
+            }
+        };
+        try {
+            exec.submit(c).get();
+        } catch (ExecutionException e) {
+            Log.e("Interrupted Exception", e.getMessage());
+        } catch (InterruptedException e) {
+            Log.e("Execution Exception", e.getMessage());
+        }
+    }
+
+    public List<Invitation> getUserInvitations(final User user) {
+        try {
+            Callable<List<Invitation>> callable = new Callable<List<Invitation>>() {
+                @Override
+                public List<Invitation> call() throws Exception {
+                    return svc.getUserInvitations(user.get_id());
+                }
+            };
+            return exec.submit(callable).get();
+        } catch (ExecutionException e) {
+            Log.e("Interrupted Exception", e.getMessage());
+            return null;
+        } catch (InterruptedException e) {
+            Log.e("Execution Exception", e.getMessage());
+            return null;
+        }
+    }
+
+    public void deleteInvitation(final Invitation invitation) {
+        Callable c = new Callable() {
+            @Override
+            public String call() {
+                svc.deleteInvitation(invitation.get_id(), new Callback<Invitation>() {
+                    @Override
+                    public void success(Invitation invitation1, Response response) {
+                        Log.v("Retrofit Success", "Invitation response");
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+                        Log.e("Retrofit Error", error.getMessage());
                     }
                 });
                 return "";

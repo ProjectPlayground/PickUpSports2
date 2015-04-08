@@ -19,7 +19,7 @@
         android:id="@+id/name_input">
 
         <RelativeLayout
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1">
             <TextView
@@ -28,7 +28,7 @@
                 android:text="First"
                 android:id="@+id/first_name_header" />
             <EditText
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/first_name_header"
                 android:hint="First Name"
@@ -36,7 +36,7 @@
             </RelativeLayout>
 
             <RelativeLayout
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1">
                 <TextView
@@ -45,7 +45,7 @@
                     android:text="Last"
                     android:id="@+id/last_name_header" />
                 <EditText
-                    android:layout_width="wrap_content"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/last_name_header"
                     android:hint="Last Name"
@@ -67,7 +67,7 @@
         android:id="@+id/location_input">
 
         <RelativeLayout
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1">
             <TextView
@@ -76,7 +76,7 @@
                 android:text="City"
                 android:id="@+id/city_header" />
             <EditText
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/city_header"
                 android:hint="City"
@@ -84,7 +84,7 @@
         </RelativeLayout>
 
         <RelativeLayout
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1">
             <TextView
@@ -93,7 +93,7 @@
                 android:text="State"
                 android:id="@+id/state_header" />
             <EditText
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/state_header"
                 android:hint="State"

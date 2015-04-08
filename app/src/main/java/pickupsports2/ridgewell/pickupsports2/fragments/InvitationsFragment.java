@@ -10,37 +10,35 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.io.InterruptedIOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import pickupsports2.ridgewell.pickupsports2.R;
 import pickupsports2.ridgewell.pickupsports2.activities.MainActivity;
-import pickupsports2.ridgewell.pickupsports2.elements.SportingEventArrayAdapter;
+import pickupsports2.ridgewell.pickupsports2.elements.InvitationArrayAdapter;
+import pickupsports2.ridgewell.pickupsports2.intents.IntentProtocol;
 import pickupsports2.ridgewell.pickupsports2.utilities.ServerRequest;
 import pickupsports2.ridgewell.pickupsports2.utilities.SwipeRefreshListFragment;
-import pickupsports2.ridgewell.pickupsports2.intents.IntentProtocol;
+import pickupsports2.ridgewell.pickupsports2.utilities.UserData;
 import ridgewell.pickupsports2.common.Event;
+import ridgewell.pickupsports2.common.Invitation;
+import ridgewell.pickupsports2.common.User;
 
 /**
  * Created by cameronridgewell on 2/9/15.
  */
-public class AllEventsFragment extends SwipeRefreshListFragment implements MainActivity.MainActivityFragment {
+public class InvitationsFragment extends SwipeRefreshListFragment implements MainActivity.MainActivityFragment {
 
-    final int CREATE_EVENT_CODE = 111;
-    final int SUCCESS_CODE = 1;
+    private List<Invitation> invitations = new ArrayList<Invitation>();
 
-    private List<Event> events = new ArrayList<Event>();
-
-    private SportingEventArrayAdapter sportingEventArrayAdapter;
+    private InvitationArrayAdapter invitationArrayAdapter;
     private ServerRequest svreq = ServerRequest.getInstance();
-
+    private User thisuser = null;
     View rootView;
 
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-        sportingEventArrayAdapter = new SportingEventArrayAdapter(this.getActivity(), events);
-        this.setListAdapter(sportingEventArrayAdapter);
 
         final SwipeRefreshLayout swipeRefresh =
                 (SwipeRefreshLayout) rootView.findViewById(R.id.event_list_fragment);
@@ -54,6 +52,13 @@ public class AllEventsFragment extends SwipeRefreshListFragment implements MainA
         });
 
         this.setmSwipeRefreshLayout(swipeRefresh);
+
+        thisuser = UserData.getInstance().getThisUser(getActivity());
+
+        invitations = svreq.getUserInvitations(thisuser);
+
+        invitationArrayAdapter = new InvitationArrayAdapter(this.getActivity(), invitations);
+        this.setListAdapter(invitationArrayAdapter);
     }
 
     @Override
@@ -73,21 +78,8 @@ public class AllEventsFragment extends SwipeRefreshListFragment implements MainA
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
-        Event toOpen = events.get(position);
+        Event toOpen = svreq.getEvent(invitations.get(position).getEvent_id());
         IntentProtocol.viewEvent(this.getActivity(), toOpen);
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == CREATE_EVENT_CODE) {
-            if (resultCode == SUCCESS_CODE) {
-                refreshFragment();
-            } else {
-                Toast toast = Toast.makeText(getActivity().getApplicationContext(),
-                        "An error occurred while creating your event", Toast.LENGTH_SHORT);
-                toast.show();
-            }
-        }
     }
 
     public void onActionButtonClick() {
@@ -96,12 +88,12 @@ public class AllEventsFragment extends SwipeRefreshListFragment implements MainA
 
     public void refreshFragment() {
         try{
-            Thread.currentThread().sleep(500);
+            Thread.currentThread().sleep(250);
         }catch(Exception e){}
         Log.v("Attempting", "Event Refresh");
-        events = svreq.getAllEvents();
-        if (events != null) {
-            sportingEventArrayAdapter.refreshItems(events);
+        invitations = svreq.getUserInvitations(thisuser);
+        invitationArrayAdapter.notifyDataSetChanged();
+        if (invitations != null) {
             Log.v("Completed", "EventRefresh");
         } else {
             Toast toast = Toast.makeText(getActivity().getApplicationContext(),

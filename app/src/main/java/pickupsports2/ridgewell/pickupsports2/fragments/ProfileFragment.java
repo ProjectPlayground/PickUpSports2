@@ -114,7 +114,7 @@ public class ProfileFragment extends Fragment implements MainActivity.MainActivi
         userName.setText(user.getFirstname() + " " + user.getLastname());
 
         TextView joinDate = (TextView) rootView.findViewById(R.id.user_join_date);
-        joinDate.setText(user.getJoinTime().toString("MMMM d, yyyy"));
+        joinDate.setText("Joined: " + user.getJoinTime().toString("MMMM d, yyyy"));
 
         TextView location = (TextView) rootView.findViewById(R.id.user_location);
         location.setText(user.getLocationProperties().toString());

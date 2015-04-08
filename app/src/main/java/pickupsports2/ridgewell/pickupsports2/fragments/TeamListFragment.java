@@ -28,7 +28,7 @@ public class TeamListFragment extends SwipeRefreshListFragment implements MainAc
                              Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         // Inflate the layout for this fragment
-        rootView = inflater.inflate(R.layout.fragment_event_list_view, container, false);
+        rootView = inflater.inflate(R.layout.fragment_list_view_refresh, container, false);
         return rootView;
     }
 

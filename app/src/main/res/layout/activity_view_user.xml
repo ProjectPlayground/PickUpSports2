@@ -7,8 +7,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingBottom="15dp">
+        android:layout_height="wrap_content">
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -25,18 +24,7 @@
                 android:layout_marginLeft="15dp"
                 android:layout_below="@+id/user_name"/>
         </RelativeLayout>
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/profile_picture" />
     </LinearLayout>
-
-    <TextView
-        style="@style/badge_display"
-        android:text="badges"
-        android:id="@+id/user_badges"
-        android:paddingLeft="10dp"/>
 
     <TextView
         style="@style/sport_tag_display"

@@ -5,7 +5,6 @@
 
     <TextView
         style="@style/viewable_heading_text"
-        android:layout_marginTop="10dp"
         android:id="@+id/view_event_title"
         android:text="title"
         android:layout_alignParentLeft="true"
@@ -94,19 +93,14 @@
         android:weightSum="2">
         <Button
             android:id="@+id/attendButton"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Attend"
-            android:layout_weight="1"/>
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Invite"
             android:layout_weight="1"/>
         </LinearLayout>
 
     <Button
+        android:layout_marginTop="15dp"
         android:text="Delete"
         android:id="@+id/delete_event"
         android:layout_width="wrap_content"
