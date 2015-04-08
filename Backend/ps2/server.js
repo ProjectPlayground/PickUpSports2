@@ -174,13 +174,14 @@ var PickUplocations2 = function() {
                     break;
                 case 'name':
                     var name = url.parse(req.url, true).query.name;
-                    self.searchInDB('events', soundex_name,
-                    	function(err, data) {
+                    var search_query = 'this.name.toLowerCase()  == \'' + name.toLowerCase().trim() + '\'';
+                    console.log(search_query);
+                    self.getFromDB('events', { '$where' : search_query}, function(err, data) {
                         if (err) {
                             console.log(err);
                             res.send(err);
                         } else {
-                        	console.log(data);
+                            console.log(data);
                             res.json(data);
                         }
                     });
@@ -296,6 +297,23 @@ var PickUplocations2 = function() {
                         res.json(data[0]);
                     }
                 });
+            } else if (id == null) {
+                var name = url.parse(req.url, true).query.name;
+                if (name != null) {
+                    var search_query = 'this.firstname.toLowerCase() + \" \" + this.lastname.toLowerCase()  == \'' 
+                        + name.toLowerCase().trim() + '\'';
+                    console.log(search_query);
+                    //
+                    self.getFromDB('users', { '$where' : search_query}, function(err, data) {
+                        if (err) {
+                            console.log(err);
+                            res.send(err);
+                        } else {
+                            console.log(data);
+                            res.json(data);
+                        }
+                    });
+                }
             }
         });
 

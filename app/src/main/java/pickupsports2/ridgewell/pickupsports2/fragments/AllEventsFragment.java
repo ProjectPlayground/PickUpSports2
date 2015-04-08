@@ -96,7 +96,7 @@ public class AllEventsFragment extends SwipeRefreshListFragment implements MainA
 
     public void refreshFragment() {
         try{
-            Thread.currentThread().sleep(250);
+            Thread.currentThread().sleep(500);
         }catch(Exception e){}
         Log.v("Attempting", "Event Refresh");
         events = svreq.getAllEvents();

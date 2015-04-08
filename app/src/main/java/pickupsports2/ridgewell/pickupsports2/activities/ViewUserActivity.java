@@ -35,15 +35,8 @@ public class ViewUserActivity extends ActionBarActivity {
         username.setText(user.getFirstname() + " " + user.getLastname());
 
         TextView joindate = (TextView) findViewById(R.id.user_join_date);
-        joindate.setText(user.getJoinTime().toString("MMMM d, yyyy"));
-/*
-        TextView badges = (TextView) findViewById(R.id.user_badges);
-        String badges_list = "|";
-        for (Badge badge : user.getBadges()) {
-            badges_list = badges_list + " " + badge.getName() + " |";
-        }
-        badges.setText(badges_list);
-*/
+        joindate.setText("Joined: " + user.getJoinTime().toString("MMMM d, yyyy"));
+
         TextView user_favorite_sports = (TextView) findViewById(R.id.user_favorite_sports);
         List<String> favorites = user.getFavoriteSports();
         if (favorites.size() > 0) {

@@ -1,7 +1,10 @@
 package pickupsports2.ridgewell.pickupsports2.activities;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -9,10 +12,18 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
+import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import pickupsports2.ridgewell.pickupsports2.R;
 import pickupsports2.ridgewell.pickupsports2.elements.EditUserDialog;
+import pickupsports2.ridgewell.pickupsports2.elements.SearchResultArrayAdapter;
+import pickupsports2.ridgewell.pickupsports2.fragments.SearchResultsFragment;
 import pickupsports2.ridgewell.pickupsports2.utilities.ServerRequest;
+import ridgewell.pickupsports2.common.Event;
+import ridgewell.pickupsports2.common.User;
 
 public class SearchActivity extends ActionBarActivity {
 
@@ -20,6 +31,11 @@ public class SearchActivity extends ActionBarActivity {
     EditText input_value;
 
     ServerRequest svreq = ServerRequest.getInstance();
+
+    ArrayList<User> users = null;
+    ArrayList<Event> events = null;
+
+    SearchResultsFragment myFragment = null;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +50,10 @@ public class SearchActivity extends ActionBarActivity {
 
         createOnSearchListener();
 
+        myFragment = new SearchResultsFragment();
+        FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.root_view, myFragment).commit();
     }
 
     public void createOnSearchListener() {
@@ -41,11 +61,19 @@ public class SearchActivity extends ActionBarActivity {
         search_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                if (search_type.getSelectedItem().equals("Event")) {
-                    svreq.searchEventByName(input_value.getText().toString());
-                } else if (search_type.getSelectedItem().equals("User")) {
-                    svreq.searchUserByName(input_value.getText().toString());
+                try {
+                    if (search_type.getSelectedItem().equals("Event")) {
+                        events = (ArrayList) svreq.searchEventByName(input_value.getText().toString());
+                        myFragment.setEventsList(events);
+                    } else if (search_type.getSelectedItem().equals("User")) {
+                        users = (ArrayList) svreq.searchUserByName(input_value.getText().toString());
+                        myFragment.setUsersList(users);
+                    }
+                } catch (NullPointerException e) {
+                    Log.e("Search Error","Didn't return a useable array from Backend");
+                    Toast toast = Toast.makeText(getApplicationContext(),
+                            "An error occured during you search", Toast.LENGTH_SHORT);
+                    toast.show();
                 }
             }
         });
