@@ -37,6 +37,10 @@ Build Cycle 4:
  * integrate Google Maps Location Storage
  * allow for Event and User information editing
 
+Build Cycle 5:
+ * add ability to send and recieve invitations
+ * add case insensitive search functionality for users and events
+
 ## User Stories
 1. I want to be able to create and delete my own events.
 2. I've recently moved, I want to be able to find other people to exercise with.
