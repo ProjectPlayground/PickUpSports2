@@ -11,10 +11,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.Session;
 
 import pickupsports2.ridgewell.pickupsports2.R;
+import pickupsports2.ridgewell.pickupsports2.elements.AttendedEventsDialog;
 import pickupsports2.ridgewell.pickupsports2.elements.EditEventDialog;
 import pickupsports2.ridgewell.pickupsports2.intents.IntentProtocol;
 import pickupsports2.ridgewell.pickupsports2.utilities.ActivityOnClickListener;
@@ -38,6 +40,7 @@ public class ViewEventActivity extends ActionBarActivity
     static final int TIME_DIALOG_ID = 888;
 
     EditEventDialog editEventDialog = null;
+    AttendedEventsDialog attendedEventsDialog = null;
 
     public ViewEventActivity() {}
 

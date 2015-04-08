@@ -74,7 +74,7 @@
     </string-array>
 
     <!-- view event activity -->
-    <string name="title_activity_view_event">ViewEvent</string>
+    <string name="title_activity_view_event">View Event</string>
 
     <string name="created_by">Created by </string>
     <string name="title_activity_main_activity_2">MainActivity_2</string>
@@ -87,7 +87,7 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <!-- Navigation Pane -->
-    <string name="title_activity_navigation_pane">NavigationPane</string>
+    <string name="title_activity_navigation_pane">Navigation Pane</string>
     <string name="drawer_open_text">Navigation</string>
     <string-array name="navigation_pane_titles">
         <item>Profile</item>

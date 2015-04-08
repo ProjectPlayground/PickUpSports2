@@ -3,12 +3,10 @@ package pickupsports2.ridgewell.pickupsports2.fragments;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,11 +14,8 @@ import java.util.List;
 import pickupsports2.ridgewell.pickupsports2.R;
 import pickupsports2.ridgewell.pickupsports2.activities.MainActivity;
 import pickupsports2.ridgewell.pickupsports2.elements.InvitationArrayAdapter;
-import pickupsports2.ridgewell.pickupsports2.elements.SportingEventArrayAdapter;
-import pickupsports2.ridgewell.pickupsports2.intents.IntentProtocol;
 import pickupsports2.ridgewell.pickupsports2.utilities.ServerRequest;
 import pickupsports2.ridgewell.pickupsports2.utilities.SwipeRefreshListFragment;
-import ridgewell.pickupsports2.common.Event;
 import ridgewell.pickupsports2.common.Invitation;
 
 /**
@@ -63,7 +58,7 @@ public class InvitationsFragment extends SwipeRefreshListFragment implements Mai
                              Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         // Inflate the layout for this fragment
-        rootView = inflater.inflate(R.layout.fragment_list_view, container, false);
+        rootView = inflater.inflate(R.layout.fragment_list_view_refresh, container, false);
         return rootView;
     }
 
